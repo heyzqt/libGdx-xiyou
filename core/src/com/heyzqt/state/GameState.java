@@ -2,6 +2,7 @@ package com.heyzqt.state;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**
@@ -17,6 +18,7 @@ public abstract class GameState {
 	protected SpriteBatch mBatch;
 	protected OrthographicCamera mCamera;
 	protected OrthographicCamera mUICamera;
+	protected Stage mStage;
 
 	public GameState(GameStateManager manager){
 		this.mGameStateManager = manager;
@@ -24,6 +26,7 @@ public abstract class GameState {
 		mBatch = mGame.getSpriteBatch();
 		mCamera = mGame.getCamera();
 		mUICamera = mGame.getUICamera();
+		mStage = mGame.getStage();
 	}
 
 	public abstract void update(float delta);

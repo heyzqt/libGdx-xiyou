@@ -22,9 +22,40 @@ public class GameStateManager {
 	public GameStateManager(MyGdxGame game) {
 		this.mGame = game;
 		mGameStates = new Stack<GameState>();
+		pushState(START);
 	}
 
 	public MyGdxGame getGame(){
 		return mGame;
+	}
+
+	public void update(float delta){
+		mGameStates.peek().update(delta);
+	}
+
+	public void render(){
+		mGameStates.peek().render();
+	}
+
+	private GameState getState(int state){
+		if(state == START) return new Start(this);
+		return null;
+	}
+
+	//入栈
+	private void pushState(int state) {
+		mGameStates.push(getState(state));
+	}
+
+	//出栈
+	public void popState() {
+		GameState state = mGameStates.pop();
+		state.dispose();
+	}
+
+	//设置当前游戏状态
+	private void setState(int state){
+		popState();
+		pushState(state);
 	}
 }

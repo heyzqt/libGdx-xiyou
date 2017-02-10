@@ -1,0 +1,47 @@
+
+success.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+backBtnDown
+  rotate: false
+  xy: 1, 285
+  size: 400, 180
+  orig: 400, 180
+  offset: 0, 0
+  index: -1
+backBtnUp
+  rotate: false
+  xy: 1, 103
+  size: 400, 180
+  orig: 400, 180
+  offset: 0, 0
+  index: -1
+nextlevelBtnDown
+  rotate: false
+  xy: 403, 285
+  size: 400, 180
+  orig: 400, 180
+  offset: 0, 0
+  index: -1
+nextlevelBtnUp
+  rotate: false
+  xy: 403, 103
+  size: 400, 180
+  orig: 400, 180
+  offset: 0, 0
+  index: -1
+starOff
+  rotate: false
+  xy: 1, 1
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+starOn
+  rotate: false
+  xy: 805, 365
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1

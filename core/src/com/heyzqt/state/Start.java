@@ -200,7 +200,5 @@ public class Start extends GameState {
 
 		//清空舞台
 		mStage.clear();
-		//销毁舞台
-		mStage.dispose();
 	}
 }

@@ -95,7 +95,6 @@ public class Failure extends GameState {
 //		mStage.addActor(mStarOffImg);
 		mStage.addActor(mBackBtn);
 		mStage.addActor(mRestartBtn);
-		Gdx.input.setInputProcessor(mStage);
 
 		initListener();
 	}
@@ -154,6 +153,7 @@ public class Failure extends GameState {
 
 	@Override
 	public void dispose() {
-
+		//清空舞台
+		mStage.clear();
 	}
 }

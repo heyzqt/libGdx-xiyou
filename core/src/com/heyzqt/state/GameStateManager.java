@@ -18,11 +18,14 @@ public class GameStateManager {
 
 	public final static int START = 0;   //开始设置界面
 	public final static int PLAY = 1;    //游戏界面
+	public final static int FAILURE = 2;  //失败界面
+	public final static int SUCCESS = 3;  //成功界面
+	public final static int SELECT = 4;    //选关界面
 
 	public GameStateManager(MyGdxGame game) {
 		this.mGame = game;
 		mGameStates = new Stack<GameState>();
-		pushState(START);
+		pushState(FAILURE);
 	}
 
 	public MyGdxGame getGame() {
@@ -37,14 +40,15 @@ public class GameStateManager {
 		mGameStates.peek().render();
 	}
 
-	private GameState getState(int state) {
+	public GameState getState(int state) {
 		if (state == START) return new Start(this);
 		if (state == PLAY) return new Play(this);
+		if(state == FAILURE) return new Failure(this);
 		return null;
 	}
 
 	//入栈
-	private void pushState(int state) {
+	public void pushState(int state) {
 		mGameStates.push(getState(state));
 	}
 
@@ -55,7 +59,7 @@ public class GameStateManager {
 	}
 
 	//设置当前游戏状态
-	private void setState(int state) {
+	public void setState(int state) {
 		popState();
 		pushState(state);
 	}

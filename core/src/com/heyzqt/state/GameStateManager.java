@@ -16,8 +16,8 @@ public class GameStateManager {
 	 */
 	private Stack<GameState> mGameStates;
 
-	//开始界面
-	public final static int START = 0;
+	public final static int START = 0;   //开始设置界面
+	public final static int PLAY = 1;    //游戏界面
 
 	public GameStateManager(MyGdxGame game) {
 		this.mGame = game;
@@ -25,20 +25,21 @@ public class GameStateManager {
 		pushState(START);
 	}
 
-	public MyGdxGame getGame(){
+	public MyGdxGame getGame() {
 		return mGame;
 	}
 
-	public void update(float delta){
+	public void update(float delta) {
 		mGameStates.peek().update(delta);
 	}
 
-	public void render(){
+	public void render() {
 		mGameStates.peek().render();
 	}
 
-	private GameState getState(int state){
-		if(state == START) return new Start(this);
+	private GameState getState(int state) {
+		if (state == START) return new Start(this);
+		if (state == PLAY) return new Play(this);
 		return null;
 	}
 
@@ -54,7 +55,7 @@ public class GameStateManager {
 	}
 
 	//设置当前游戏状态
-	private void setState(int state){
+	private void setState(int state) {
 		popState();
 		pushState(state);
 	}

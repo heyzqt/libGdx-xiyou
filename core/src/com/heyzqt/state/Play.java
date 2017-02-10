@@ -1,5 +1,9 @@
 package com.heyzqt.state;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+
 /**
  * Created by heyzqt on 2017/2/7.
  *
@@ -7,9 +11,16 @@ package com.heyzqt.state;
  */
 public class Play extends GameState{
 
+	private TiledMap mMap;
+	private OrthoCachedTiledMapRenderer mMapRenderer;
+	private OrthogonalTiledMapRenderer mOrthogonalTiledMapRenderer;
 
 	public Play(GameStateManager manager) {
 		super(manager);
+		init();
+	}
+
+	private void init(){
 	}
 
 	@Override
@@ -19,7 +30,6 @@ public class Play extends GameState{
 
 	@Override
 	public void render() {
-
 	}
 
 	@Override

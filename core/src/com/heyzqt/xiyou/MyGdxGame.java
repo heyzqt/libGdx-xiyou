@@ -15,7 +15,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private OrthographicCamera mCamera;
 	private OrthographicCamera mUICamera;
 
-	public final int VIEW_WIDTH = 1280;
+	public final int VIEW_WIDTH = 960;
 	public final int VIEW_HEIGHT = 640;
 
 	private GameStateManager mManager;
@@ -40,6 +40,10 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		mManager.update(Gdx.graphics.getDeltaTime());
 		mManager.render();
+	}
+
+	@Override
+	public void dispose() {
 	}
 
 	public Stage getStage(){ return mStage; }

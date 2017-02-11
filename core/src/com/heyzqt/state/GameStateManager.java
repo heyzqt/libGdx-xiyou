@@ -25,7 +25,7 @@ public class GameStateManager {
 	public GameStateManager(MyGdxGame game) {
 		this.mGame = game;
 		mGameStates = new Stack<GameState>();
-		pushState(SUCCESS);
+		pushState(SELECT);
 	}
 
 	public MyGdxGame getGame() {
@@ -45,6 +45,7 @@ public class GameStateManager {
 		if (state == PLAY) return new Play(this);
 		if(state == FAILURE) return new Failure(this);
 		if(state == SUCCESS) return new Success(this);
+		if(state == SELECT) return new Select(this);
 		return null;
 	}
 

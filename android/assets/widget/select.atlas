@@ -1,0 +1,33 @@
+
+select.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+selectImgFirst
+  rotate: false
+  xy: 1, 323
+  size: 330, 330
+  orig: 330, 330
+  offset: 0, 0
+  index: -1
+selectThird
+  rotate: false
+  xy: 1, 1
+  size: 250, 320
+  orig: 250, 320
+  offset: 0, 0
+  index: -1
+selectSecond
+  rotate: false
+  xy: 333, 368
+  size: 280, 285
+  orig: 280, 285
+  offset: 0, 0
+  index: -1
+selectForth
+  rotate: false
+  xy: 615, 423
+  size: 270, 230
+  orig: 270, 230
+  offset: 0, 0
+  index: -1

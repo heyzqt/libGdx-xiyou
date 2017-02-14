@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.heyzqt.handle.AssetManager;
 import com.heyzqt.state.GameStateManager;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -20,8 +21,13 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private GameStateManager mManager;
 
+	public static AssetManager mAssetManager;
+
 	@Override
 	public void create() {
+
+		loadAssets();
+
 		mBatch = new SpriteBatch();
 		mStage = new Stage();
 		Gdx.input.setInputProcessor(mStage);
@@ -32,6 +38,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		mUICamera.setToOrtho(false,VIEW_WIDTH,VIEW_HEIGHT);
 
 		mManager = new GameStateManager(this);
+	}
+
+	private void loadAssets(){
+		mAssetManager = new AssetManager();
 	}
 
 	@Override

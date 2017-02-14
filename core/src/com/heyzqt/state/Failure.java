@@ -39,7 +39,6 @@ public class Failure extends GameState {
 	//重新开始按钮
 	private ImageButton mRestartBtn;
 
-
 	public Failure(GameStateManager manager) {
 		super(manager);
 		init();
@@ -81,13 +80,13 @@ public class Failure extends GameState {
 		//初始化返回控件
 		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlasRegions[4]),
 				new TextureRegionDrawable(mAtlasRegions[5]));
-		mBackBtn.setSize(200,90);
+		mBackBtn.setSize(200, 90);
 		mBackBtn.setPosition(450, 100);
 		//初始化重新挑战控件
 		mRestartBtn = new ImageButton(new TextureRegionDrawable(mAtlasRegions[2]),
 				new TextureRegionDrawable(mAtlasRegions[3]));
-		mRestartBtn.setSize(200,90);
-		mRestartBtn.setPosition(660,100);
+		mRestartBtn.setSize(200, 90);
+		mRestartBtn.setPosition(660, 100);
 
 		mStage.addActor(mPlaceLab);
 		mStage.addActor(mTimeLab);
@@ -102,7 +101,7 @@ public class Failure extends GameState {
 	private void initListener() {
 
 		//返回地图按钮
-		mBackBtn.addListener(new ClickListener(){
+		mBackBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
@@ -116,7 +115,7 @@ public class Failure extends GameState {
 		});
 
 		//重新挑战
-		mRestartBtn.addListener(new ClickListener(){
+		mRestartBtn.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("hello 重新挑战");
@@ -135,11 +134,11 @@ public class Failure extends GameState {
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
 		mBatch.draw(mBackground, 0, 0);
-		mBatch.draw(mAtlasRegions[1],225,213,50,60);
-		mBatch.draw(mAtlasRegions[1],285,213,50,60);
-		mBatch.draw(mAtlasRegions[0],345,213,50,60);
-		mBatch.draw(mAtlasRegions[0],405,213,50,60);
-		mBatch.draw(mAtlasRegions[0],465,213,50,60);
+		mBatch.draw(mAtlasRegions[1], 225, 213, 50, 60);
+		mBatch.draw(mAtlasRegions[1], 285, 213, 50, 60);
+		mBatch.draw(mAtlasRegions[0], 345, 213, 50, 60);
+		mBatch.draw(mAtlasRegions[0], 405, 213, 50, 60);
+		mBatch.draw(mAtlasRegions[0], 465, 213, 50, 60);
 		mBatch.end();
 
 		mStage.act();

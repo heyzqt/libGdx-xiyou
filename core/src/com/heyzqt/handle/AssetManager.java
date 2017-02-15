@@ -81,6 +81,11 @@ public class AssetManager {
 		atlas.remove(key);
 	}
 
+	//获取图片集合
+	public TextureAtlas getTextureAtlas(String key){
+		return atlas.get(key);
+	}
+
 	//加载Music
 	public void loadMusic(String path, String key) {
 		Music music = Gdx.audio.newMusic(Gdx.files.internal(path));

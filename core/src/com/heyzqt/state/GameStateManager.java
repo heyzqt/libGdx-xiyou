@@ -25,7 +25,7 @@ public class GameStateManager {
 	public GameStateManager(MyGdxGame game) {
 		this.mGame = game;
 		mGameStates = new Stack<GameState>();
-		pushState(START);
+		pushState(PLAY);
 	}
 
 	public MyGdxGame getGame() {

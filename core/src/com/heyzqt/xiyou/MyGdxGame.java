@@ -16,8 +16,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	private OrthographicCamera mCamera;
 	private OrthographicCamera mUICamera;
 
-	public final int VIEW_WIDTH = 960;
-	public final int VIEW_HEIGHT = 640;
+	public final static int VIEW_WIDTH = 960;
+	public final static int VIEW_HEIGHT = 640;
 
 	private GameStateManager mManager;
 

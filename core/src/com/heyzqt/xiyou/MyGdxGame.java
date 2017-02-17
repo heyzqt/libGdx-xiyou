@@ -55,6 +55,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadTexture("background/failure_bg.png", Constant.FAILURE_BG);
 		mAssetManager.loadTextureAtlas("widget/failure.atlas", Constant.FAILURE_WIDGET);
 
+		//加载成功界面Success.java资源
+		mAssetManager.loadTexture("background/success_bg.png",Constant.SUCCESS_BG);
+		mAssetManager.loadTextureAtlas("widget/success.atlas",Constant.SUCCESS_WIDGET);
+
 		//加载游戏界面Play.java资源
 		mAssetManager.loadTexture("map/level_static_2_bg.png", Constant.PLAY_BG);
 		mAssetManager.loadTextureAtlas("widget/monkey.atlas", Constant.MONKEY);

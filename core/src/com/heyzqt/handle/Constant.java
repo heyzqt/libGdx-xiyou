@@ -41,9 +41,14 @@ public class Constant {
 	public static final String START_BG = "start_bg";
 	public static final String START_SETTING = "start_setting";
 
+	//成功界面
+	public static final String SUCCESS_BG = "success_bg";
+	public static final String SUCCESS_WIDGET = "success_widget";
+
 	//失败界面
 	public static final String FAILURE_BG = "failure_bg";
 	public static final String FAILURE_WIDGET = "failure_widget";
+
 	//游戏界面
 	public static final String MONKEY = "monkey";
 	public static final String PLAY_BG = "play_bg";

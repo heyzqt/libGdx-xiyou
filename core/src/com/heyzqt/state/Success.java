@@ -1,8 +1,5 @@
 package com.heyzqt.state;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -10,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.xiyou.MyGdxGame;
 
 /**
  * Created by heyzqt on 2017/2/7.
@@ -18,11 +16,6 @@ import com.heyzqt.handle.Constant;
  */
 public class Success extends GameState {
 
-	//背景
-	private Texture mBackground;
-
-	//字体
-	private BitmapFont mFont;
 	//标题
 	private Label mTitleLab;
 	//时间
@@ -43,24 +36,20 @@ public class Success extends GameState {
 	}
 
 	private void init() {
-		//初始化背景
-		mBackground = new Texture("background/success_bg.png");
-
-		mFont = new BitmapFont(Gdx.files.internal("font/text48.fnt"));
 
 		//初始化标题
-		Label.LabelStyle style = new Label.LabelStyle(mFont, Constant.PLACE_COLOR);
+		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.PLACE_COLOR);
 		mTitleLab = new Label("大闹天", style);
 		mTitleLab.setFontScale(1.5f);
 		mTitleLab.setPosition(mGame.VIEW_WIDTH / 2 + 60, mGame.VIEW_HEIGHT - 50);
 
 		//初始化时间
-		style = new Label.LabelStyle(mFont, Constant.TIME_COLOR);
+		style = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.TIME_COLOR);
 		mTimeLab = new Label("0时1天1宫", style);
 		mTimeLab.setPosition(480, 370);
 
 		//初始化五角星和按钮
-		mAtlas = new TextureAtlas("widget/success.atlas");
+		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.SUCCESS_WIDGET);
 		mAtlasRegions = new TextureAtlas.AtlasRegion[6];
 		mAtlasRegions[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("starOff"));
 		mAtlasRegions[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("starOn"));
@@ -75,9 +64,9 @@ public class Success extends GameState {
 		mNextBtn = new ImageButton(new TextureRegionDrawable(mAtlasRegions[2]),
 				new TextureRegionDrawable(mAtlasRegions[3]));
 		mBackBtn.setPosition(450, 80);
-		mBackBtn.setSize(200,90);
+		mBackBtn.setSize(200, 90);
 		mNextBtn.setPosition(660, 80);
-		mNextBtn.setSize(200,90);
+		mNextBtn.setSize(200, 90);
 
 		mStage.addActor(mTitleLab);
 		mStage.addActor(mTimeLab);
@@ -89,7 +78,7 @@ public class Success extends GameState {
 
 	private void initListener() {
 		//返回地图按钮
-		mBackBtn.addListener(new ClickListener(){
+		mBackBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
@@ -103,7 +92,7 @@ public class Success extends GameState {
 		});
 
 		//下一关
-		mNextBtn.addListener(new ClickListener(){
+		mNextBtn.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("hello 下一关");
@@ -118,9 +107,12 @@ public class Success extends GameState {
 
 	@Override
 	public void render() {
+
+		//重新设置相机锚点
+		mCamera.setToOrtho(false, MyGdxGame.VIEW_WIDTH, MyGdxGame.VIEW_HEIGHT);
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
-		mBatch.draw(mBackground, 0, 0);
+		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.SUCCESS_BG), 0, 0);
 		mBatch.draw(mAtlasRegions[1], 180, 213, 50, 60);
 		mBatch.draw(mAtlasRegions[1], 240, 213, 50, 60);
 		mBatch.draw(mAtlasRegions[0], 300, 213, 50, 60);
@@ -139,9 +131,6 @@ public class Success extends GameState {
 
 	@Override
 	public void dispose() {
-
-		//销毁背景图片
-		mBackground.dispose();
 
 		//清空所有演员
 		mStage.getActors().clear();

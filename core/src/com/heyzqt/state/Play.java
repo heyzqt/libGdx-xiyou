@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -20,7 +23,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.heyzqt.entity.Background;
+import com.heyzqt.entity.EnemyDao;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
@@ -69,9 +74,6 @@ public class Play extends GameState {
 	//刚体
 	private Body mBody;
 
-	//游戏主角
-	private Monkey mMonkey;
-
 	//游戏背景
 	private Background mBackground;
 
@@ -86,6 +88,12 @@ public class Play extends GameState {
 
 	//攻击按钮
 	private ImageButton mAttackBtn;
+
+	//游戏主角
+	private Monkey mMonkey;
+
+	//持刀天兵
+	private Array<EnemyDao> mEnemyDaos;
 
 	public Play(GameStateManager manager) {
 		super(manager);
@@ -110,6 +118,9 @@ public class Play extends GameState {
 		//创建主角
 		createActor();
 
+		//创建持刀天兵
+		createEnemyDao();
+
 		//初始化背景
 		mBackground = new Background(Constant.PLAY_BG);
 
@@ -117,7 +128,7 @@ public class Play extends GameState {
 		TextureAtlas mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.PLAY_WIDGET);
 		mLeftBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("leftBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("leftBtnDown")));
-		mLeftBtn.setPosition(100,20);
+		mLeftBtn.setPosition(100, 20);
 		mRightBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("rightBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("rightBtnDown")));
 		mRightBtn.setPosition(260, 20);
@@ -135,6 +146,9 @@ public class Play extends GameState {
 		mStage.addActor(mJumpBtn);
 
 		initListener();
+
+		mContactListener = new Box2DContactListener();
+		mWorld.setContactListener(mContactListener);
 	}
 
 	private void initListener() {
@@ -199,6 +213,50 @@ public class Play extends GameState {
 		});
 	}
 
+	private void createEnemyDao() {
+		mEnemyDaos = new Array<EnemyDao>();
+
+		//持刀天兵对象层
+		MapLayer mapLayer = mMap.getLayers().get("enemyDao");
+		if (mapLayer == null) return;
+
+		//初始化持刀天兵刚体形状
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyDef.BodyType.StaticBody;
+		//多边形形状
+		PolygonShape polygonShape = new PolygonShape();
+		polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
+		//设置夹具
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = polygonShape;
+		fixtureDef.isSensor = true;
+		fixtureDef.filter.categoryBits = Constant.ENEMY_DAO;
+		fixtureDef.filter.maskBits = Constant.PLAYER;
+
+		//遍历enemyDao对象层
+		for (MapObject object : mapLayer.getObjects()) {
+			//坐标
+			float x = 0;
+			float y = 0;
+			//获取对象坐标
+			if (object instanceof EllipseMapObject) {
+				EllipseMapObject ellipseMapObject = (EllipseMapObject) object;
+				x = ellipseMapObject.getEllipse().x / Constant.RATE;
+				y = ellipseMapObject.getEllipse().y / Constant.RATE;
+			}
+
+			//设置位置
+			bodyDef.position.set(x, y);
+			Body body = mWorld.createBody(bodyDef);
+			body.createFixture(fixtureDef).setUserData("enemyDao");
+
+			EnemyDao enemyDao = new EnemyDao(body);
+			mEnemyDaos.add(enemyDao);
+
+			body.setUserData(enemyDao);
+		}
+	}
+
 	private void createActor() {
 		//初始化刚体属性
 		mBodyDef = new BodyDef();
@@ -211,9 +269,9 @@ public class Play extends GameState {
 		mBody = mWorld.createBody(mBodyDef);
 		shape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
 		fixtureDef.shape = shape;
-		fixtureDef.filter.categoryBits = Constant.PLAYER;
+		fixtureDef.filter.categoryBits = Constant.PLAYER | Constant.ENEMY_DAO;
 		fixtureDef.filter.maskBits = Constant.BLOCK;
-		mBody.createFixture(fixtureDef).setUserData("player");
+		mBody.createFixture(fixtureDef).setUserData("monkey");
 
 		//创建传感器 foot
 		shape.setAsBox(25 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -60 / Constant.RATE), 0);
@@ -331,6 +389,11 @@ public class Play extends GameState {
 		//画孙悟空
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mMonkey.render(mBatch, statetime);
+
+		//画持刀天兵
+		for (EnemyDao enemy : mEnemyDaos) {
+			enemy.render(mBatch, statetime);
+		}
 
 		/**
 		 * 画舞台

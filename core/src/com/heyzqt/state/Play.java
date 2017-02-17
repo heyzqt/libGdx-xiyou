@@ -269,8 +269,8 @@ public class Play extends GameState {
 		mBody = mWorld.createBody(mBodyDef);
 		shape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
 		fixtureDef.shape = shape;
-		fixtureDef.filter.categoryBits = Constant.PLAYER | Constant.ENEMY_DAO;
-		fixtureDef.filter.maskBits = Constant.BLOCK;
+		fixtureDef.filter.categoryBits = Constant.PLAYER;
+		fixtureDef.filter.maskBits = Constant.BLOCK | Constant.ENEMY_DAO;
 		mBody.createFixture(fixtureDef).setUserData("monkey");
 
 		//创建传感器 foot

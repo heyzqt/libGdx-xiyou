@@ -33,4 +33,16 @@ public class Constant {
 	public static final short ENEMY_QIANG = 16;
 	//持弓碰撞属性
 	public static final short ENEMY_GONG = 32;
+
+	/**
+	 * 资源名
+	 */
+	//失败界面
+	public static final String FAILURE_BG = "failure_bg";
+	public static final String FAILURE_WIDGET = "failure_widget";
+	//游戏界面
+	public static final String MONKEY = "monkey";
+	public static final String PLAY_BG = "play_bg";
+	public static final String PLAY_WIDGET = "play_widget";
+
 }

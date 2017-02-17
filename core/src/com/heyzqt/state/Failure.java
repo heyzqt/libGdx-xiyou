@@ -1,8 +1,5 @@
 package com.heyzqt.state;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -11,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.xiyou.MyGdxGame;
 
 /**
  * Created by heyzqt on 2017/2/7.
@@ -19,11 +17,7 @@ import com.heyzqt.handle.Constant;
  */
 public class Failure extends GameState {
 
-	//背景
-	private Texture mBackground;
-
 	//关卡名称 过关时间
-	private BitmapFont mFont;
 	private Label mPlaceLab;
 	private Label mTimeLab;
 
@@ -45,23 +39,20 @@ public class Failure extends GameState {
 	}
 
 	private void init() {
-		//背景
-		mBackground = new Texture("background/failure_bg.png");
 
-		mFont = new BitmapFont(Gdx.files.internal("font/text48.fnt"));
 		//地点样式
-		Label.LabelStyle placeStyle = new Label.LabelStyle(mFont, Constant.PLACE_COLOR);
+		Label.LabelStyle placeStyle = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.PLACE_COLOR);
 		mPlaceLab = new Label("闹天宫", placeStyle);
 		mPlaceLab.setFontScale(1.3f);
 		mPlaceLab.setPosition(390, 425);
 
 		//时间样式
-		Label.LabelStyle timeStyle = new Label.LabelStyle(mFont, Constant.TIME_COLOR);
+		Label.LabelStyle timeStyle = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.TIME_COLOR);
 		mTimeLab = new Label("0时1天1宫", timeStyle);
 		mTimeLab.setPosition(480, 360);
 
 		//五角星与按钮
-		mAtlas = new TextureAtlas("widget/failure.atlas");
+		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.FAILURE_WIDGET);
 		mAtlasRegions = new TextureAtlas.AtlasRegion[6];
 		mAtlasRegions[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("starOff"));
 		mAtlasRegions[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("starOn"));
@@ -109,7 +100,6 @@ public class Failure extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 返回选关界面");
 				mGameStateManager.setState(GameStateManager.START);
 			}
 		});
@@ -118,7 +108,7 @@ public class Failure extends GameState {
 		mRestartBtn.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 重新挑战");
+				mGameStateManager.setState(GameStateManager.PLAY);
 			}
 		});
 	}
@@ -131,9 +121,10 @@ public class Failure extends GameState {
 	@Override
 	public void render() {
 
+		mCamera.setToOrtho(false, MyGdxGame.VIEW_WIDTH, MyGdxGame.VIEW_HEIGHT);
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
-		mBatch.draw(mBackground, 0, 0);
+		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.FAILURE_BG), 0, 0);
 		mBatch.draw(mAtlasRegions[1], 225, 213, 50, 60);
 		mBatch.draw(mAtlasRegions[1], 285, 213, 50, 60);
 		mBatch.draw(mAtlasRegions[0], 345, 213, 50, 60);
@@ -152,6 +143,9 @@ public class Failure extends GameState {
 
 	@Override
 	public void dispose() {
+
+		//清空演员
+		mStage.getActors().clear();
 		//清空舞台
 		mStage.clear();
 	}

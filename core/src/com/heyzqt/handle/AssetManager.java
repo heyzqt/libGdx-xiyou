@@ -34,7 +34,7 @@ public class AssetManager {
 		mFont = new BitmapFont(Gdx.files.internal("font/text48.fnt"));
 	}
 
-	//释放资源
+	//释放字体
 	public void removeFont() {
 		if (mFont != null) {
 			mFont.dispose();

@@ -3,10 +3,10 @@ package com.heyzqt.state;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -16,6 +16,11 @@ import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.heyzqt.entity.Background;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
@@ -53,7 +58,6 @@ public class Play extends GameState {
 	private float tileHeight;
 
 	//地图渲染器
-	private OrthoCachedTiledMapRenderer mMapRenderer;
 	private OrthogonalTiledMapRenderer mOrthogonalTiledMapRenderer;
 
 	//游戏渲染时间
@@ -68,6 +72,21 @@ public class Play extends GameState {
 	//游戏主角
 	private Monkey mMonkey;
 
+	//游戏背景
+	private Background mBackground;
+
+	//左按钮
+	private ImageButton mLeftBtn;
+
+	//右按钮
+	private ImageButton mRightBtn;
+
+	//跳跃按钮
+	private ImageButton mJumpBtn;
+
+	//攻击按钮
+	private ImageButton mAttackBtn;
+
 	public Play(GameStateManager manager) {
 		super(manager);
 		init();
@@ -80,14 +99,10 @@ public class Play extends GameState {
 
 		//初始化刚体世界相机
 		mBox2DCamera = new OrthographicCamera();
-		mBox2DCamera.setToOrtho(false, MyGdxGame.VIEW_WIDTH / Constant.RATE,
-				MyGdxGame.VIEW_HEIGHT / Constant.RATE);
+		mBox2DCamera.setToOrtho(false, MyGdxGame.VIEW_WIDTH / Constant.RATE, MyGdxGame.VIEW_HEIGHT / Constant.RATE);
 
 		//初始化Box2D渲染器
 		mBox2DRender = new Box2DDebugRenderer();
-
-		//初始化相机渲染器
-		mMapRenderer = new OrthoCachedTiledMapRenderer(mMap);
 
 		//创建地图
 		createMap();
@@ -95,6 +110,87 @@ public class Play extends GameState {
 		//创建主角
 		createActor();
 
+		//初始化背景
+		mBackground = new Background(Constant.PLAY_BG);
+
+		//初始化界面控件
+		TextureAtlas mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.PLAY_WIDGET);
+		mLeftBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("leftBtnUp")),
+				new TextureRegionDrawable(mAtlas.findRegion("leftBtnDown")));
+		mLeftBtn.setPosition(100, 30);
+		mRightBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("rightBtnUp")),
+				new TextureRegionDrawable(mAtlas.findRegion("rightBtnDown")));
+		mRightBtn.setPosition(240, 30);
+
+		mAttackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("attackBtnUp")),
+				new TextureRegionDrawable(mAtlas.findRegion("attackBtnDown")));
+		mAttackBtn.setPosition(1000, 35);
+		mJumpBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("jumpBtnUp")),
+				new TextureRegionDrawable(mAtlas.findRegion("jumpBtnDown")));
+		mJumpBtn.setPosition(1130, 140);
+
+		mStage.addActor(mLeftBtn);
+		mStage.addActor(mRightBtn);
+		mStage.addActor(mAttackBtn);
+		mStage.addActor(mJumpBtn);
+
+		initListener();
+	}
+
+	private void initListener() {
+		//左按钮
+		mLeftBtn.addListener(new ClickListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				mBody.setLinearVelocity(-1f, 0);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				mBody.setLinearVelocity(0f, 0);
+			}
+		});
+
+		//右按钮
+		mRightBtn.addListener(new ClickListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				mBody.setLinearVelocity(1f, 0);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				mBody.setLinearVelocity(0, 0);
+			}
+		});
+
+		//攻击按钮
+		mAttackBtn.addListener(new ClickListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("hello attack");
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			}
+		});
+
+		//跳跃按钮
+		mJumpBtn.addListener(new ClickListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				mBody.applyForceToCenter(0, 250, true);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			}
+		});
 	}
 
 	private void createActor() {
@@ -106,6 +202,8 @@ public class Play extends GameState {
 		mBodyDef.type = BodyDef.BodyType.DynamicBody;
 		//position是刚体中心点的位置
 		mBodyDef.position.set(100 / Constant.RATE, 400 / Constant.RATE);
+		//设置水平方向速度
+		//mBodyDef.linearVelocity.set(0.8f, 0);
 		mBody = mWorld.createBody(mBodyDef);
 		shape.setAsBox(30 / Constant.RATE, 30 / Constant.RATE);
 		fixtureDef.shape = shape;
@@ -126,11 +224,14 @@ public class Play extends GameState {
 
 	private void createMap() {
 		try {
-			mMap = new TmxMapLoader().load("map/level_1.tmx");
+			mMap = new TmxMapLoader().load("map/level_0.tmx");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Gdx.app.exit();
 		}
+
+		//初始化相机渲染器
+		mOrthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(mMap);
 
 		//赋值地图参数
 		tileSize = mMap.getProperties().get("tilewidth", Integer.class);
@@ -138,7 +239,7 @@ public class Play extends GameState {
 		tileHeight = mMap.getProperties().get("height", Integer.class);
 
 		//绑定地面图层与刚体
-		TiledMapTileLayer layer = (TiledMapTileLayer) mMap.getLayers().get("movable");
+		TiledMapTileLayer layer = (TiledMapTileLayer) mMap.getLayers().get("ground");
 
 		//遍历所有单元格
 		BodyDef bodyDef = new BodyDef();
@@ -178,29 +279,117 @@ public class Play extends GameState {
 
 	@Override
 	public void update(float delta) {
+
+		mWorld.step(1 / 60f, 1, 1);
+
+		/**
+		 * 主角死亡 方式一：掉落到屏幕之外 方式二：碰到敌人
+		 */
+		if (mMonkey.getBody().getPosition().y < 0) {
+			mGameStateManager.setState(GameStateManager.FAILURE);
+		}
+
+		/**
+		 * 主角通关
+		 */
+		if (mMonkey.getBody().getPosition().x * Constant.RATE > tileWidth * tileSize) {
+			mGameStateManager.setState(GameStateManager.SUCCESS);
+		}
 	}
 
 	@Override
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		handleInput();
-		mWorld.step(1 / 60f, 1, 1);
 		statetime += Gdx.graphics.getDeltaTime();
 
+		update(statetime);
+
+		/**
+		 * 绘图世界
+		 */
+		//设置相机投影矩阵锚点位置
+		mCamera.position.set(mMonkey.getPosition().x * Constant.RATE + MyGdxGame.VIEW_WIDTH / 4,
+				MyGdxGame.VIEW_HEIGHT / 2, 0);
+		//调整游戏相机
+		adjustCamera();
+		mCamera.update();
+
+		//设置绘图矩阵
+		mBatch.setProjectionMatrix(mUICamera.combined);
+		//画背景
+		mBackground.render(mBatch);
+
+		//画地图
+		mOrthogonalTiledMapRenderer.setView(mCamera);
+		mOrthogonalTiledMapRenderer.render();
+
+		//画孙悟空
+		mBatch.setProjectionMatrix(mCamera.combined);
+		mMonkey.render(mBatch, statetime);
+
+		/**
+		 * 画舞台
+		 */
+		mStage.act();
+		mStage.draw();
+
+		/**
+		 * 物理世界
+		 */
+		mBox2DCamera.position.set(mMonkey.getPosition().x + MyGdxGame.VIEW_WIDTH / 4 / Constant.RATE,
+				MyGdxGame.VIEW_HEIGHT / 2 / Constant.RATE, 0);
+		//调整2D相机
+		adjustBox2DCamera();
 		mBox2DCamera.update();
+		//渲染物理世界
 		mBox2DRender.render(mWorld, mBox2DCamera.combined);
+	}
+
+	/**
+	 * 调整游戏相机
+	 */
+	private void adjustCamera() {
+		//当相机锚点x坐标小于相机视距一半时，不再移动相机
+		if (mCamera.position.x < mCamera.viewportWidth / 2) {
+			mCamera.position.x = mCamera.viewportWidth / 2;
+		}
+
+		//当相机锚点x坐标大于地图宽度时，不再移动相机
+		if (mCamera.position.x > (tileWidth * tileSize - mCamera.viewportWidth / 2)) {
+			mCamera.position.x = tileWidth * tileSize - mCamera.viewportWidth / 2;
+		}
+	}
+
+
+	/**
+	 * 调整物理世界渲染相机
+	 */
+	private void adjustBox2DCamera() {
+		//最小情况 当物理世界相机锚点x坐标小于相机视距一半时，不再移动相机
+		if (mBox2DCamera.position.x < mBox2DCamera.viewportWidth / 2) {
+			mBox2DCamera.position.x = mBox2DCamera.viewportWidth / 2;
+		}
+
+		//最大情况 当物理相机锚点x坐标大于地图宽度时，不再移动相机
+		if (mBox2DCamera.position.x > (tileWidth / Constant.RATE * tileSize - mBox2DCamera.viewportWidth / 2)) {
+			mBox2DCamera.position.x = tileWidth / Constant.RATE * tileSize - mBox2DCamera.viewportWidth / 2;
+		}
 	}
 
 	@Override
 	public void handleInput() {
 		if (Gdx.input.justTouched()) {
-			mBody.applyForceToCenter(0, 400, true);
+			mBody.applyForceToCenter(0, 300, true);
 		}
 	}
 
 	@Override
 	public void dispose() {
 
+		//清空演员
+		mStage.getActors().clear();
+		//清空舞台
+		mStage.clear();
 	}
 }

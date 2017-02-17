@@ -1,0 +1,61 @@
+
+playWidget.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+attackBtnDown
+  rotate: false
+  xy: 1, 269
+  size: 136, 136
+  orig: 136, 136
+  offset: 0, 0
+  index: -1
+attackBtnUp
+  rotate: false
+  xy: 1, 131
+  size: 136, 136
+  orig: 136, 136
+  offset: 0, 0
+  index: -1
+jumpBtnDown
+  rotate: false
+  xy: 139, 277
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+jumpBtnUp
+  rotate: false
+  xy: 1, 1
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+leftBtnDown
+  rotate: false
+  xy: 139, 147
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+leftBtnUp
+  rotate: false
+  xy: 269, 277
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+rightBtnDown
+  rotate: false
+  xy: 269, 147
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+rightBtnUp
+  rotate: false
+  xy: 139, 17
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1

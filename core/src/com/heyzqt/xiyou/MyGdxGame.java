@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.heyzqt.handle.AssetManager;
+import com.heyzqt.handle.Constant;
 import com.heyzqt.state.GameStateManager;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -42,6 +43,18 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private void loadAssets(){
 		mAssetManager = new AssetManager();
+
+		//加载字体
+		mAssetManager.loadFont();
+
+		//加载失败Failure界面资源
+		mAssetManager.loadTexture("background/failure_bg.png",Constant.FAILURE_BG);
+		mAssetManager.loadTextureAtlas("widget/failure.atlas",Constant.FAILURE_WIDGET);
+
+		//加载Play界面资源
+		mAssetManager.loadTexture("map/level_static_2_bg.png",Constant.PLAY_BG);
+		mAssetManager.loadTextureAtlas("widget/monkey.atlas", Constant.MONKEY);
+		mAssetManager.loadTextureAtlas("widget/playWidget.atlas",Constant.PLAY_WIDGET);
 	}
 
 	@Override

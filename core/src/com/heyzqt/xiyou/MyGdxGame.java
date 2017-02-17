@@ -34,27 +34,31 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(mStage);
 
 		mCamera = new OrthographicCamera();
-		mCamera.setToOrtho(false,VIEW_WIDTH,VIEW_HEIGHT);
+		mCamera.setToOrtho(false, VIEW_WIDTH, VIEW_HEIGHT);
 		mUICamera = new OrthographicCamera();
-		mUICamera.setToOrtho(false,VIEW_WIDTH,VIEW_HEIGHT);
+		mUICamera.setToOrtho(false, VIEW_WIDTH, VIEW_HEIGHT);
 
 		mManager = new GameStateManager(this);
 	}
 
-	private void loadAssets(){
+	private void loadAssets() {
 		mAssetManager = new AssetManager();
 
 		//加载字体
 		mAssetManager.loadFont();
 
-		//加载失败Failure界面资源
-		mAssetManager.loadTexture("background/failure_bg.png",Constant.FAILURE_BG);
-		mAssetManager.loadTextureAtlas("widget/failure.atlas",Constant.FAILURE_WIDGET);
+		//加载开始界面Start.java资源
+		mAssetManager.loadTexture("background/start_bg.png", Constant.START_BG);
+		mAssetManager.loadTextureAtlas("widget/start_setting.atlas", Constant.START_SETTING);
 
-		//加载Play界面资源
-		mAssetManager.loadTexture("map/level_static_2_bg.png",Constant.PLAY_BG);
+		//加载失败界面Failure.java资源
+		mAssetManager.loadTexture("background/failure_bg.png", Constant.FAILURE_BG);
+		mAssetManager.loadTextureAtlas("widget/failure.atlas", Constant.FAILURE_WIDGET);
+
+		//加载游戏界面Play.java资源
+		mAssetManager.loadTexture("map/level_static_2_bg.png", Constant.PLAY_BG);
 		mAssetManager.loadTextureAtlas("widget/monkey.atlas", Constant.MONKEY);
-		mAssetManager.loadTextureAtlas("widget/playWidget.atlas",Constant.PLAY_WIDGET);
+		mAssetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);
 	}
 
 	@Override
@@ -69,13 +73,17 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void dispose() {
 	}
 
-	public Stage getStage(){ return mStage; }
+	public Stage getStage() {
+		return mStage;
+	}
 
 	public SpriteBatch getSpriteBatch() {
 		return mBatch;
 	}
 
-	public OrthographicCamera getCamera() { return mCamera; }
+	public OrthographicCamera getCamera() {
+		return mCamera;
+	}
 
 	public OrthographicCamera getUICamera() {
 		return mUICamera;

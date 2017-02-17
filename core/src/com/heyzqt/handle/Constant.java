@@ -37,6 +37,10 @@ public class Constant {
 	/**
 	 * 资源名
 	 */
+	//开始界面 设置界面
+	public static final String START_BG = "start_bg";
+	public static final String START_SETTING = "start_setting";
+
 	//失败界面
 	public static final String FAILURE_BG = "failure_bg";
 	public static final String FAILURE_WIDGET = "failure_widget";

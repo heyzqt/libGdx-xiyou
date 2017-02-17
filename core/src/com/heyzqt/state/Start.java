@@ -3,10 +3,7 @@ package com.heyzqt.state;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -16,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.xiyou.MyGdxGame;
 
 /**
  * Created by heyzqt on 2017/2/7.
@@ -25,11 +22,9 @@ import com.heyzqt.handle.Constant;
  */
 public class Start extends GameState {
 
-	//开始界面图片
-	private Texture mTexture;
-	//开始界面按钮图片
-	private TextureAtlas mBtnAtlas;
-	private Array<TextureAtlas.AtlasRegion> mBtnRegions;
+	//开始界面+设置界面 控件图片集
+	private TextureAtlas mAtlas;
+
 	//开始界面按钮
 	private ImageButton mStartBtn;
 	private ImageButton mSettingBtn;
@@ -43,7 +38,6 @@ public class Start extends GameState {
 	private Label mAboutUSLab;
 	private Label mAboutCont;
 	//返回主界面按钮
-	private TextureRegion[] mBackRegions;
 	private ImageButton mBackButton;
 
 	/**
@@ -58,30 +52,26 @@ public class Start extends GameState {
 
 	private void init() {
 
-		//初始化背景
-		mTexture = new Texture("background/start_bg.png");
-
 		//开始界面控件初始化
-		mBtnAtlas = new TextureAtlas("widget/startBtn.atlas");
-		mBtnRegions = new Array<TextureAtlas.AtlasRegion>();
-		mBtnRegions = mBtnAtlas.findRegions("startBtn");
-		mStartBtn = new ImageButton(new TextureRegionDrawable(mBtnRegions.get(2)),
-				new TextureRegionDrawable(mBtnRegions.get(3)));
-		mSettingBtn = new ImageButton(new TextureRegionDrawable(mBtnRegions.get(1)),
-				new TextureRegionDrawable(mBtnRegions.get(0)));
+		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.START_SETTING);
+		mStartBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("startBtnUp")),
+				new TextureRegionDrawable(mAtlas.findRegion("startBtnDown")));
+		mSettingBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("settingBtnUp")),
+				new TextureRegionDrawable(mAtlas.findRegion("settingBtnDown")));
 		mStartBtn.setSize(280, 100);
 		mSettingBtn.setSize(280, 100);
-		mStartBtn.setPosition(mGame.VIEW_WIDTH / 2 +20, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 100);
+		mStartBtn.setPosition(mGame.VIEW_WIDTH / 2 + 20, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 100);
 		mSettingBtn.setPosition(mGame.VIEW_WIDTH / 2 + 26, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 180);
 
 		//设置界面初始化 - 是否打开音效
-		BitmapFont font = new BitmapFont(Gdx.files.internal("font/text48.fnt"));
-		Label.LabelStyle style = new Label.LabelStyle(font, Constant.MAIN_COLOR);
+		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont()
+				, Constant.MAIN_COLOR);
 		mSoundLabel = new Label("是否打开音乐:", style);
 		mSoundLabel.setPosition(400, 220);
-		Drawable checkOn = new TextureRegionDrawable(new TextureRegion(new Texture("widget/checkOn.png")));
-		Drawable checkOff = new TextureRegionDrawable(new TextureRegion(new Texture("widget/checkOff.png")));
-		CheckBox.CheckBoxStyle boxStyle = new CheckBox.CheckBoxStyle(checkOn, checkOff, font, Color.BLUE);
+		Drawable checkOn = new TextureRegionDrawable(mAtlas.findRegion("checkOn"));
+		Drawable checkOff = new TextureRegionDrawable(mAtlas.findRegion("checkOff"));
+		CheckBox.CheckBoxStyle boxStyle = new CheckBox.CheckBoxStyle(checkOn, checkOff,
+				MyGdxGame.mAssetManager.getFont(), Color.BLUE);
 		mCheckBox = new CheckBox("", boxStyle);
 		mCheckBox.setPosition(720, 220);
 		//设置界面初始化 - 关于我们
@@ -91,11 +81,8 @@ public class Start extends GameState {
 		mAboutUSLab.setPosition(400, 145);
 		mAboutCont.setPosition(460, 100);
 		//设置界面初始化 - 返回按钮
-		mBackRegions = new TextureRegion[2];
-		mBackRegions[0] = new TextureRegion(new Texture("widget/backStartBtnUp.png"));
-		mBackRegions[1] = new TextureRegion(new Texture("widget/backStartBtnDown.png"));
-		mBackButton = new ImageButton(new TextureRegionDrawable(mBackRegions[0]),
-				new TextureRegionDrawable(mBackRegions[1]));
+		mBackButton = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("backStartBtnUp")),
+				new TextureRegionDrawable(mAtlas.findRegion("backStartBtnDown")));
 		mBackButton.setPosition(500, 40);
 
 		//初始化监听
@@ -107,7 +94,6 @@ public class Start extends GameState {
 		mStartBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 游戏开始");
 				return true;
 			}
 
@@ -121,7 +107,6 @@ public class Start extends GameState {
 		mSettingBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 设置");
 				return true;
 			}
 
@@ -134,12 +119,11 @@ public class Start extends GameState {
 		mCheckBox.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				if(isPlay){
+				if (isPlay) {
 					isPlay = false;
-				}else{
+				} else {
 					isPlay = true;
 				}
-				System.out.println("hello : isPlay = "+isPlay);
 			}
 		});
 
@@ -182,7 +166,7 @@ public class Start extends GameState {
 
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
-		mBatch.draw(mTexture, 0, 0);
+		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.START_BG), 0, 0);
 		mBatch.end();
 
 		update(Gdx.graphics.getDeltaTime());
@@ -198,8 +182,9 @@ public class Start extends GameState {
 
 	@Override
 	public void dispose() {
-		System.out.println("hello dispose()");
 
+		//清空演员
+		mStage.getActors().clear();
 		//清空舞台
 		mStage.clear();
 	}

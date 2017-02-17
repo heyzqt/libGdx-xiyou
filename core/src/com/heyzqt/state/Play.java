@@ -117,10 +117,10 @@ public class Play extends GameState {
 		TextureAtlas mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.PLAY_WIDGET);
 		mLeftBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("leftBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("leftBtnDown")));
-		mLeftBtn.setPosition(100, 30);
+		mLeftBtn.setPosition(100,20);
 		mRightBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("rightBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("rightBtnDown")));
-		mRightBtn.setPosition(240, 30);
+		mRightBtn.setPosition(260, 20);
 
 		mAttackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("attackBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("attackBtnDown")));
@@ -142,13 +142,17 @@ public class Play extends GameState {
 		mLeftBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				//添加一个水平方向速度
 				mBody.setLinearVelocity(-1f, 0);
+				Monkey.STATE = Monkey.STATE_LEFT;
 				return true;
 			}
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				//添加一个水平方向速度
 				mBody.setLinearVelocity(0f, 0);
+				Monkey.STATE = Monkey.STATE_IDEL_LEFT;
 			}
 		});
 
@@ -156,12 +160,14 @@ public class Play extends GameState {
 		mRightBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				Monkey.STATE = Monkey.STATE_RIGHT;
 				mBody.setLinearVelocity(1f, 0);
 				return true;
 			}
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Monkey.STATE = Monkey.STATE_IDEL_RIGHT;
 				mBody.setLinearVelocity(0, 0);
 			}
 		});
@@ -202,17 +208,15 @@ public class Play extends GameState {
 		mBodyDef.type = BodyDef.BodyType.DynamicBody;
 		//position是刚体中心点的位置
 		mBodyDef.position.set(100 / Constant.RATE, 400 / Constant.RATE);
-		//设置水平方向速度
-		//mBodyDef.linearVelocity.set(0.8f, 0);
 		mBody = mWorld.createBody(mBodyDef);
-		shape.setAsBox(30 / Constant.RATE, 30 / Constant.RATE);
+		shape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
 		fixtureDef.shape = shape;
 		fixtureDef.filter.categoryBits = Constant.PLAYER;
 		fixtureDef.filter.maskBits = Constant.BLOCK;
 		mBody.createFixture(fixtureDef).setUserData("player");
 
 		//创建传感器 foot
-		shape.setAsBox(25 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -30 / Constant.RATE), 0);
+		shape.setAsBox(25 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -60 / Constant.RATE), 0);
 		fixtureDef.shape = shape;
 		fixtureDef.filter.categoryBits = Constant.PLAYER;
 		fixtureDef.filter.maskBits = Constant.BLOCK;

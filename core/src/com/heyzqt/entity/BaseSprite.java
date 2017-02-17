@@ -40,6 +40,8 @@ public class BaseSprite {
 	public void update(float delta) {}
 
 	public void render(SpriteBatch batch, float delta) {
+		update(delta);
+
 		batch.begin();
 		batch.draw(mAnimation.getKeyFrame(delta, true),
 				mBody.getPosition().x * Constant.RATE - mWidth / 2,

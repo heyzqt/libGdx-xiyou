@@ -61,7 +61,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//加载游戏界面Play.java资源
 		mAssetManager.loadTexture("map/level_static_2_bg.png", Constant.PLAY_BG);
-		mAssetManager.loadTextureAtlas("widget/monkey.atlas", Constant.MONKEY);
+		mAssetManager.loadTextureAtlas("role/role.atlas",Constant.ROLE);
 		mAssetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);
 	}
 

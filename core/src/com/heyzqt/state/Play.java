@@ -119,11 +119,11 @@ public class Play extends GameState {
 		//创建地图
 		createMap();
 
-		//创建主角
-		createActor();
-
 		//创建持刀天兵
 		createEnemyDao();
+
+		//创建主角
+		createActor();
 
 		//初始化背景
 		mBackground = new Background(Constant.PLAY_BG);
@@ -290,7 +290,7 @@ public class Play extends GameState {
 
 	private void createMap() {
 		try {
-			mMap = new TmxMapLoader().load("map/level_"+level+".tmx");
+			mMap = new TmxMapLoader().load("map/level_" + level + ".tmx");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Gdx.app.exit();
@@ -347,6 +347,20 @@ public class Play extends GameState {
 	public void update(float delta) {
 
 		mWorld.step(1 / 60f, 1, 1);
+
+		/**
+		 * 处理主角与天兵战斗逻辑
+		 * 获得已经被移除对象 并进行清理
+		 */
+		Array<Body> removeBodies = mContactListener.getRemoveEnemies();
+		for (Body removeBody : removeBodies) {
+			mEnemyDaos.removeValue((EnemyDao) removeBody.getUserData(), true);
+			//销毁刚体
+			mWorld.destroyBody(removeBody);
+			//孙悟空打败敌人数目加一
+			mMonkey.beatEnemy();
+		}
+		removeBodies.clear();
 
 		/**
 		 * 主角死亡 方式一：掉落到屏幕之外 方式二：碰到敌人

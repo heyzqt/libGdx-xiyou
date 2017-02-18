@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.Utils;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**
@@ -30,6 +31,12 @@ public class Success extends GameState {
 	//下一关按钮
 	private ImageButton mNextBtn;
 
+	//标题
+	private String titleStr;
+
+	//时间
+	private String timeStr;
+
 	public Success(GameStateManager manager) {
 		super(manager);
 		init();
@@ -38,14 +45,37 @@ public class Success extends GameState {
 	private void init() {
 
 		//初始化标题
+		switch (Play.level) {
+			case 0:
+				titleStr = "南天门";
+				break;
+			case 1:
+				titleStr = "南天王殿";
+				break;
+			case 2:
+				titleStr = "西天王殿";
+				break;
+			case 3:
+				titleStr = "北天王殿";
+				break;
+			case 4:
+				titleStr = "凌霄宝殿";
+				break;
+		}
+
+		//初始化时间
+		timeStr = Utils.changeSecondToHMS(Utils.time);
+
+
+		//初始化标题
 		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.PLACE_COLOR);
-		mTitleLab = new Label("大闹天", style);
+		mTitleLab = new Label(titleStr, style);
 		mTitleLab.setFontScale(1.5f);
 		mTitleLab.setPosition(mGame.VIEW_WIDTH / 2 + 60, mGame.VIEW_HEIGHT - 50);
 
 		//初始化时间
 		style = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.TIME_COLOR);
-		mTimeLab = new Label("0时1天1宫", style);
+		mTimeLab = new Label(timeStr, style);
 		mTimeLab.setPosition(480, 370);
 
 		//初始化五角星和按钮

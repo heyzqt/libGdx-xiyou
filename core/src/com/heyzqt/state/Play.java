@@ -29,6 +29,7 @@ import com.heyzqt.entity.EnemyDao;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.Utils;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**
@@ -94,6 +95,9 @@ public class Play extends GameState {
 
 	//持刀天兵
 	private Array<EnemyDao> mEnemyDaos;
+
+	//地图编号
+	public static int level = 0;
 
 	public Play(GameStateManager manager) {
 		super(manager);
@@ -286,7 +290,7 @@ public class Play extends GameState {
 
 	private void createMap() {
 		try {
-			mMap = new TmxMapLoader().load("map/level_0.tmx");
+			mMap = new TmxMapLoader().load("map/level_"+level+".tmx");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Gdx.app.exit();
@@ -364,6 +368,7 @@ public class Play extends GameState {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		statetime += Gdx.graphics.getDeltaTime();
+		Utils.setTime(statetime);
 
 		update(statetime);
 

@@ -152,7 +152,7 @@ public class Play extends GameState {
 		initListener();
 
 		mContactListener = new Box2DContactListener();
-		mWorld.setContactListener(mContactListener);
+		//mWorld.setContactListener(mContactListener);
 	}
 
 	private void initListener() {
@@ -194,7 +194,6 @@ public class Play extends GameState {
 		mAttackBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello attack");
 				return true;
 			}
 
@@ -225,17 +224,12 @@ public class Play extends GameState {
 		if (mapLayer == null) return;
 
 		//初始化持刀天兵刚体形状
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.StaticBody;
+		BodyDef enemyDef = new BodyDef();
+		enemyDef.type = BodyDef.BodyType.DynamicBody;
 		//多边形形状
 		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
 		//设置夹具
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = polygonShape;
-		fixtureDef.isSensor = true;
-		fixtureDef.filter.categoryBits = Constant.ENEMY_DAO;
-		fixtureDef.filter.maskBits = Constant.PLAYER;
+		FixtureDef enemyFixDef = new FixtureDef();
 
 		//遍历enemyDao对象层
 		for (MapObject object : mapLayer.getObjects()) {
@@ -249,15 +243,31 @@ public class Play extends GameState {
 				y = ellipseMapObject.getEllipse().y / Constant.RATE;
 			}
 
+			//持刀天兵夹具
+			polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
+			enemyFixDef.shape = polygonShape;
+			enemyFixDef.isSensor = true;
+			enemyFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+			enemyFixDef.filter.maskBits = Constant.PLAYER;
+
 			//设置位置
-			bodyDef.position.set(x, y);
-			Body body = mWorld.createBody(bodyDef);
-			body.createFixture(fixtureDef).setUserData("enemyDao");
+			enemyDef.position.set(x, y);
+			Body enemyBody = mWorld.createBody(enemyDef);
+			//body.setLinearVelocity(-0.1f, 0);
+			enemyBody.createFixture(enemyFixDef).setUserData("enemyDao");
 
-			EnemyDao enemyDao = new EnemyDao(body);
+
+			//创建传感器 foot
+			polygonShape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -58 / Constant.RATE), 0);
+			enemyFixDef.shape = polygonShape;
+			enemyFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+			enemyFixDef.filter.maskBits = Constant.BLOCK;
+			enemyFixDef.isSensor = false;
+			enemyBody.createFixture(enemyFixDef).setUserData("enemyFoot");
+
+			EnemyDao enemyDao = new EnemyDao(enemyBody);
 			mEnemyDaos.add(enemyDao);
-
-			body.setUserData(enemyDao);
+			enemyBody.setUserData(enemyDao);
 		}
 	}
 
@@ -278,7 +288,7 @@ public class Play extends GameState {
 		mBody.createFixture(fixtureDef).setUserData("monkey");
 
 		//创建传感器 foot
-		shape.setAsBox(25 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -60 / Constant.RATE), 0);
+		shape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -60 / Constant.RATE), 0);
 		fixtureDef.shape = shape;
 		fixtureDef.filter.categoryBits = Constant.PLAYER;
 		fixtureDef.filter.maskBits = Constant.BLOCK;
@@ -331,10 +341,10 @@ public class Play extends GameState {
 				chainShape.createChain(vector2);
 				//绑定夹具与链式图形
 				chainFixtureDef.shape = chainShape;
-				//设置恢复力为0
+				//设置摩擦系数为0
 				chainFixtureDef.friction = 0;
 				chainFixtureDef.filter.categoryBits = Constant.BLOCK;
-				chainFixtureDef.filter.maskBits = Constant.PLAYER;
+				chainFixtureDef.filter.maskBits = Constant.PLAYER | Constant.ENEMY_DAO;
 				//设置传感器
 				chainFixtureDef.isSensor = false;
 

@@ -39,16 +39,16 @@
   </data>
  </layer>
  <objectgroup name="enemyDao">
-  <object id="1" x="592" y="387">
+  <object id="1" x="592" y="268">
    <ellipse/>
   </object>
-  <object id="4" x="1520" y="385">
+  <object id="4" x="1520" y="347">
    <ellipse/>
   </object>
-  <object id="10" x="2672" y="387">
+  <object id="10" x="2672" y="356">
    <ellipse/>
   </object>
-  <object id="12" x="1201" y="449">
+  <object id="12" x="1201" y="419">
    <ellipse/>
   </object>
  </objectgroup>

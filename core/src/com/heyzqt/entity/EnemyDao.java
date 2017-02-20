@@ -8,10 +8,11 @@ import com.heyzqt.xiyou.MyGdxGame;
 /**
  * Created by heyzqt on 2017/2/7.
  *
- * 迟到天兵精灵类
+ * 持刀天兵精灵类
  */
-public class EnemyDao extends BaseSprite {
+public class EnemyDao extends BaseSprite{
 
+	//天兵图片集合
 	private TextureAtlas mAtlas;
 
 	//右走状态图片集合
@@ -24,6 +25,8 @@ public class EnemyDao extends BaseSprite {
 	public static int STATE_LEFT = 1;
 	public static int STATE_RIGHT = 2;
 
+	//天兵是否存活
+	private boolean isLive = true;
 
 	public EnemyDao(Body body) {
 
@@ -48,6 +51,7 @@ public class EnemyDao extends BaseSprite {
 
 	@Override
 	public void update(float delta) {
+
 		if (STATE == STATE_LEFT) {
 			setAnimation(mLeftState, 1 / 12f);
 		} else {

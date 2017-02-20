@@ -253,9 +253,7 @@ public class Play extends GameState {
 			//设置位置
 			enemyDef.position.set(x, y);
 			Body enemyBody = mWorld.createBody(enemyDef);
-			//body.setLinearVelocity(-0.1f, 0);
 			enemyBody.createFixture(enemyFixDef).setUserData("enemyDao");
-
 
 			//创建传感器 foot
 			polygonShape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -58 / Constant.RATE), 0);
@@ -268,6 +266,9 @@ public class Play extends GameState {
 			EnemyDao enemyDao = new EnemyDao(enemyBody);
 			mEnemyDaos.add(enemyDao);
 			enemyBody.setUserData(enemyDao);
+
+			Thread thread = new Thread(enemyDao);
+			thread.start();
 		}
 	}
 
@@ -415,14 +416,14 @@ public class Play extends GameState {
 		mOrthogonalTiledMapRenderer.setView(mCamera);
 		mOrthogonalTiledMapRenderer.render();
 
-		//画孙悟空
 		mBatch.setProjectionMatrix(mCamera.combined);
-		mMonkey.render(mBatch, statetime);
-
 		//画持刀天兵
 		for (EnemyDao enemy : mEnemyDaos) {
 			enemy.render(mBatch, statetime);
 		}
+
+		//画孙悟空
+		mMonkey.render(mBatch, statetime);
 
 		/**
 		 * 画舞台

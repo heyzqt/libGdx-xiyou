@@ -10,7 +10,7 @@ import com.heyzqt.xiyou.MyGdxGame;
  *
  * 持刀天兵精灵类
  */
-public class EnemyDao extends BaseSprite{
+public class EnemyDao extends BaseSprite implements Runnable {
 
 	//天兵图片集合
 	private TextureAtlas mAtlas;
@@ -51,11 +51,37 @@ public class EnemyDao extends BaseSprite{
 
 	@Override
 	public void update(float delta) {
+	}
 
-		if (STATE == STATE_LEFT) {
-			setAnimation(mLeftState, 1 / 12f);
-		} else {
-			setAnimation(mRightState, 1 / 12f);
+
+	@Override
+	public void run() {
+
+		while (true) {
+
+			//判断刀兵是否存活
+			if (!isLive) {
+				return;
+			}
+
+			if (STATE == STATE_LEFT) {
+				setAnimation(mLeftState, 1 / 12f);
+				//屏幕左边缘
+				mBody.setLinearVelocity(-0.2f, 0);
+			} else {
+				setAnimation(mRightState, 1 / 12f);
+				//屏幕右边缘
+				mBody.setLinearVelocity(0.2f, 0);
+			}
+
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			//给刀兵随机产生一个往左或往右的方向 产生随机数[1,2]
+			STATE = (int) (Math.random() * 2) + 1;
 		}
 	}
 }

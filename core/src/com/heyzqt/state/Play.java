@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.ChainShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -74,6 +75,9 @@ public class Play extends GameState {
 
 	//刚体
 	private Body mBody;
+
+	//夹具
+	private FixtureDef mAttackFixDef;
 
 	//游戏背景
 	private Background mBackground;
@@ -152,7 +156,7 @@ public class Play extends GameState {
 		initListener();
 
 		mContactListener = new Box2DContactListener();
-		//mWorld.setContactListener(mContactListener);
+		mWorld.setContactListener(mContactListener);
 	}
 
 	private void initListener() {
@@ -192,13 +196,36 @@ public class Play extends GameState {
 
 		//攻击按钮
 		mAttackBtn.addListener(new ClickListener() {
+			Fixture mFixture;
+
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				//创建攻击传感器 stick
+				PolygonShape shape = new PolygonShape();
+				if (Monkey.STATE == Monkey.STATE_RIGHT ||
+						Monkey.STATE == Monkey.STATE_IDEL_RIGHT) {
+					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
+							, new Vector2(60 / Constant.RATE, 0), 0);
+				} else {
+					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
+							, new Vector2(-60 / Constant.RATE, 0), 0);
+				}
+
+				mAttackFixDef = new FixtureDef();
+				mAttackFixDef.shape = shape;
+				mAttackFixDef.filter.categoryBits = Constant.PLAYER;
+				mAttackFixDef.filter.maskBits = Constant.ENEMY_DAO;
+				mAttackFixDef.isSensor = true;
+				mFixture = mBody.createFixture(mAttackFixDef);
+				mFixture.setUserData("stick");
 				return true;
 			}
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				if (mFixture != null) {
+					mBody.destroyFixture(mFixture);
+				}
 			}
 		});
 
@@ -255,7 +282,7 @@ public class Play extends GameState {
 			Body enemyBody = mWorld.createBody(enemyDef);
 			enemyBody.createFixture(enemyFixDef).setUserData("enemyDao");
 
-			//创建传感器 foot
+			//创建脚传感器 foot
 			polygonShape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -58 / Constant.RATE), 0);
 			enemyFixDef.shape = polygonShape;
 			enemyFixDef.filter.categoryBits = Constant.ENEMY_DAO;
@@ -365,7 +392,11 @@ public class Play extends GameState {
 		 */
 		Array<Body> removeBodies = mContactListener.getRemoveEnemies();
 		for (Body removeBody : removeBodies) {
-			mEnemyDaos.removeValue((EnemyDao) removeBody.getUserData(), true);
+			//设置天兵状态为死亡
+			EnemyDao enemy = (EnemyDao) removeBody.getUserData();
+			enemy.setLive(false);
+			//移除天兵
+			mEnemyDaos.removeValue(enemy, true);
 			//销毁刚体
 			mWorld.destroyBody(removeBody);
 			//孙悟空打败敌人数目加一

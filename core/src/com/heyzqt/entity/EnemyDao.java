@@ -28,6 +28,9 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	//天兵是否存活
 	private boolean isLive = true;
 
+	//记录天兵被攻击的次数 攻击两次天兵死亡
+	public int attacks = 0;
+
 	public EnemyDao(Body body) {
 
 		super(body);
@@ -83,5 +86,13 @@ public class EnemyDao extends BaseSprite implements Runnable {
 			//给刀兵随机产生一个往左或往右的方向 产生随机数[1,2]
 			STATE = (int) (Math.random() * 2) + 1;
 		}
+	}
+
+	public boolean isLive() {
+		return isLive;
+	}
+
+	public void setLive(boolean live) {
+		isLive = live;
 	}
 }

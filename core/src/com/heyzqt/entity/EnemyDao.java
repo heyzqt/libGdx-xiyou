@@ -22,9 +22,10 @@ public class EnemyDao extends BaseSprite implements Runnable {
 
 	//天兵3种状态
 	public static int STATE;
-	public static int STATE_LEFT = 1;
-	public static int STATE_RIGHT = 2;
-	public static int STATE_ATTACK = 3;
+	public static int STATE_LEFT = 1;	//左行走
+	public static int STATE_RIGHT = 2;   //右行走
+	public static int STATE_LEFT_ATTACK = 3;	//左攻击
+	public static int STATE_RITHT_ATTACK = 4;	//右攻击
 
 	//天兵是否存活
 	private boolean isLive = true;

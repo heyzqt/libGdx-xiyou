@@ -29,7 +29,8 @@ public class Monkey extends BaseSprite {
 	public static int STATE_IDEL_RIGHT = 2;		//右边站立
 	public static int STATE_LEFT = 3;			//左边行走
 	public static int STATE_RIGHT = 4;			//右边行走
-	public static int STATE_ATTACK = 5;			//攻击
+	public static int STATE_LEFT_ATTACK = 5;			//左攻击
+	public static int STATE_RITHT_ATTACK = 6;			//右攻击
 
 	//击败敌人数目
 	private int enemyCount;

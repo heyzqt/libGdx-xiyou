@@ -23,18 +23,22 @@ public class Monkey extends BaseSprite {
 	//左走状态图片集合
 	private TextureAtlas.AtlasRegion[] mLeftState;
 
-	//孙悟空4种状态
+	//孙悟空5种状态
 	public static int STATE;
-	public static int STATE_IDEL_LEFT = 1;
-	public static int STATE_IDEL_RIGHT = 2;
-	public static int STATE_LEFT = 3;
-	public static int STATE_RIGHT = 4;
+	public static int STATE_IDEL_LEFT = 1;		//左边站立
+	public static int STATE_IDEL_RIGHT = 2;		//右边站立
+	public static int STATE_LEFT = 3;			//左边行走
+	public static int STATE_RIGHT = 4;			//右边行走
+	public static int STATE_ATTACK = 5;			//攻击
 
 	//击败敌人数目
 	private int enemyCount;
 
 	//敌人总数
 	private int allEnemiesCount;
+
+	//被攻击次数
+	public int attacks = 0;
 
 	public Monkey(Body body) {
 		super(body);

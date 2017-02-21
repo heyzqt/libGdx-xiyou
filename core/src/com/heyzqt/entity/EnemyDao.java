@@ -20,10 +20,11 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	//左走状态图片集合
 	private TextureAtlas.AtlasRegion[] mLeftState;
 
-	//天兵2种状态
+	//天兵3种状态
 	public static int STATE;
 	public static int STATE_LEFT = 1;
 	public static int STATE_RIGHT = 2;
+	public static int STATE_ATTACK = 3;
 
 	//天兵是否存活
 	private boolean isLive = true;

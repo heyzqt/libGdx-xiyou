@@ -324,6 +324,7 @@ public class Play extends GameState {
 		mBody.createFixture(fixtureDef).setUserData("foot");
 
 		mMonkey = new Monkey(mBody);
+		mBody.setUserData(mMonkey);
 	}
 
 	private void createMap() {
@@ -405,11 +406,14 @@ public class Play extends GameState {
 		removeBodies.clear();
 
 		/**
-		 * 主角死亡 方式一：掉落到屏幕之外 方式二：碰到敌人
+		 * 主角死亡 方式一：掉落到屏幕之外 方式二：敌人主角砍死
 		 */
 		if (mMonkey.getBody().getPosition().y < 0) {
 			mGameStateManager.setState(GameStateManager.FAILURE);
+		} else if (mMonkey.attacks == 3) {
+			mGameStateManager.setState(GameStateManager.FAILURE);
 		}
+
 
 		/**
 		 * 主角通关

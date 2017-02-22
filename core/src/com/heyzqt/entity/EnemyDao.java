@@ -21,17 +21,20 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	private TextureAtlas.AtlasRegion[] mLeftState;
 
 	//天兵3种状态
-	public static int STATE;
-	public static int STATE_LEFT = 1;	//左行走
+	public int STATE;
+	public static int STATE_LEFT = 1;    //左行走
 	public static int STATE_RIGHT = 2;   //右行走
-	public static int STATE_LEFT_ATTACK = 3;	//左攻击
-	public static int STATE_RITHT_ATTACK = 4;	//右攻击
+	public static int STATE_LEFT_ATTACK = 3;    //左攻击
+	public static int STATE_RITHT_ATTACK = 4;    //右攻击
 
 	//天兵是否存活
 	private boolean isLive = true;
 
 	//记录天兵被攻击的次数 攻击两次天兵死亡
 	public int attacks = 0;
+
+	//天兵与孙悟空是否接触
+	private boolean isContacted = false;
 
 	public EnemyDao(Body body) {
 
@@ -56,6 +59,18 @@ public class EnemyDao extends BaseSprite implements Runnable {
 
 	@Override
 	public void update(float delta) {
+
+		if (!isContacted) {
+			return;
+		}
+
+		if (STATE == STATE_LEFT) {
+			setAnimation(mLeftState, 1 / 12f);
+			mBody.setLinearVelocity(0, 0);
+		} else if (STATE == STATE_RIGHT) {
+			setAnimation(mRightState, 1 / 12f);
+			mBody.setLinearVelocity(0, 0);
+		}
 	}
 
 
@@ -63,19 +78,21 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	public void run() {
 
 		while (true) {
-
 			//判断刀兵是否存活
 			if (!isLive) {
 				return;
 			}
 
+			//刀兵孙悟空接触时不执行下面的代码
+			if (isContacted) {
+				continue;
+			}
+
 			if (STATE == STATE_LEFT) {
 				setAnimation(mLeftState, 1 / 12f);
-				//屏幕左边缘
 				mBody.setLinearVelocity(-0.2f, 0);
 			} else {
 				setAnimation(mRightState, 1 / 12f);
-				//屏幕右边缘
 				mBody.setLinearVelocity(0.2f, 0);
 			}
 
@@ -85,8 +102,10 @@ public class EnemyDao extends BaseSprite implements Runnable {
 				e.printStackTrace();
 			}
 
-			//给刀兵随机产生一个往左或往右的方向 产生随机数[1,2]
-			STATE = (int) (Math.random() * 2) + 1;
+			if (!isContacted) {
+				//给刀兵随机产生一个往左或往右的方向 产生随机数[1,2]
+				STATE = (int) (Math.random() * 2) + 1;
+			}
 		}
 	}
 
@@ -96,5 +115,13 @@ public class EnemyDao extends BaseSprite implements Runnable {
 
 	public void setLive(boolean live) {
 		isLive = live;
+	}
+
+	public boolean isContacted() {
+		return isContacted;
+	}
+
+	synchronized public void setContacted(boolean contacted) {
+		isContacted = contacted;
 	}
 }

@@ -76,8 +76,10 @@ public class Play extends GameState {
 	//刚体
 	private Body mBody;
 
-	//夹具
+	//孙悟空攻击夹具
 	private FixtureDef mAttackFixDef;
+	//孙悟空形状夹具
+	private Fixture mShapeFix;
 
 	//游戏背景
 	private Background mBackground;
@@ -200,6 +202,11 @@ public class Play extends GameState {
 
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+				if (mShapeFix != null) {
+					mBody.destroyFixture(mShapeFix);
+				}
+
 				//创建攻击传感器 stick
 				PolygonShape shape = new PolygonShape();
 				if (Monkey.STATE == Monkey.STATE_RIGHT ||
@@ -226,6 +233,16 @@ public class Play extends GameState {
 				if (mFixture != null) {
 					mBody.destroyFixture(mFixture);
 				}
+
+				//重新初始化孙悟空的monkey传感器
+				FixtureDef fixtureDef = new FixtureDef();
+				PolygonShape shape = new PolygonShape();
+				shape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
+				fixtureDef.shape = shape;
+				fixtureDef.filter.categoryBits = Constant.PLAYER;
+				fixtureDef.filter.maskBits = Constant.ENEMY_DAO;
+				mShapeFix = mBody.createFixture(fixtureDef);
+				mShapeFix.setUserData("monkey");
 			}
 		});
 
@@ -305,6 +322,7 @@ public class Play extends GameState {
 		FixtureDef fixtureDef = new FixtureDef();
 		PolygonShape shape = new PolygonShape();
 
+		//设置孙悟空形状和静态传感器monkey
 		mBodyDef.type = BodyDef.BodyType.DynamicBody;
 		//position是刚体中心点的位置
 		mBodyDef.position.set(100 / Constant.RATE, 400 / Constant.RATE);
@@ -312,15 +330,16 @@ public class Play extends GameState {
 		shape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
 		fixtureDef.shape = shape;
 		fixtureDef.filter.categoryBits = Constant.PLAYER;
-		fixtureDef.filter.maskBits = Constant.BLOCK | Constant.ENEMY_DAO;
-		mBody.createFixture(fixtureDef).setUserData("monkey");
+		fixtureDef.filter.maskBits = Constant.ENEMY_DAO;
+		mShapeFix = mBody.createFixture(fixtureDef);
+		mShapeFix.setUserData("monkey");
 
 		//创建传感器 foot
 		shape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -60 / Constant.RATE), 0);
 		fixtureDef.shape = shape;
 		fixtureDef.filter.categoryBits = Constant.PLAYER;
 		fixtureDef.filter.maskBits = Constant.BLOCK;
-		fixtureDef.isSensor = true;
+		fixtureDef.isSensor = false;
 		mBody.createFixture(fixtureDef).setUserData("foot");
 
 		mMonkey = new Monkey(mBody);

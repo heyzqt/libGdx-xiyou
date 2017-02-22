@@ -45,9 +45,10 @@ public class Box2DContactListener implements ContactListener {
 					|| Monkey.STATE == Monkey.STATE_IDEL_LEFT) {
 				enemyDao.getBody().setLinearVelocity(-1f, 0);
 			}
-			if (enemyDao.attacks == 2) {
-				removeEnemies.add(fixtureA.getBody());
-			}
+			//天兵被攻击2次后死亡
+//			if (enemyDao.attacks == 2) {
+//				removeEnemies.add(fixtureA.getBody());
+//			}
 		}
 
 		//持刀天兵攻击孙悟空

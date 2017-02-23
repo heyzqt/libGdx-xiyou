@@ -40,70 +40,76 @@ import com.heyzqt.xiyou.MyGdxGame;
  */
 public class Play extends GameState {
 
+	/**
+	 * 刚体世界
+	 */
 	//声明世界
 	private World mWorld;
-
 	//物理世界相机
 	private OrthographicCamera mBox2DCamera;
-
 	//物理世界渲染器
 	private Box2DDebugRenderer mBox2DRender;
-
 	//声明刚体监听器
 	private Box2DContactListener mContactListener;
 
+	/**
+	 * 游戏地图
+	 */
 	//地图
 	private TiledMap mMap;
-
 	//瓦片大小
 	private float tileSize;
-
 	//地图宽度（瓦片数量）
 	private float tileWidth;
-
 	//地图高度（瓦片数量）
 	private float tileHeight;
-
 	//地图渲染器
 	private OrthogonalTiledMapRenderer mOrthogonalTiledMapRenderer;
+	//地图编号
+	public static int level = 0;
 
-	//游戏渲染时间
-	private float statetime;
-
-	//刚体信息
-	private BodyDef mBodyDef;
-
-	//刚体
-	private Body mBody;
-
-	//孙悟空攻击夹具
-	private FixtureDef mAttackFixDef;
-	//孙悟空形状夹具
-	private Fixture mShapeFix;
-
-	//游戏背景
-	private Background mBackground;
-
+	/**
+	 * 界面控件
+	 */
 	//左按钮
 	private ImageButton mLeftBtn;
-
 	//右按钮
 	private ImageButton mRightBtn;
-
 	//跳跃按钮
 	private ImageButton mJumpBtn;
-
 	//攻击按钮
 	private ImageButton mAttackBtn;
 
+	/**
+	 * 精灵
+	 */
+	//游戏背景
+	private Background mBackground;
 	//游戏主角
-	private Monkey mMonkey;
-
+	public static Monkey mMonkey;
 	//持刀天兵
 	private Array<EnemyDao> mEnemyDaos;
 
-	//地图编号
-	public static int level = 0;
+	/**
+	 * 刚体
+	 */
+	//刚体信息
+	private BodyDef mBodyDef;
+	//刚体
+	private Body mBody;
+	//孙悟空攻击夹具
+	private FixtureDef mAttackFixDef;
+	//孙悟空形状夹具
+	private Fixture mStandFix;
+	private FixtureDef mStandFixDef;
+
+	/**
+	 * 其他
+	 */
+	//游戏渲染时间
+	private float statetime;
+	//判断敌人是否创建了攻击夹具
+	private boolean isCreatedFixture = false;
 
 	public Play(GameStateManager manager) {
 		super(manager);
@@ -203,8 +209,9 @@ public class Play extends GameState {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-				if (mShapeFix != null) {
-					mBody.destroyFixture(mShapeFix);
+				if (mStandFix != null) {
+					mBody.destroyFixture(mStandFix);
+					mStandFix = null;
 				}
 
 				//创建攻击传感器 stick
@@ -235,14 +242,8 @@ public class Play extends GameState {
 				}
 
 				//重新初始化孙悟空的monkey传感器
-				FixtureDef fixtureDef = new FixtureDef();
-				PolygonShape shape = new PolygonShape();
-				shape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
-				fixtureDef.shape = shape;
-				fixtureDef.filter.categoryBits = Constant.PLAYER;
-				fixtureDef.filter.maskBits = Constant.ENEMY_DAO;
-				mShapeFix = mBody.createFixture(fixtureDef);
-				mShapeFix.setUserData("monkey");
+				mStandFix = mBody.createFixture(mStandFixDef);
+				mStandFix.setUserData("monkey");
 			}
 		});
 
@@ -328,11 +329,12 @@ public class Play extends GameState {
 		mBodyDef.position.set(100 / Constant.RATE, 400 / Constant.RATE);
 		mBody = mWorld.createBody(mBodyDef);
 		shape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
-		fixtureDef.shape = shape;
-		fixtureDef.filter.categoryBits = Constant.PLAYER;
-		fixtureDef.filter.maskBits = Constant.ENEMY_DAO;
-		mShapeFix = mBody.createFixture(fixtureDef);
-		mShapeFix.setUserData("monkey");
+		mStandFixDef = new FixtureDef();
+		mStandFixDef.shape = shape;
+		mStandFixDef.filter.categoryBits = Constant.PLAYER;
+		mStandFixDef.filter.maskBits = Constant.ENEMY_DAO;
+		mStandFix = mBody.createFixture(mStandFixDef);
+		mStandFix.setUserData("monkey");
 
 		//创建传感器 foot
 		shape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -60 / Constant.RATE), 0);
@@ -425,11 +427,11 @@ public class Play extends GameState {
 		removeBodies.clear();
 
 		/**
-		 * 主角死亡 方式一：掉落到屏幕之外 方式二：敌人主角砍死
+		 * 主角死亡 方式一：掉落到屏幕之外 方式二：敌人攻击主角致死
 		 */
 		if (mMonkey.getBody().getPosition().y < 0) {
 			mGameStateManager.setState(GameStateManager.FAILURE);
-		} else if (mMonkey.attacks == 3) {
+		} else if (mMonkey.attacks == 5) {
 			mGameStateManager.setState(GameStateManager.FAILURE);
 		}
 

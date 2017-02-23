@@ -1,8 +1,13 @@
 package com.heyzqt.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.state.Play;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**
@@ -25,16 +30,28 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	public static int STATE_LEFT = 1;    //左行走
 	public static int STATE_RIGHT = 2;   //右行走
 	public static int STATE_LEFT_ATTACK = 3;    //左攻击
-	public static int STATE_RITHT_ATTACK = 4;    //右攻击
+	public static int STATE_RIGHT_ATTACK = 4;    //右攻击
 
 	//天兵是否存活
 	private boolean isLive = true;
 
+	//天兵与孙悟空是否接触
+	private boolean isContacted = false;
+
+	//攻击是否完成
+	public boolean isAttacked = false;
+
 	//记录天兵被攻击的次数 攻击两次天兵死亡
 	public int attacks = 0;
 
-	//天兵与孙悟空是否接触
-	private boolean isContacted = false;
+	//天兵左右攻击夹具
+	public Fixture mLeftFixture;
+	public Fixture mRightFixture;
+	public FixtureDef mLeftFixDef;
+	public FixtureDef mRightFixDef;
+
+	//记录update()上一次时间
+	private int preTime;
 
 	public EnemyDao(Body body) {
 
@@ -55,21 +72,93 @@ public class EnemyDao extends BaseSprite implements Runnable {
 		mLeftState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftStand"));
 		mLeftState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW1"));
 		mLeftState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW2"));
+
+		//左传感器 dao
+		PolygonShape shapeLeft = new PolygonShape();
+		shapeLeft.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
+				, new Vector2(-60 / Constant.RATE, 0), 0);
+		mLeftFixDef = new FixtureDef();
+		mLeftFixDef.shape = shapeLeft;
+		mLeftFixDef.isSensor = true;
+		mLeftFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+		mLeftFixDef.filter.maskBits = Constant.PLAYER;
+
+		//右传感器 dao
+		PolygonShape shapeRight = new PolygonShape();
+		mRightFixDef = new FixtureDef();
+		shapeRight.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
+				, new Vector2(60 / Constant.RATE, 0), 0);
+		mRightFixDef.shape = shapeRight;
+		mRightFixDef.isSensor = true;
+		mRightFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+		mRightFixDef.filter.maskBits = Constant.PLAYER;
+
+		//设置状态动画
+		setStateAnimation();
 	}
 
 	@Override
 	public void update(float delta) {
 
-		if (!isContacted) {
-			return;
-		}
-
-		if (STATE == STATE_LEFT) {
-			setAnimation(mLeftState, 1 / 12f);
-			mBody.setLinearVelocity(0, 0);
-		} else if (STATE == STATE_RIGHT) {
-			setAnimation(mRightState, 1 / 12f);
-			mBody.setLinearVelocity(0, 0);
+		/**
+		 * 根据当前天兵与主角位置关系
+		 * 设置天兵攻击状态
+		 */
+		if (Play.mMonkey != null) {
+			//天兵与孙悟空x差值
+			float x = Play.mMonkey.getBody().getPosition().x - mBody.getPosition().x;
+			int time = (int) delta;
+			if (x < 100 / Constant.RATE && x > 0) {    //孙悟空在天兵右边 100 / Constant.RATE距离内
+				isContacted = true;
+				//设置状态动画
+				STATE = STATE_RIGHT_ATTACK;
+				mBody.setLinearVelocity(0, 0);
+				setAnimation(mRightState, 1 / 12f);
+				//每隔2秒攻击一次
+				if (time > preTime && time % 2 == 0 && mRightFixture == null && !isAttacked) {
+					mRightFixture = mBody.createFixture(mRightFixDef);
+					mRightFixture.setUserData("dao");
+					preTime = time;
+				} else {
+					//如果右武器不为空且攻击结束则清理
+					if (mRightFixture != null && isAttacked) {
+						mBody.destroyFixture(mRightFixture);
+						mRightFixture = null;
+						isAttacked = false;
+					}
+				}
+			} else if ((-x) < 100 / Constant.RATE && (-x) > 0) {  //孙悟空在天兵左边 100 / Constant.RATE距离内
+				isContacted = true;
+				//设置状态动画
+				STATE = STATE_LEFT_ATTACK;
+				mBody.setLinearVelocity(0, 0);
+				setAnimation(mLeftState, 1 / 12f);
+				//每隔2秒攻击一次
+				if (time > preTime && time % 2 == 0 && mLeftFixture == null && !isAttacked) {
+					mLeftFixture = mBody.createFixture(mLeftFixDef);
+					mLeftFixture.setUserData("dao");
+					preTime = time;
+				} else {
+					//如果左武器不为空且攻击结束则清理
+					if (mLeftFixture != null && isAttacked) {
+						mBody.destroyFixture(mLeftFixture);
+						mLeftFixture = null;
+						isAttacked = false;
+					}
+				}
+			} else {
+				isContacted = false;
+				if (mLeftFixture != null && isAttacked) {
+					mBody.destroyFixture(mLeftFixture);
+					mLeftFixture = null;
+					isAttacked = false;
+				}
+				if (mRightFixture != null && isAttacked) {
+					mBody.destroyFixture(mRightFixture);
+					mRightFixture = null;
+					isAttacked = false;
+				}
+			}
 		}
 	}
 
@@ -88,13 +177,7 @@ public class EnemyDao extends BaseSprite implements Runnable {
 				continue;
 			}
 
-			if (STATE == STATE_LEFT) {
-				setAnimation(mLeftState, 1 / 12f);
-				mBody.setLinearVelocity(-0.2f, 0);
-			} else {
-				setAnimation(mRightState, 1 / 12f);
-				mBody.setLinearVelocity(0.2f, 0);
-			}
+			setStateAnimation();
 
 			try {
 				Thread.sleep(1500);
@@ -123,5 +206,24 @@ public class EnemyDao extends BaseSprite implements Runnable {
 
 	synchronized public void setContacted(boolean contacted) {
 		isContacted = contacted;
+	}
+
+	/**
+	 * 设置状态动画
+	 */
+	private void setStateAnimation() {
+		if (STATE == STATE_RIGHT_ATTACK) {
+			mBody.setLinearVelocity(0, 0);
+			setAnimation(mRightState, 1 / 12f);
+		} else if (STATE == STATE_LEFT_ATTACK) {
+			mBody.setLinearVelocity(0, 0);
+			setAnimation(mLeftState, 1 / 12f);
+		} else if (STATE == STATE_LEFT) {
+			setAnimation(mLeftState, 1 / 12f);
+			mBody.setLinearVelocity(-0.2f, 0);
+		} else if (STATE == STATE_RIGHT) {
+			setAnimation(mRightState, 1 / 12f);
+			mBody.setLinearVelocity(0.2f, 0);
+		}
 	}
 }

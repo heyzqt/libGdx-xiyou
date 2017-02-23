@@ -25,12 +25,12 @@ public class Monkey extends BaseSprite {
 
 	//孙悟空5种状态
 	public static int STATE;
-	public static int STATE_IDEL_LEFT = 1;		//左边站立
-	public static int STATE_IDEL_RIGHT = 2;		//右边站立
-	public static int STATE_LEFT = 3;			//左边行走
-	public static int STATE_RIGHT = 4;			//右边行走
-	public static int STATE_LEFT_ATTACK = 5;			//左攻击
-	public static int STATE_RITHT_ATTACK = 6;			//右攻击
+	public static int STATE_IDEL_LEFT = 1;        //左边站立
+	public static int STATE_IDEL_RIGHT = 2;        //右边站立
+	public static int STATE_LEFT = 3;            //左边行走
+	public static int STATE_RIGHT = 4;            //右边行走
+	public static int STATE_LEFT_ATTACK = 5;            //左攻击
+	public static int STATE_RITHT_ATTACK = 6;            //右攻击
 
 	//击败敌人数目
 	private int enemyCount;
@@ -83,30 +83,33 @@ public class Monkey extends BaseSprite {
 		} else if (STATE == STATE_RIGHT) {
 			setAnimation(mRightState, 1 / 12f);
 		}
+
+		//设置孙悟空一直是苏醒状态
+		mBody.setAwake(true);
 	}
 
 	//打败敌人
-	public void beatEnemy(){
+	public void beatEnemy() {
 		enemyCount++;
 	}
 
 	//获得打败敌人数目
-	public int getEnemyCount(){
+	public int getEnemyCount() {
 		return enemyCount;
 	}
 
 	//获得敌人总数
-	public int getEnemiesCount(){
+	public int getEnemiesCount() {
 		return allEnemiesCount;
 	}
 
 	//设置敌人数目
-	public void setEnemyCount(int enemyCount){
+	public void setEnemyCount(int enemyCount) {
 		this.enemyCount = enemyCount;
 	}
 
 	//设置敌人总数
-	public void setAllEnemiesCount(int allEnemiesCount){
+	public void setAllEnemiesCount(int allEnemiesCount) {
 		this.allEnemiesCount = allEnemiesCount;
 	}
 

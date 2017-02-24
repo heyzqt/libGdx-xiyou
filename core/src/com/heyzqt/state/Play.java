@@ -3,6 +3,7 @@ package com.heyzqt.state;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -22,6 +23,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -71,6 +73,9 @@ public class Play extends GameState {
 	/**
 	 * 界面控件
 	 */
+	//分数
+	private Label mScore;
+	private BitmapFont mScoreFont;
 	//左按钮
 	private ImageButton mLeftBtn;
 	//右按钮
@@ -141,21 +146,32 @@ public class Play extends GameState {
 		mBackground = new Background(Constant.PLAY_BG);
 
 		//初始化界面控件
+		//初始化分数
+		mScoreFont = MyGdxGame.mAssetManager.getFont();
+		mScoreFont.getData().setScale(0.8f, 1f);
+		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.mAssetManager.getNumFont(), null);
+		mScore = new Label("0", style);
+		mScore.setPosition(1100, 590);
+		//初始化操作杆
 		TextureAtlas mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.PLAY_WIDGET);
+		//左行动按钮
 		mLeftBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("leftBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("leftBtnDown")));
 		mLeftBtn.setPosition(100, 20);
+		//右行动按钮
 		mRightBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("rightBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("rightBtnDown")));
 		mRightBtn.setPosition(260, 20);
-
+		//攻击按钮
 		mAttackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("attackBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("attackBtnDown")));
 		mAttackBtn.setPosition(1000, 35);
+		//跳跃按钮
 		mJumpBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("jumpBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("jumpBtnDown")));
 		mJumpBtn.setPosition(1130, 140);
 
+		mStage.addActor(mScore);
 		mStage.addActor(mLeftBtn);
 		mStage.addActor(mRightBtn);
 		mStage.addActor(mAttackBtn);
@@ -243,7 +259,6 @@ public class Play extends GameState {
 				//重新初始化孙悟空的monkey传感器
 				mStandFix = mBody.createFixture(mStandFixDef);
 				mStandFix.setUserData("monkey");
-				System.out.println("standFix = " + mStandFix + ",fixdef = " + mStandFix);
 			}
 		});
 
@@ -428,6 +443,11 @@ public class Play extends GameState {
 		removeBodies.clear();
 
 		/**
+		 * 设置分数
+		 */
+		mScore.setText(mMonkey.getEnemyCount() + "");
+
+		/**
 		 * 主角死亡 方式一：掉落到屏幕之外 方式二：敌人攻击主角致死
 		 */
 		if (mMonkey.getBody().getPosition().y < 0) {
@@ -472,6 +492,11 @@ public class Play extends GameState {
 		//画地图
 		mOrthogonalTiledMapRenderer.setView(mCamera);
 		mOrthogonalTiledMapRenderer.render();
+
+		//画分数
+		mBatch.begin();
+		mScoreFont.draw(mBatch, "分数:", 725, mScore.getY() - 20);
+		mBatch.end();
 
 		mBatch.setProjectionMatrix(mCamera.combined);
 		//画持刀天兵

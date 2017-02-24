@@ -211,7 +211,6 @@ public class Play extends GameState {
 
 				if (mStandFix != null) {
 					mBody.destroyFixture(mStandFix);
-					mStandFix = null;
 				}
 
 				//创建攻击传感器 stick
@@ -244,6 +243,7 @@ public class Play extends GameState {
 				//重新初始化孙悟空的monkey传感器
 				mStandFix = mBody.createFixture(mStandFixDef);
 				mStandFix.setUserData("monkey");
+				System.out.println("standFix = " + mStandFix + ",fixdef = " + mStandFix);
 			}
 		});
 
@@ -328,9 +328,10 @@ public class Play extends GameState {
 		//position是刚体中心点的位置
 		mBodyDef.position.set(100 / Constant.RATE, 400 / Constant.RATE);
 		mBody = mWorld.createBody(mBodyDef);
-		shape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
+		PolygonShape standShape = new PolygonShape();
+		standShape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
 		mStandFixDef = new FixtureDef();
-		mStandFixDef.shape = shape;
+		mStandFixDef.shape = standShape;
 		mStandFixDef.filter.categoryBits = Constant.PLAYER;
 		mStandFixDef.filter.maskBits = Constant.ENEMY_DAO;
 		mStandFix = mBody.createFixture(mStandFixDef);

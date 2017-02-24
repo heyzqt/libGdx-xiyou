@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
 import com.heyzqt.entity.EnemyDao;
-import com.heyzqt.entity.Monkey;
 import com.heyzqt.state.Play;
 
 /**
@@ -39,11 +38,11 @@ public class Box2DContactListener implements ContactListener {
 			//天兵被攻击次数+1
 			enemyDao.attacks++;
 			//天兵被击飞
-			if (Monkey.STATE == Monkey.STATE_RIGHT || Monkey.STATE == Monkey.STATE_RITHT_ATTACK
-					|| Monkey.STATE == Monkey.STATE_IDEL_RIGHT) {
+			float x = Play.mMonkey.getBody().getPosition().x -
+					enemyDao.getBody().getPosition().x;
+			if (x < 0) {
 				enemyDao.getBody().setLinearVelocity(1f, 0);
-			} else if (Monkey.STATE == Monkey.STATE_LEFT || Monkey.STATE == Monkey.STATE_LEFT_ATTACK
-					|| Monkey.STATE == Monkey.STATE_IDEL_LEFT) {
+			} else {
 				enemyDao.getBody().setLinearVelocity(-1f, 0);
 			}
 			//天兵被攻击2次后死亡
@@ -57,6 +56,15 @@ public class Box2DContactListener implements ContactListener {
 			EnemyDao enemy = (EnemyDao) fixtureB.getBody().getUserData();
 			//孙悟空被攻击次数+1
 			Play.mMonkey.attacks++;
+			//孙悟空被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					enemy.getBody().getPosition().x;
+			if (x > 0) {
+				Play.mMonkey.getBody().setLinearVelocity(1f, 0);
+			} else {
+				Play.mMonkey.getBody().setLinearVelocity(-1f, 0);
+			}
+
 			//攻击结束标志
 			enemy.isAttacked = true;
 		}
@@ -64,6 +72,15 @@ public class Box2DContactListener implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
+		//获取刚体碰撞夹具A
+		Fixture fixtureA = contact.getFixtureA();
+		//获取刚体碰撞夹具B
+		Fixture fixtureB = contact.getFixtureB();
+
+		//持刀天兵攻击孙悟空结束后 孙悟空速度重置为0
+		if (Utils.isContacted(fixtureA, fixtureB, "monkey", "dao")) {
+			Play.mMonkey.getBody().setLinearVelocity(0, 0);
+		}
 	}
 
 	@Override

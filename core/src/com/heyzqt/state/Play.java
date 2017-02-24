@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
@@ -73,6 +74,12 @@ public class Play extends GameState {
 	/**
 	 * 界面控件
 	 */
+	//孙悟空头像
+	private TextureRegion mSunAvatar;
+	//血槽
+	private TextureRegion mBloodProgress;
+	private TextureRegion mBloodProgressBG;
+	private float bloodProgress;        //血槽值
 	//分数
 	private Label mScore;
 	private BitmapFont mScoreFont;
@@ -113,8 +120,6 @@ public class Play extends GameState {
 	 */
 	//游戏渲染时间
 	private float statetime;
-	//判断敌人是否创建了攻击夹具
-	private boolean isCreatedFixture = false;
 
 	public Play(GameStateManager manager) {
 		super(manager);
@@ -146,8 +151,14 @@ public class Play extends GameState {
 		mBackground = new Background(Constant.PLAY_BG);
 
 		//初始化界面控件
+		TextureAtlas mBloodAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.PLAY_BLOOD);
+		//初始化头像
+		mSunAvatar = mBloodAtlas.findRegion("sunAvatar");
+		//初始化血槽
+		mBloodProgressBG = mBloodAtlas.findRegion("blood_border");
+		mBloodProgress = mBloodAtlas.findRegion("blood");
 		//初始化分数
-		mScoreFont = MyGdxGame.mAssetManager.getFont();
+		mScoreFont = new BitmapFont(Gdx.files.internal("font/text48.fnt"));
 		mScoreFont.getData().setScale(0.8f, 1f);
 		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.mAssetManager.getNumFont(), null);
 		mScore = new Label("0", style);
@@ -177,8 +188,10 @@ public class Play extends GameState {
 		mStage.addActor(mAttackBtn);
 		mStage.addActor(mJumpBtn);
 
+		//初始化孙悟空所有按钮的监听事件
 		initListener();
 
+		//注册碰撞监听事件
 		mContactListener = new Box2DContactListener();
 		mWorld.setContactListener(mContactListener);
 	}
@@ -442,9 +455,10 @@ public class Play extends GameState {
 		}
 		removeBodies.clear();
 
-		/**
-		 * 设置分数
-		 */
+		//设置主角当前血量逻辑
+		bloodProgress = (Monkey.BLOOD - mMonkey.attacks) * 26;
+
+		//设置分数
 		mScore.setText(mMonkey.getEnemyCount() + "");
 
 		/**
@@ -452,10 +466,9 @@ public class Play extends GameState {
 		 */
 		if (mMonkey.getBody().getPosition().y < 0) {
 			mGameStateManager.setState(GameStateManager.FAILURE);
-		} else if (mMonkey.attacks == 5) {
+		} else if (mMonkey.attacks == Monkey.BLOOD) {
 			mGameStateManager.setState(GameStateManager.FAILURE);
 		}
-
 
 		/**
 		 * 主角通关
@@ -493,8 +506,15 @@ public class Play extends GameState {
 		mOrthogonalTiledMapRenderer.setView(mCamera);
 		mOrthogonalTiledMapRenderer.render();
 
-		//画分数
 		mBatch.begin();
+		//画血槽
+		mBatch.draw(mBloodProgressBG, 130, mScore.getY() - 55);
+		if (bloodProgress >= 0) {
+			mBatch.draw(mBloodProgress, 133, mScore.getY() - 53, bloodProgress, 26);
+		}
+		//画孙悟空头像
+		mBatch.draw(mSunAvatar, 80, mScore.getY() - 80, 70, 80);
+		//画分数
 		mScoreFont.draw(mBatch, "分数:", 725, mScore.getY() - 20);
 		mBatch.end();
 

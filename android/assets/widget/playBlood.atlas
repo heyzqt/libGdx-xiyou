@@ -1,0 +1,26 @@
+
+playBlood.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+blood
+  rotate: false
+  xy: 1, 39
+  size: 160, 30
+  orig: 160, 30
+  offset: 0, 0
+  index: -1
+blood_border
+  rotate: false
+  xy: 1, 7
+  size: 160, 30
+  orig: 160, 30
+  offset: 0, 0
+  index: -1
+sunAvatar
+  rotate: false
+  xy: 163, 1
+  size: 68, 68
+  orig: 68, 68
+  offset: 0, 0
+  index: -1

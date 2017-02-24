@@ -21,6 +21,7 @@ public class AssetManager {
 	private BitmapFont mFont;
 	private HashMap<String, Music> musics;
 	private HashMap<String, Sound> sounds;
+	private BitmapFont mNumFont;
 
 	public AssetManager() {
 		textures = new HashMap<String, Texture>();
@@ -38,6 +39,23 @@ public class AssetManager {
 	public void removeFont() {
 		if (mFont != null) {
 			mFont.dispose();
+		}
+	}
+
+	//获取数字字体资源
+	public BitmapFont getNumFont() {
+		return mNumFont;
+	}
+
+	//加载数字字体
+	public void loadNumFont() {
+		mNumFont = new BitmapFont(Gdx.files.internal("font/font_1_m.fnt"));
+	}
+
+	//释放数字字体
+	public void removeNumFont() {
+		if (mNumFont != null) {
+			mNumFont.dispose();
 		}
 	}
 
@@ -82,7 +100,7 @@ public class AssetManager {
 	}
 
 	//获取图片集合
-	public TextureAtlas getTextureAtlas(String key){
+	public TextureAtlas getTextureAtlas(String key) {
 		return atlas.get(key);
 	}
 
@@ -127,6 +145,12 @@ public class AssetManager {
 	}
 
 	public void removeAll() {
+		//清理字体
+		removeFont();
+
+		//清理数字字体
+		removeNumFont();
+
 		//清理所有图片
 		for (Object object : textures.values()) {
 			Texture tex = (Texture) object;
@@ -140,9 +164,6 @@ public class AssetManager {
 			at.dispose();
 		}
 		atlas.clear();
-
-		//清理字体
-		removeFont();
 
 		//清理所有Music
 		for (Object object : musics.values()) {

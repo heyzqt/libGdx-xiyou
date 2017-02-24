@@ -60,6 +60,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadTextureAtlas("widget/success.atlas",Constant.SUCCESS_WIDGET);
 
 		//加载游戏界面Play.java资源
+		mAssetManager.loadNumFont();
 		mAssetManager.loadTexture("map/level_static_2_bg.png", Constant.PLAY_BG);
 		mAssetManager.loadTextureAtlas("role/role.atlas",Constant.ROLE);
 		mAssetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);

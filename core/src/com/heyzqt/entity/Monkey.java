@@ -41,6 +41,9 @@ public class Monkey extends BaseSprite {
 	//被攻击次数
 	public int attacks = 0;
 
+	//孙悟空的总血量
+	public final static int BLOOD = 6;
+
 	public Monkey(Body body) {
 		super(body);
 

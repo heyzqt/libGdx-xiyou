@@ -51,6 +51,7 @@ public class Constant {
 
 	//游戏界面
 	public static final String ROLE = "role";
+	public static final String SUN = "sun";
 	public static final String PLAY_BG = "play_bg";
 	public static final String PLAY_WIDGET = "play_widget";
 	public static final String PLAY_BLOOD = "play_blood";

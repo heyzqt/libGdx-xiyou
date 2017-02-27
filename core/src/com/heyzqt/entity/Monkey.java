@@ -22,6 +22,10 @@ public class Monkey extends BaseSprite {
 	private TextureAtlas.AtlasRegion[] mRightState;
 	//左走状态图片集合
 	private TextureAtlas.AtlasRegion[] mLeftState;
+	//左攻击状态图片集合
+	private TextureAtlas.AtlasRegion[] mLeftAttackState;
+	//右攻击状态图片集合
+	private TextureAtlas.AtlasRegion[] mRightAttackState;
 
 	//孙悟空5种状态
 	public static int STATE;
@@ -30,7 +34,9 @@ public class Monkey extends BaseSprite {
 	public static int STATE_LEFT = 3;            //左边行走
 	public static int STATE_RIGHT = 4;            //右边行走
 	public static int STATE_LEFT_ATTACK = 5;            //左攻击
-	public static int STATE_RITHT_ATTACK = 6;            //右攻击
+	public static int STATE_RIGHT_ATTACK = 6;            //右攻击
+	public static int STATE_LEFT_HITED = 7;            //往左背击飞
+	public static int STATE_RIGHT_HITED = 8;            //往右被击飞
 
 	//击败敌人数目
 	private int enemyCount;
@@ -49,7 +55,7 @@ public class Monkey extends BaseSprite {
 
 		STATE = STATE_IDEL_RIGHT;
 
-		mMonkeyAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ROLE);
+		mMonkeyAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.SUN);
 
 		//初始化静止图片
 		mLeftStandState = new TextureAtlas.AtlasRegion[2];
@@ -71,6 +77,18 @@ public class Monkey extends BaseSprite {
 		mLeftState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftW1"));
 		mLeftState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftW2"));
 		mLeftState[2] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftW3"));
+
+		//初始化左攻击图像
+		mLeftAttackState = new TextureAtlas.AtlasRegion[3];
+		mLeftAttackState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftAttack1"));
+		mLeftAttackState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftAttack2"));
+		mLeftAttackState[2] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftAttack3"));
+
+		//初始化右攻击图像
+		mRightAttackState = new TextureAtlas.AtlasRegion[3];
+		mRightAttackState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack1"));
+		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack2"));
+		mRightAttackState[2] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack3"));
 	}
 
 	@Override
@@ -85,6 +103,10 @@ public class Monkey extends BaseSprite {
 			setAnimation(mLeftState, 1 / 12f);
 		} else if (STATE == STATE_RIGHT) {
 			setAnimation(mRightState, 1 / 12f);
+		} else if (STATE == STATE_LEFT_ATTACK) {
+			setAnimation(mLeftAttackState, 1 / 12f);
+		} else if (STATE == STATE_RIGHT_ATTACK) {
+			setAnimation(mRightAttackState, 1 / 12f);
 		}
 
 		//设置孙悟空一直是苏醒状态

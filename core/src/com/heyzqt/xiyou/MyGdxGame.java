@@ -63,6 +63,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadNumFont();
 		mAssetManager.loadTextureAtlas("widget/playBlood.atlas", Constant.PLAY_BLOOD);
 		mAssetManager.loadTexture("map/level_static_2_bg.png", Constant.PLAY_BG);
+		//加载孙悟空人物素材
+		mAssetManager.loadTextureAtlas("role/sun.atlas",Constant.SUN);
 		mAssetManager.loadTextureAtlas("role/role.atlas", Constant.ROLE);
 		mAssetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);
 	}

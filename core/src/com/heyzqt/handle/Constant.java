@@ -41,6 +41,13 @@ public class Constant {
 	public static final String BTN_COMMON_SOUND = "btn_common_sound";
 	public static final String BTN_SELECT_SOUND = "btn_select_sound";
 
+	//第一关至第五关卡背景音效
+	public static final String LEVEL_0_BGM = "bgm_level_0";
+	public static final String LEVEL_1_BGM = "bgm_level_1";
+	public static final String LEVEL_2_BGM = "bgm_level_2";
+	public static final String LEVEL_3_BGM = "bgm_level_3";
+	public static final String LEVEL_4_BGM = "bgm_level_4";
+
 	//开始界面 设置界面
 	public static final String START_BG = "start_bg";
 	public static final String START_SETTING = "start_setting";

@@ -130,9 +130,6 @@ public class Select extends GameState {
 
 	@Override
 	public void dispose() {
-		//销毁背景图片
-		//mBackground.dispose();
-
 		//关闭背景音乐
 		MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).stop();
 

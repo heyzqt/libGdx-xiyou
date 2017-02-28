@@ -50,6 +50,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		//加载按钮音效
 		mAssetManager.loadSound("sound/btn_common.wav", Constant.BTN_COMMON_SOUND);
 		mAssetManager.loadSound("sound/btn_select.wav", Constant.BTN_SELECT_SOUND);
+		//加载第一关背景音乐
+		mAssetManager.loadMusic("sound/bgm_level_0.mp3", Constant.LEVEL_0_BGM);
 
 		//加载开始界面Start.java资源
 		mAssetManager.loadTexture("background/start_bg.png", Constant.START_BG);
@@ -57,7 +59,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadMusic("sound/bgm_main.mp3", Constant.START_BGM);
 
 		//加载选关界面Select.java资源
-		mAssetManager.loadTexture("background/world_map_bg.jpg",Constant.SELECT_BG);
+		mAssetManager.loadTexture("background/world_map_bg.jpg", Constant.SELECT_BG);
 		mAssetManager.loadTextureAtlas("widget/select.atlas", Constant.SELECT_WIDGET);
 
 		//加载失败界面Failure.java资源

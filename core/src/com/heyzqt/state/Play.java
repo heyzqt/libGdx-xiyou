@@ -1,6 +1,7 @@
 package com.heyzqt.state;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -408,6 +409,34 @@ public class Play extends GameState {
 	private void createMap() {
 		try {
 			mMap = new TmxMapLoader().load("map/level_" + level + ".tmx");
+			Music music;
+			switch (level) {
+				case 0:        //第一关背景音乐
+					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
+					music.setLooping(true);
+					music.play();
+					break;
+				case 1:        //第二关背景音乐
+					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
+					music.setLooping(true);
+					music.play();
+					break;
+				case 2:        //第三关背景音乐
+					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM);
+					music.setLooping(true);
+					music.play();
+					break;
+				case 3:        //第四关背景音乐
+					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_3_BGM);
+					music.setLooping(true);
+					music.play();
+					break;
+				case 4:        //第五关背景音乐
+					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_4_BGM);
+					music.setLooping(true);
+					music.play();
+					break;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Gdx.app.exit();
@@ -636,6 +665,24 @@ public class Play extends GameState {
 
 	@Override
 	public void dispose() {
+		//关闭背景音乐
+		switch (level) {
+			case 0:        //第一关背景音乐
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).stop();
+				break;
+			case 1:        //第二关背景音乐
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).stop();
+				break;
+			case 2:        //第三关背景音乐
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM).stop();
+				break;
+			case 3:        //第四关背景音乐
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_3_BGM).stop();
+				break;
+			case 4:        //第五关背景音乐
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_4_BGM).stop();
+				break;
+		}
 
 		//清空演员
 		mStage.getActors().clear();

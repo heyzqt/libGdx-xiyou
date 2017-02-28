@@ -40,9 +40,6 @@ public class Failure extends GameState {
 	//时间
 	private String timeStr;
 
-	//等级
-	public static int loseGrades = 0;
-
 	//画星级起始x坐标
 	public int distance = 225;
 
@@ -166,13 +163,8 @@ public class Failure extends GameState {
 		mBatch.begin();
 		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.FAILURE_BG), 0, 0);
 
-		//画出亮的星星
-		int i = 0;
-		for (; i < loseGrades; i++) {
-			mBatch.draw(mAtlasRegions[1], distance + i * 60, 213, 50, 60);
-		}
 		//画出暗的星星
-		for (; i < 5; i++) {
+		for (int i = 0; i < 5; i++) {
 			mBatch.draw(mAtlasRegions[0], distance + i * 60, 213, 50, 60);
 		}
 		mBatch.end();

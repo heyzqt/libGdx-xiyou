@@ -384,6 +384,25 @@ public class Play extends GameState {
 
 		mMonkey = new Monkey(mBody);
 		mBody.setUserData(mMonkey);
+
+		//设置敌人总数
+		switch (level) {
+			case 0:        //第一关
+				mMonkey.setAllEnemiesCount(mMonkey.level_1_enemies);
+				break;
+			case 1:        //第二关
+				mMonkey.setAllEnemiesCount(mMonkey.level_2_enemies);
+				break;
+			case 2:        //第三关
+				mMonkey.setAllEnemiesCount(mMonkey.level_3_enemies);
+				break;
+			case 3:        //第四关
+				mMonkey.setAllEnemiesCount(mMonkey.level_4_enemies);
+				break;
+			case 4:        //第五关
+				mMonkey.setAllEnemiesCount(mMonkey.level_5_enemies);
+				break;
+		}
 	}
 
 	private void createMap() {
@@ -480,10 +499,33 @@ public class Play extends GameState {
 		}
 
 		/**
-		 * 主角通关
+		 * 主角通关 并判断星级
 		 */
 		if (mMonkey.getBody().getPosition().x * Constant.RATE > tileWidth * tileSize) {
 			mGameStateManager.setState(GameStateManager.SUCCESS);
+			Success.winGrades = (Monkey.BLOOD - mMonkey.attacks);
+			//血量判断
+			if ((Monkey.BLOOD - mMonkey.attacks) >= Monkey.BLOOD / 2) {
+				Success.winGrades = 1;
+			} else {
+				Success.winGrades = 0;
+			}
+
+			//时间判断
+			if (statetime <= 60) {
+				Success.winGrades += 2;
+			} else {
+				Success.winGrades += 1;
+			}
+
+			//分数判断
+			if (mMonkey.getEnemyCount() == mMonkey.getEnemiesCount()) {
+				Success.winGrades += 2;
+			} else if (mMonkey.getEnemyCount() == 0) {
+				Success.winGrades += 0;
+			} else {
+				Success.winGrades += 1;
+			}
 		}
 	}
 

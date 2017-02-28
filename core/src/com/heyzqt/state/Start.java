@@ -20,7 +20,7 @@ import com.heyzqt.xiyou.MyGdxGame;
 
 /**
  * Created by heyzqt on 2017/2/7.
- * 开始界面
+ * 开始设置界面
  */
 public class Start extends GameState {
 
@@ -72,10 +72,16 @@ public class Start extends GameState {
 		mSoundLabel.setPosition(400, 220);
 		Drawable checkOn = new TextureRegionDrawable(mAtlas.findRegion("checkOn"));
 		Drawable checkOff = new TextureRegionDrawable(mAtlas.findRegion("checkOff"));
-		CheckBox.CheckBoxStyle boxStyle = new CheckBox.CheckBoxStyle(checkOn, checkOff,
+		CheckBox.CheckBoxStyle boxStyle = new CheckBox.CheckBoxStyle(checkOff, checkOn,
 				MyGdxGame.mAssetManager.getFont(), Color.BLUE);
 		mCheckBox = new CheckBox("", boxStyle);
 		mCheckBox.setPosition(720, 220);
+		if (isPlay) {
+			mCheckBox.setChecked(true);
+		} else {
+			mCheckBox.setChecked(false);
+		}
+
 		//设置界面初始化 - 关于我们
 		mAboutUSLab = new Label("关于游戏：", style);
 		mAboutCont = new Label("游戏名：大话西游之大闹天宫; 版本号 1.0; 开发者：张晴", style);
@@ -88,7 +94,7 @@ public class Start extends GameState {
 		mBackButton.setPosition(500, 40);
 
 		//背景音乐
-		Music music = MyGdxGame.mAssetManager.getMusic(Constant.START_BG_MUSIC);
+		Music music = MyGdxGame.mAssetManager.getMusic(Constant.START_BGM);
 		music.setLooping(true);
 		music.play();
 
@@ -170,6 +176,13 @@ public class Start extends GameState {
 			mStage.addActor(mAboutUSLab);
 			mStage.addActor(mAboutCont);
 			mStage.addActor(mBackButton);
+		}
+
+		//更新音乐状态
+		if (!isPlay) {
+			MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).pause();
+		} else {
+			MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).play();
 		}
 	}
 

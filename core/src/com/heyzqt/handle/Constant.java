@@ -44,7 +44,7 @@ public class Constant {
 	//开始界面 设置界面
 	public static final String START_BG = "start_bg";
 	public static final String START_SETTING = "start_setting";
-	public static final String START_BG_MUSIC = "start_bg_music";
+	public static final String START_BGM = "start_bgm";
 
 	//选关界面
 	public static final String SELECT_WIDGET = "select_widget";

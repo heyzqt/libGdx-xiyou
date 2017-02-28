@@ -136,6 +136,9 @@ public class Select extends GameState {
 		//销毁背景图片
 		//mBackground.dispose();
 
+		//关闭背景音乐
+		MyGdxGame.mAssetManager.getMusic(Constant.START_BG_MUSIC).stop();
+
 		//清空所有演员
 		mStage.getActors().clear();
 		//清空舞台

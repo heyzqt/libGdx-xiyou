@@ -98,6 +98,9 @@ public class Success extends GameState {
 		mNextBtn.setPosition(660, 80);
 		mNextBtn.setSize(200, 90);
 
+		//初始化背景音乐
+		MyGdxGame.mAssetManager.getSound(Constant.SUCCESS_BGM).play();
+
 		mStage.addActor(mTitleLab);
 		mStage.addActor(mTimeLab);
 		mStage.addActor(mBackBtn);
@@ -116,7 +119,7 @@ public class Success extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 返回选关界面");
+				MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 				mGameStateManager.setState(GameStateManager.START);
 			}
 		});
@@ -125,7 +128,7 @@ public class Success extends GameState {
 		mNextBtn.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 下一关");
+				MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 			}
 		});
 	}

@@ -37,7 +37,7 @@ public class Constant {
 	/**
 	 * 资源名
 	 */
-	//btn_select.wav
+	//按钮音效
 	public static final String BTN_COMMON_SOUND = "btn_common_sound";
 	public static final String BTN_SELECT_SOUND = "btn_select_sound";
 
@@ -52,10 +52,12 @@ public class Constant {
 	//成功界面
 	public static final String SUCCESS_BG = "success_bg";
 	public static final String SUCCESS_WIDGET = "success_widget";
+	public static final String SUCCESS_BGM = "success_bgm";
 
 	//失败界面
 	public static final String FAILURE_BG = "failure_bg";
 	public static final String FAILURE_WIDGET = "failure_widget";
+	public static final String FAILURE_BGM = "failure_bgm";
 
 	//游戏界面
 	public static final String SUN = "sun";

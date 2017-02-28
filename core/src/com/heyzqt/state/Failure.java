@@ -108,6 +108,9 @@ public class Failure extends GameState {
 		mRestartBtn.setSize(200, 90);
 		mRestartBtn.setPosition(660, 100);
 
+		//初始化背景音乐
+		MyGdxGame.mAssetManager.getSound(Constant.FAILURE_BGM).play();
+
 		mStage.addActor(mPlaceLab);
 		mStage.addActor(mTimeLab);
 //		mStage.addActor(mStarOnImg);
@@ -129,6 +132,7 @@ public class Failure extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 				mGameStateManager.setState(GameStateManager.START);
 			}
 		});
@@ -137,6 +141,7 @@ public class Failure extends GameState {
 		mRestartBtn.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 				mGameStateManager.setState(GameStateManager.PLAY);
 			}
 		});

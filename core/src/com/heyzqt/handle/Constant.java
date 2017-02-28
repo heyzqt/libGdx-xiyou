@@ -41,6 +41,9 @@ public class Constant {
 	public static final String START_BG = "start_bg";
 	public static final String START_SETTING = "start_setting";
 
+	//选关界面
+	public static final String SELECT_WIDGET = "select_widget";
+
 	//成功界面
 	public static final String SUCCESS_BG = "success_bg";
 	public static final String SUCCESS_WIDGET = "success_widget";

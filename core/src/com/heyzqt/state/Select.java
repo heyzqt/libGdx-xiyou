@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.heyzqt.handle.Constant;
+import com.heyzqt.xiyou.MyGdxGame;
 
 /**
  * Created by heyzqt on 2017/2/7.
@@ -33,17 +35,14 @@ public class Select extends GameState {
 
 	private void init() {
 
-		//初始化背景
-		//mBackground = new Texture("");
-
 		//初始化选关素材
-		mAtlas = new TextureAtlas("widget/select.atlas");
+		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.SELECT_WIDGET);
 		mSouthDoorBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectForth")));
 		mSouthPlaBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectThird")));
 		mWestPlaBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectSecond")));
 		mNorthPlaBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectImgFirst")));
 		mSouthDoorBtn.setPosition(mGame.VIEW_WIDTH / 2 - 200, mGame.VIEW_HEIGHT / 2 + 100);
-		mSouthPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 + 300, mGame.VIEW_HEIGHT / 2 +70);
+		mSouthPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 + 300, mGame.VIEW_HEIGHT / 2 + 70);
 		mWestPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 - 200, mGame.VIEW_HEIGHT / 2 - 300);
 		mNorthPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 + 250, mGame.VIEW_HEIGHT / 2 - 290);
 
@@ -61,7 +60,9 @@ public class Select extends GameState {
 		mSouthDoorBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 南天门");
+				//进入第一关
+				Play.level = 0;
+				mGameStateManager.setState(GameStateManager.PLAY);
 				return true;
 			}
 		});
@@ -70,7 +71,6 @@ public class Select extends GameState {
 		mSouthPlaBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 南王殿");
 				return true;
 			}
 		});
@@ -79,7 +79,6 @@ public class Select extends GameState {
 		mWestPlaBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 西天门");
 				return true;
 			}
 		});
@@ -88,7 +87,6 @@ public class Select extends GameState {
 		mNorthPlaBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello 北天门");
 				return true;
 			}
 		});

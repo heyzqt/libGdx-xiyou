@@ -99,7 +99,7 @@ public class Start extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				mGameStateManager.setState(GameStateManager.PLAY);
+				mGameStateManager.setState(GameStateManager.SELECT);
 			}
 		});
 

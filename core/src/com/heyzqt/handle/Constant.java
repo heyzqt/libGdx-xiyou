@@ -50,8 +50,8 @@ public class Constant {
 	public static final String FAILURE_WIDGET = "failure_widget";
 
 	//游戏界面
-	public static final String ROLE = "role";
 	public static final String SUN = "sun";
+	public static final String ENEMY_DAO_ROLE = "enemy_dao";
 	public static final String PLAY_BG = "play_bg";
 	public static final String PLAY_WIDGET = "play_widget";
 	public static final String PLAY_BLOOD = "play_blood";

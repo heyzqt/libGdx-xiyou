@@ -24,6 +24,10 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	private TextureAtlas.AtlasRegion[] mRightState;
 	//左走状态图片集合
 	private TextureAtlas.AtlasRegion[] mLeftState;
+	//左攻击图片集合
+	private TextureAtlas.AtlasRegion[] mLeftAttackState;
+	//右攻击图片集合
+	private TextureAtlas.AtlasRegion[] mRightAttackState;
 
 	//天兵3种状态
 	public int STATE;
@@ -59,7 +63,7 @@ public class EnemyDao extends BaseSprite implements Runnable {
 
 		STATE = STATE_LEFT;
 
-		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ROLE);
+		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_DAO_ROLE);
 
 		//初始化右走图片
 		mRightState = new TextureAtlas.AtlasRegion[3];
@@ -72,6 +76,18 @@ public class EnemyDao extends BaseSprite implements Runnable {
 		mLeftState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftStand"));
 		mLeftState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW1"));
 		mLeftState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW2"));
+
+		//初始化左攻击图片
+		mLeftAttackState = new TextureAtlas.AtlasRegion[3];
+		mLeftAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftAttack1"));
+		mLeftAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW1"));
+		mLeftAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW2"));
+
+		//初始化右攻击图片
+		mRightAttackState = new TextureAtlas.AtlasRegion[3];
+		mRightAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightAttack1"));
+		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightW1"));
+		mRightAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightW2"));
 
 		//左传感器 dao
 		PolygonShape shapeLeft = new PolygonShape();
@@ -113,7 +129,7 @@ public class EnemyDao extends BaseSprite implements Runnable {
 				//设置状态动画
 				STATE = STATE_RIGHT_ATTACK;
 				mBody.setLinearVelocity(0, 0);
-				setAnimation(mRightState, 1 / 12f);
+				setAnimation(mRightAttackState, 1 / 12f);
 				//每隔2秒攻击一次
 				if (time > preTime && time % 2 == 0 && mRightFixture == null && !isAttacked) {
 					mRightFixture = mBody.createFixture(mRightFixDef);
@@ -132,7 +148,7 @@ public class EnemyDao extends BaseSprite implements Runnable {
 				//设置状态动画
 				STATE = STATE_LEFT_ATTACK;
 				mBody.setLinearVelocity(0, 0);
-				setAnimation(mLeftState, 1 / 12f);
+				setAnimation(mLeftAttackState, 1 / 12f);
 				//每隔2秒攻击一次
 				if (time > preTime && time % 2 == 0 && mLeftFixture == null && !isAttacked) {
 					mLeftFixture = mBody.createFixture(mLeftFixDef);
@@ -214,10 +230,10 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	private void setStateAnimation() {
 		if (STATE == STATE_RIGHT_ATTACK) {
 			mBody.setLinearVelocity(0, 0);
-			setAnimation(mRightState, 1 / 12f);
+			setAnimation(mRightAttackState, 1 / 12f);
 		} else if (STATE == STATE_LEFT_ATTACK) {
 			mBody.setLinearVelocity(0, 0);
-			setAnimation(mLeftState, 1 / 12f);
+			setAnimation(mLeftAttackState, 1 / 12f);
 		} else if (STATE == STATE_LEFT) {
 			setAnimation(mLeftState, 1 / 12f);
 			mBody.setLinearVelocity(-0.2f, 0);

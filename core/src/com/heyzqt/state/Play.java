@@ -246,9 +246,11 @@ public class Play extends GameState {
 				PolygonShape shape = new PolygonShape();
 				if (Monkey.STATE == Monkey.STATE_RIGHT ||
 						Monkey.STATE == Monkey.STATE_IDEL_RIGHT) {
+					Monkey.STATE = Monkey.STATE_RIGHT_ATTACK;
 					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
 							, new Vector2(60 / Constant.RATE, 0), 0);
 				} else {
+					Monkey.STATE = Monkey.STATE_LEFT_ATTACK;
 					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
 							, new Vector2(-60 / Constant.RATE, 0), 0);
 				}
@@ -267,6 +269,13 @@ public class Play extends GameState {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				if (mFixture != null) {
 					mBody.destroyFixture(mFixture);
+				}
+
+				//将状态置为左静止或右静止状态
+				if (Monkey.STATE == Monkey.STATE_RIGHT_ATTACK) {
+					Monkey.STATE = Monkey.STATE_IDEL_RIGHT;
+				} else {
+					Monkey.STATE = Monkey.STATE_IDEL_LEFT;
 				}
 
 				//重新初始化孙悟空的monkey传感器

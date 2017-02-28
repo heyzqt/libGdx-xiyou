@@ -79,16 +79,14 @@ public class Monkey extends BaseSprite {
 		mLeftState[2] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftW3"));
 
 		//初始化左攻击图像
-		mLeftAttackState = new TextureAtlas.AtlasRegion[3];
+		mLeftAttackState = new TextureAtlas.AtlasRegion[2];
 		mLeftAttackState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftAttack1"));
 		mLeftAttackState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftAttack2"));
-		mLeftAttackState[2] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftAttack3"));
 
 		//初始化右攻击图像
-		mRightAttackState = new TextureAtlas.AtlasRegion[3];
+		mRightAttackState = new TextureAtlas.AtlasRegion[2];
 		mRightAttackState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack1"));
 		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack2"));
-		mRightAttackState[2] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack3"));
 	}
 
 	@Override

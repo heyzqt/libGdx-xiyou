@@ -37,9 +37,10 @@ public class Success extends GameState {
 	//时间
 	private String timeStr;
 
-	//等级
-	private int grades = 5;
+	//星级
+	private int grades = 0;
 
+	//画星级起始x坐标
 	public int distance = 180;
 
 	public Success(GameStateManager manager) {

@@ -40,6 +40,12 @@ public class Failure extends GameState {
 	//时间
 	private String timeStr;
 
+	//等级
+	private int grades = 0;
+
+	//画星级起始x坐标
+	public int distance = 225;
+
 	public Failure(GameStateManager manager) {
 		super(manager);
 		init();
@@ -159,11 +165,16 @@ public class Failure extends GameState {
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
 		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.FAILURE_BG), 0, 0);
-		mBatch.draw(mAtlasRegions[1], 225, 213, 50, 60);
-		mBatch.draw(mAtlasRegions[1], 285, 213, 50, 60);
-		mBatch.draw(mAtlasRegions[0], 345, 213, 50, 60);
-		mBatch.draw(mAtlasRegions[0], 405, 213, 50, 60);
-		mBatch.draw(mAtlasRegions[0], 465, 213, 50, 60);
+
+		//画出亮的星星
+		int i = 0;
+		for (; i < grades; i++) {
+			mBatch.draw(mAtlasRegions[1], distance + i * 60, 213, 50, 60);
+		}
+		//画出暗的星星
+		for (; i < 5; i++) {
+			mBatch.draw(mAtlasRegions[0], distance + i * 60, 213, 50, 60);
+		}
 		mBatch.end();
 
 		mStage.act();
@@ -182,5 +193,13 @@ public class Failure extends GameState {
 		mStage.getActors().clear();
 		//清空舞台
 		mStage.clear();
+	}
+
+	public int getGrades() {
+		return grades;
+	}
+
+	public void setGrades(int grades) {
+		this.grades = grades;
 	}
 }

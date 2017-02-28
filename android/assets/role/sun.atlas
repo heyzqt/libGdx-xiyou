@@ -1,0 +1,103 @@
+
+sun.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+sunLeftAttack1
+  rotate: false
+  xy: 1, 261
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunLeftAttack2
+  rotate: false
+  xy: 1, 131
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunLeftHited
+  rotate: false
+  xy: 160, 261
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunLeftStand
+  rotate: false
+  xy: 1, 1
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunLeftW1
+  rotate: false
+  xy: 160, 131
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunLeftW2
+  rotate: false
+  xy: 319, 261
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunLeftW3
+  rotate: false
+  xy: 160, 1
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunRightAttack1
+  rotate: false
+  xy: 319, 131
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunRightAttack2
+  rotate: false
+  xy: 478, 261
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunRightHited
+  rotate: false
+  xy: 319, 1
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunRightStand
+  rotate: false
+  xy: 478, 131
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunRightW1
+  rotate: false
+  xy: 637, 261
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunRightW2
+  rotate: false
+  xy: 478, 1
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1
+sunRightW3
+  rotate: false
+  xy: 637, 131
+  size: 157, 128
+  orig: 157, 128
+  offset: 0, 0
+  index: -1

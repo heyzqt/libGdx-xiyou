@@ -1,0 +1,61 @@
+
+enemyDao.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemyDaoLeftAttack1
+  rotate: false
+  xy: 1, 1
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+enemyDaoLeftStand
+  rotate: false
+  xy: 103, 1
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+enemyDaoLeftW1
+  rotate: false
+  xy: 205, 1
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+enemyDaoLeftW2
+  rotate: false
+  xy: 307, 1
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+enemyDaoRightAttack1
+  rotate: false
+  xy: 409, 1
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+enemyDaoRightStand
+  rotate: false
+  xy: 511, 1
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+enemyDaoRightW1
+  rotate: false
+  xy: 613, 1
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+enemyDaoRightW2
+  rotate: false
+  xy: 715, 1
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1

@@ -37,6 +37,11 @@ public class Success extends GameState {
 	//时间
 	private String timeStr;
 
+	//等级
+	private int grades = 5;
+
+	public int distance = 180;
+
 	public Success(GameStateManager manager) {
 		super(manager);
 		init();
@@ -146,11 +151,15 @@ public class Success extends GameState {
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
 		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.SUCCESS_BG), 0, 0);
-		mBatch.draw(mAtlasRegions[1], 180, 213, 50, 60);
-		mBatch.draw(mAtlasRegions[1], 240, 213, 50, 60);
-		mBatch.draw(mAtlasRegions[0], 300, 213, 50, 60);
-		mBatch.draw(mAtlasRegions[0], 360, 213, 50, 60);
-		mBatch.draw(mAtlasRegions[0], 420, 213, 50, 60);
+		//画出亮的星星
+		int i = 0;
+		for (; i < grades; i++) {
+			mBatch.draw(mAtlasRegions[1], distance + i * 60, 213, 50, 60);
+		}
+		//画出暗的星星
+		for (; i < 5; i++) {
+			mBatch.draw(mAtlasRegions[0], distance + i * 60, 213, 50, 60);
+		}
 		mBatch.end();
 
 		mStage.act();
@@ -169,5 +178,13 @@ public class Success extends GameState {
 		mStage.getActors().clear();
 		//清空舞台
 		mStage.clear();
+	}
+
+	public int getGrades() {
+		return grades;
+	}
+
+	public void setGrades(int grades) {
+		this.grades = grades;
 	}
 }

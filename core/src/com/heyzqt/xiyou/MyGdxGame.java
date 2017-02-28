@@ -57,6 +57,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadMusic("sound/bgm_main.mp3", Constant.START_BGM);
 
 		//加载选关界面Select.java资源
+		mAssetManager.loadTexture("background/world_map_bg.jpg",Constant.SELECT_BG);
 		mAssetManager.loadTextureAtlas("widget/select.atlas", Constant.SELECT_WIDGET);
 
 		//加载失败界面Failure.java资源

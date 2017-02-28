@@ -48,6 +48,7 @@ public class Constant {
 
 	//选关界面
 	public static final String SELECT_WIDGET = "select_widget";
+	public static final String SELECT_BG = "select_bg";
 
 	//成功界面
 	public static final String SUCCESS_BG = "success_bg";

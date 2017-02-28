@@ -1,7 +1,6 @@
 package com.heyzqt.state;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -16,9 +15,6 @@ import com.heyzqt.xiyou.MyGdxGame;
  * 选关界面
  */
 public class Select extends GameState {
-
-	//背景
-	private Texture mBackground;
 
 	//四个关卡素材
 	private TextureAtlas mAtlas;
@@ -120,6 +116,7 @@ public class Select extends GameState {
 
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
+		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.SELECT_BG), 0, 0);
 		mBatch.end();
 
 		mStage.act();

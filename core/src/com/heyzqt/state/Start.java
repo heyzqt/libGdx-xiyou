@@ -1,6 +1,8 @@
 package com.heyzqt.state;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -85,6 +87,11 @@ public class Start extends GameState {
 				new TextureRegionDrawable(mAtlas.findRegion("backStartBtnDown")));
 		mBackButton.setPosition(500, 40);
 
+		//背景音乐
+		Music music = MyGdxGame.mAssetManager.getMusic(Constant.START_BG_MUSIC);
+		music.setLooping(true);
+		music.play();
+
 		//初始化监听
 		initListener();
 	}
@@ -99,6 +106,8 @@ public class Start extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND);
+				sound.play();
 				mGameStateManager.setState(GameStateManager.SELECT);
 			}
 		});
@@ -113,6 +122,8 @@ public class Start extends GameState {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				isStart = false;
+				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND);
+				sound.play();
 			}
 		});
 
@@ -137,6 +148,8 @@ public class Start extends GameState {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				isStart = true;
+				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND);
+				sound.play();
 			}
 		});
 	}

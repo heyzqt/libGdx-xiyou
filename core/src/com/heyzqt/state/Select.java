@@ -1,5 +1,6 @@
 package com.heyzqt.state;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -60,6 +61,8 @@ public class Select extends GameState {
 		mSouthDoorBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_SELECT_SOUND);
+				sound.play();
 				//进入第一关
 				Play.level = 0;
 				mGameStateManager.setState(GameStateManager.PLAY);
@@ -71,6 +74,11 @@ public class Select extends GameState {
 		mSouthPlaBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_SELECT_SOUND);
+				sound.play();
+				//进入第二关
+				Play.level = 1;
+				mGameStateManager.setState(GameStateManager.PLAY);
 				return true;
 			}
 		});
@@ -79,6 +87,11 @@ public class Select extends GameState {
 		mWestPlaBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_SELECT_SOUND);
+				sound.play();
+				//进入第三关
+				Play.level = 2;
+				mGameStateManager.setState(GameStateManager.PLAY);
 				return true;
 			}
 		});
@@ -87,6 +100,11 @@ public class Select extends GameState {
 		mNorthPlaBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_SELECT_SOUND);
+				sound.play();
+				//进入第四关
+				Play.level = 3;
+				mGameStateManager.setState(GameStateManager.PLAY);
 				return true;
 			}
 		});

@@ -47,12 +47,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		//加载字体
 		mAssetManager.loadFont();
 
+		//加载按钮音效
+		mAssetManager.loadSound("sound/btn_common.wav",Constant.BTN_COMMON_SOUND);
+		mAssetManager.loadSound("sound/btn_select.wav",Constant.BTN_SELECT_SOUND);
+
 		//加载开始界面Start.java资源
 		mAssetManager.loadTexture("background/start_bg.png", Constant.START_BG);
 		mAssetManager.loadTextureAtlas("widget/start_setting.atlas", Constant.START_SETTING);
+		mAssetManager.loadMusic("sound/bgm_main.mp3", Constant.START_BG_MUSIC);
 
 		//加载选关界面Select.java资源
-		mAssetManager.loadTextureAtlas("widget/select.atlas" , Constant.SELECT_WIDGET);
+		mAssetManager.loadTextureAtlas("widget/select.atlas", Constant.SELECT_WIDGET);
 
 		//加载失败界面Failure.java资源
 		mAssetManager.loadTexture("background/failure_bg.png", Constant.FAILURE_BG);
@@ -67,9 +72,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadTextureAtlas("widget/playBlood.atlas", Constant.PLAY_BLOOD);
 		mAssetManager.loadTexture("map/level_static_2_bg.png", Constant.PLAY_BG);
 		//加载孙悟空人物素材
-		mAssetManager.loadTextureAtlas("role/sun.atlas",Constant.SUN);
+		mAssetManager.loadTextureAtlas("role/sun.atlas", Constant.SUN);
 		//加载持刀天兵人物素材
-		mAssetManager.loadTextureAtlas("role/enemyDao.atlas",Constant.ENEMY_DAO_ROLE);
+		mAssetManager.loadTextureAtlas("role/enemyDao.atlas", Constant.ENEMY_DAO_ROLE);
 		mAssetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);
 	}
 

@@ -37,9 +37,14 @@ public class Constant {
 	/**
 	 * 资源名
 	 */
+	//btn_select.wav
+	public static final String BTN_COMMON_SOUND = "btn_common_sound";
+	public static final String BTN_SELECT_SOUND = "btn_select_sound";
+
 	//开始界面 设置界面
 	public static final String START_BG = "start_bg";
 	public static final String START_SETTING = "start_setting";
+	public static final String START_BG_MUSIC = "start_bg_music";
 
 	//选关界面
 	public static final String SELECT_WIDGET = "select_widget";

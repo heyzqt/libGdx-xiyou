@@ -52,6 +52,24 @@ public class Box2DContactListener implements ContactListener {
 		}
 
 		//持刀天兵攻击孙悟空
+		if (Utils.isContacted(fixtureA, fixtureB, "dao", "monkey")) {
+			EnemyDao enemy = (EnemyDao) fixtureA.getBody().getUserData();
+			//孙悟空被攻击次数+1
+			Play.mMonkey.attacks++;
+			//孙悟空被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					enemy.getBody().getPosition().x;
+			if (x > 0) {
+				Play.mMonkey.getBody().setLinearVelocity(1f, 0);
+			} else {
+				Play.mMonkey.getBody().setLinearVelocity(-1f, 0);
+			}
+
+			//攻击结束标志
+			enemy.isAttacked = true;
+		}
+
+		//持刀天兵攻击孙悟空
 		if (Utils.isContacted(fixtureA, fixtureB, "monkey", "dao")) {
 			EnemyDao enemy = (EnemyDao) fixtureB.getBody().getUserData();
 			//孙悟空被攻击次数+1

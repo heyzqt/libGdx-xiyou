@@ -124,7 +124,7 @@ public class EnemyDao extends BaseSprite implements Runnable {
 			//天兵与孙悟空x差值
 			float x = Play.mMonkey.getBody().getPosition().x - mBody.getPosition().x;
 			int time = (int) delta;
-			if (x < 100 / Constant.RATE && x > 0) {    //孙悟空在天兵右边 100 / Constant.RATE距离内
+			if (x < 100 / Constant.RATE && x > 0) {    //孙悟空在天兵右边1米
 				isContacted = true;
 				//设置状态动画
 				STATE = STATE_RIGHT_ATTACK;
@@ -143,7 +143,7 @@ public class EnemyDao extends BaseSprite implements Runnable {
 						isAttacked = false;
 					}
 				}
-			} else if ((-x) < 100 / Constant.RATE && (-x) > 0) {  //孙悟空在天兵左边 100 / Constant.RATE距离内
+			} else if ((-x) < 100 / Constant.RATE && (-x) > 0) {  //孙悟空在天兵左边1米
 				isContacted = true;
 				//设置状态动画
 				STATE = STATE_LEFT_ATTACK;

@@ -41,7 +41,7 @@ public class Failure extends GameState {
 	private String timeStr;
 
 	//等级
-	private int grades = 0;
+	public static int loseGrades = 0;
 
 	//画星级起始x坐标
 	public int distance = 225;
@@ -168,7 +168,7 @@ public class Failure extends GameState {
 
 		//画出亮的星星
 		int i = 0;
-		for (; i < grades; i++) {
+		for (; i < loseGrades; i++) {
 			mBatch.draw(mAtlasRegions[1], distance + i * 60, 213, 50, 60);
 		}
 		//画出暗的星星
@@ -193,13 +193,5 @@ public class Failure extends GameState {
 		mStage.getActors().clear();
 		//清空舞台
 		mStage.clear();
-	}
-
-	public int getGrades() {
-		return grades;
-	}
-
-	public void setGrades(int grades) {
-		this.grades = grades;
 	}
 }

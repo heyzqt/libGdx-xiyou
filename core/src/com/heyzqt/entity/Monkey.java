@@ -26,6 +26,10 @@ public class Monkey extends BaseSprite {
 	private TextureAtlas.AtlasRegion[] mLeftAttackState;
 	//右攻击状态图片集合
 	private TextureAtlas.AtlasRegion[] mRightAttackState;
+	//左边被击飞动画
+	private TextureAtlas.AtlasRegion[] mLeftHittedState;
+	//右边被击飞动画
+	private TextureAtlas.AtlasRegion[] mRightHittedState;
 
 	//孙悟空5种状态
 	public static int STATE;
@@ -35,7 +39,7 @@ public class Monkey extends BaseSprite {
 	public static int STATE_RIGHT = 4;            //右边行走
 	public static int STATE_LEFT_ATTACK = 5;            //左攻击
 	public static int STATE_RIGHT_ATTACK = 6;            //右攻击
-	public static int STATE_LEFT_HITED = 7;            //往左背击飞
+	public static int STATE_LEFT_HITED = 7;            //往左被击飞
 	public static int STATE_RIGHT_HITED = 8;            //往右被击飞
 
 	//击败敌人数目
@@ -43,11 +47,11 @@ public class Monkey extends BaseSprite {
 
 	//敌人总数
 	private int allEnemiesCount;
-	public int level_1_enemies = 4;		//第一关敌人总数
-	public int level_2_enemies = 4;		//第二关敌人总数
-	public int level_3_enemies = 4;		//第三关敌人总数
-	public int level_4_enemies = 4;		//第四关敌人总数
-	public int level_5_enemies = 4;		//第五关敌人总数
+	public int level_1_enemies = 4;        //第一关敌人总数
+	public int level_2_enemies = 4;        //第二关敌人总数
+	public int level_3_enemies = 4;        //第三关敌人总数
+	public int level_4_enemies = 4;        //第四关敌人总数
+	public int level_5_enemies = 4;        //第五关敌人总数
 
 	//被攻击次数
 	public int attacks = 0;
@@ -92,6 +96,16 @@ public class Monkey extends BaseSprite {
 		mRightAttackState = new TextureAtlas.AtlasRegion[2];
 		mRightAttackState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack1"));
 		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack2"));
+
+		//左边被击飞动画
+		mLeftHittedState = new TextureAtlas.AtlasRegion[2];
+		mLeftHittedState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftHited"));
+		mLeftHittedState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftHited"));
+
+		//右边被击飞动画
+		mRightHittedState = new TextureAtlas.AtlasRegion[2];
+		mRightHittedState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightHited"));
+		mRightHittedState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightHited"));
 	}
 
 	@Override
@@ -110,6 +124,10 @@ public class Monkey extends BaseSprite {
 			setAnimation(mLeftAttackState, 1 / 12f);
 		} else if (STATE == STATE_RIGHT_ATTACK) {
 			setAnimation(mRightAttackState, 1 / 12f);
+		} else if (STATE == STATE_LEFT_HITED) {
+			setAnimation(mLeftHittedState, 1 / 12f);
+		} else if (STATE == STATE_RIGHT_HITED) {
+			setAnimation(mRightHittedState, 1 / 12f);
 		}
 
 		//设置孙悟空一直是苏醒状态

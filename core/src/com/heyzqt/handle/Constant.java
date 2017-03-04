@@ -52,6 +52,7 @@ public class Constant {
 	public static final String START_BG = "start_bg";
 	public static final String START_SETTING = "start_setting";
 	public static final String START_BGM = "start_bgm";
+	public static final String SETTING_DIALOG = "setting_dialog";
 
 	//选关界面
 	public static final String SELECT_WIDGET = "select_widget";

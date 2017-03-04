@@ -3,59 +3,90 @@ start_setting.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+aboutBtnDown
+  rotate: false
+  xy: 1, 667
+  size: 560, 220
+  orig: 560, 220
+  offset: 0, 0
+  index: -1
+aboutBtnUp
+  rotate: false
+  xy: 1, 445
+  size: 560, 220
+  orig: 560, 220
+  offset: 0, 0
+  index: -1
+backStartBtnDown
+  rotate: false
+  xy: 1, 223
+  size: 560, 220
+  orig: 560, 220
+  offset: 0, 0
+  index: -1
+backStartBtnUp
+  rotate: false
+  xy: 1, 1
+  size: 560, 220
+  orig: 560, 220
+  offset: 0, 0
+  index: -1
+close
+  rotate: false
+  xy: 563, 855
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+
+start_setting2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+musicBtnOff
+  rotate: false
+  xy: 1, 627
+  size: 560, 220
+  orig: 560, 220
+  offset: 0, 0
+  index: -1
+musicBtnOn
+  rotate: false
+  xy: 1, 405
+  size: 560, 220
+  orig: 560, 220
+  offset: 0, 0
+  index: -1
 settingBtnDown
   rotate: false
-  xy: 1, 732
+  xy: 1, 203
   size: 560, 200
   orig: 560, 200
   offset: 0, 0
   index: -1
 settingBtnUp
   rotate: false
-  xy: 1, 530
+  xy: 1, 1
+  size: 560, 200
+  orig: 560, 200
+  offset: 0, 0
+  index: -1
+
+start_setting3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+startBtnDown
+  rotate: false
+  xy: 1, 203
   size: 560, 200
   orig: 560, 200
   offset: 0, 0
   index: -1
 startBtnUp
   rotate: false
-  xy: 1, 328
-  size: 560, 200
-  orig: 560, 200
-  offset: 0, 0
-  index: -1
-startBtnDown
-  rotate: false
-  xy: 1, 126
-  size: 560, 200
-  orig: 560, 200
-  offset: 0, 0
-  index: -1
-backStartBtnDown
-  rotate: false
-  xy: 563, 875
-  size: 224, 57
-  orig: 224, 57
-  offset: 0, 0
-  index: -1
-backStartBtnUp
-  rotate: false
-  xy: 1, 67
-  size: 224, 57
-  orig: 224, 57
-  offset: 0, 0
-  index: -1
-checkOff
-  rotate: false
-  xy: 563, 809
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-checkOn
-  rotate: false
   xy: 1, 1
-  size: 64, 64
-  orig: 64, 64
+  size: 560, 200
+  orig: 560, 200
   offset: 0, 0
   index: -1

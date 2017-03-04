@@ -10,12 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.widget.SettingDialog;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**
@@ -33,12 +33,11 @@ public class Start extends GameState {
 
 	//设置界面
 	//是否打开音乐
-	private Label mSoundLabel;
 	private CheckBox mCheckBox;
 	public static boolean isPlay = true;
 	//关于我们
-	private Label mAboutUSLab;
-	private Label mAboutCont;
+	private ImageButton mAboutBtn;
+	private SettingDialog mSettingDialog;
 	//返回主界面按钮
 	private ImageButton mBackButton;
 
@@ -46,6 +45,8 @@ public class Start extends GameState {
 	 * 判断当前界面 true 开始界面 false 设置界面
 	 */
 	public static boolean isStart = true;
+
+	public static boolean isShowDialog = false;
 
 	public Start(GameStateManager gsm) {
 		super(gsm);
@@ -66,16 +67,13 @@ public class Start extends GameState {
 		mSettingBtn.setPosition(mGame.VIEW_WIDTH / 2 + 26, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 180);
 
 		//设置界面初始化 - 是否打开音效
-		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont()
-				, Constant.MAIN_COLOR);
-		mSoundLabel = new Label("是否打开音乐:", style);
-		mSoundLabel.setPosition(400, 220);
-		Drawable checkOn = new TextureRegionDrawable(mAtlas.findRegion("checkOn"));
-		Drawable checkOff = new TextureRegionDrawable(mAtlas.findRegion("checkOff"));
+		Drawable checkOn = new TextureRegionDrawable(mAtlas.findRegion("musicBtnOn"));
+		Drawable checkOff = new TextureRegionDrawable(mAtlas.findRegion("musicBtnOff"));
 		CheckBox.CheckBoxStyle boxStyle = new CheckBox.CheckBoxStyle(checkOff, checkOn,
 				MyGdxGame.mAssetManager.getFont(), Color.BLUE);
 		mCheckBox = new CheckBox("", boxStyle);
-		mCheckBox.setPosition(720, 220);
+		mCheckBox.setSize(255, 100);
+		mCheckBox.setPosition(mGame.VIEW_WIDTH / 2 + 38, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 40);
 		if (isPlay) {
 			mCheckBox.setChecked(true);
 		} else {
@@ -83,15 +81,17 @@ public class Start extends GameState {
 		}
 
 		//设置界面初始化 - 关于我们
-		mAboutUSLab = new Label("关于游戏：", style);
-		mAboutCont = new Label("游戏名：大话西游之大闹天宫; 版本号 1.0; 开发者：张晴", style);
-		mAboutCont.setFontScale(0.6f);
-		mAboutUSLab.setPosition(400, 145);
-		mAboutCont.setPosition(460, 100);
+		mAboutBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("aboutBtnUp")),
+				new TextureRegionDrawable(mAtlas.findRegion("aboutBtnDown")));
+		mAboutBtn.setSize(280, 100);
+		mAboutBtn.setPosition(mGame.VIEW_WIDTH / 2 + 26, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 110);
+		mSettingDialog = new SettingDialog(MyGdxGame.VIEW_WIDTH / 2, MyGdxGame.VIEW_HEIGHT / 2);
+
 		//设置界面初始化 - 返回按钮
 		mBackButton = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("backStartBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("backStartBtnDown")));
-		mBackButton.setPosition(500, 40);
+		mBackButton.setSize(280, 100);
+		mBackButton.setPosition(mGame.VIEW_WIDTH / 2 + 26, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 180);
 
 		//背景音乐
 		Music music = MyGdxGame.mAssetManager.getMusic(Constant.START_BGM);
@@ -133,6 +133,21 @@ public class Start extends GameState {
 			}
 		});
 
+		//关于按钮
+		mAboutBtn.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				isShowDialog = true;
+			}
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				//这里必须要touchDown()方法返回true 否则对话框无法显示
+				return true;
+			}
+		});
+
+		//是否打开音乐
 		mCheckBox.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -171,11 +186,13 @@ public class Start extends GameState {
 			mStage.addActor(mStartBtn);
 			mStage.addActor(mSettingBtn);
 		} else {    //设置界面
-			mStage.addActor(mSoundLabel);
 			mStage.addActor(mCheckBox);
-			mStage.addActor(mAboutUSLab);
-			mStage.addActor(mAboutCont);
+			mStage.addActor(mAboutBtn);
 			mStage.addActor(mBackButton);
+			if (isShowDialog) {
+				mStage.addActor(mSettingDialog.mWindow);
+				mStage.addActor(mSettingDialog.mBackBtn);
+			}
 		}
 
 		//更新音乐状态

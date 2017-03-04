@@ -242,6 +242,8 @@ public class Play extends GameState {
 				if (mStandFix != null) {
 					mBody.destroyFixture(mStandFix);
 				}
+				//设置速度为0
+				mBody.setLinearVelocity(0, 0);
 
 				//创建攻击传感器 stick
 				PolygonShape shape = new PolygonShape();
@@ -272,10 +274,16 @@ public class Play extends GameState {
 					mBody.destroyFixture(mFixture);
 				}
 
-				//将状态置为左静止或右静止状态
-				if (Monkey.STATE == Monkey.STATE_RIGHT_ATTACK) {
+				//设置孙悟空在攻击完后的状态
+				if (mRightBtn.isPressed()) {
+					Monkey.STATE = Monkey.STATE_RIGHT;
+					mBody.setLinearVelocity(1f, 0);
+				} else if (mLeftBtn.isPressed()) {
+					Monkey.STATE = Monkey.STATE_LEFT;
+					mBody.setLinearVelocity(-1f, 0);
+				} else if (Monkey.STATE == Monkey.STATE_RIGHT_ATTACK) {
 					Monkey.STATE = Monkey.STATE_IDEL_RIGHT;
-				} else {
+				} else if (Monkey.STATE == Monkey.STATE_LEFT_ATTACK) {
 					Monkey.STATE = Monkey.STATE_IDEL_LEFT;
 				}
 

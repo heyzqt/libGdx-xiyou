@@ -113,6 +113,20 @@ public class Box2DContactListener implements ContactListener {
 				Monkey.STATE = Monkey.STATE_IDEL_RIGHT;
 			}
 		}
+
+		//持刀天兵击飞孙悟空结束后 孙悟空速度重置为0
+		if (Utils.isContacted(fixtureA, fixtureB, "dao", "monkey")) {
+			Play.mMonkey.getBody().setLinearVelocity(0, 0);
+			EnemyDao enemy = (EnemyDao) fixtureA.getBody().getUserData();
+			//孙悟空被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					enemy.getBody().getPosition().x;
+			if (x > 0) {
+				Monkey.STATE = Monkey.STATE_IDEL_RIGHT;
+			} else {
+				Monkey.STATE = Monkey.STATE_IDEL_LEFT;
+			}
+		}
 	}
 
 	@Override

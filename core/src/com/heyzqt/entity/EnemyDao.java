@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.State;
 import com.heyzqt.state.Play;
 import com.heyzqt.xiyou.MyGdxGame;
 
@@ -20,6 +21,10 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	//天兵图片集合
 	private TextureAtlas mAtlas;
 
+	//左停止状态图片集合
+	private TextureAtlas.AtlasRegion[] mLeftStandState;
+	//右停止状态图片集合
+	private TextureAtlas.AtlasRegion[] mRightStandState;
 	//右走状态图片集合
 	private TextureAtlas.AtlasRegion[] mRightState;
 	//左走状态图片集合
@@ -28,19 +33,22 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	private TextureAtlas.AtlasRegion[] mLeftAttackState;
 	//右攻击图片集合
 	private TextureAtlas.AtlasRegion[] mRightAttackState;
+	//左边被击飞动画
+	private TextureAtlas.AtlasRegion[] mLeftHittedState;
+	//右边被击飞动画
+	private TextureAtlas.AtlasRegion[] mRightHittedState;
 
-	//天兵3种状态
+	//天兵状态
 	public int STATE;
-	public static int STATE_LEFT = 1;    //左行走
-	public static int STATE_RIGHT = 2;   //右行走
-	public static int STATE_LEFT_ATTACK = 3;    //左攻击
-	public static int STATE_RIGHT_ATTACK = 4;    //右攻击
 
 	//天兵是否存活
 	private boolean isLive = true;
 
 	//天兵与孙悟空是否接触
 	private boolean isContacted = false;
+
+	//是否击中孙悟空
+	public boolean isHittedSun = false;
 
 	//攻击是否完成
 	public boolean isAttacked = false;
@@ -61,9 +69,18 @@ public class EnemyDao extends BaseSprite implements Runnable {
 
 		super(body);
 
-		STATE = STATE_LEFT;
+		STATE = State.STATE_LEFT;
 
 		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_DAO_ROLE);
+
+		//初始化静止图片
+		mLeftStandState = new TextureAtlas.AtlasRegion[2];
+		mLeftStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftStand"));
+		mLeftStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftStand"));
+
+		mRightStandState = new TextureAtlas.AtlasRegion[2];
+		mRightStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightStand"));
+		mRightStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightStand"));
 
 		//初始化右走图片
 		mRightState = new TextureAtlas.AtlasRegion[3];
@@ -78,16 +95,28 @@ public class EnemyDao extends BaseSprite implements Runnable {
 		mLeftState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW2"));
 
 		//初始化左攻击图片
-		mLeftAttackState = new TextureAtlas.AtlasRegion[3];
+		mLeftAttackState = new TextureAtlas.AtlasRegion[4];
 		mLeftAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftAttack1"));
-		mLeftAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW1"));
-		mLeftAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW2"));
+		mLeftAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftAttack2"));
+		mLeftAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftAttack3"));
+		mLeftAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftAttack3"));
 
 		//初始化右攻击图片
-		mRightAttackState = new TextureAtlas.AtlasRegion[3];
+		mRightAttackState = new TextureAtlas.AtlasRegion[4];
 		mRightAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightAttack1"));
-		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightW1"));
-		mRightAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightW2"));
+		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightAttack2"));
+		mRightAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightAttack3"));
+		mRightAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightAttack4"));
+
+		//左边被击飞动画
+		mLeftHittedState = new TextureAtlas.AtlasRegion[2];
+		mLeftHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftHitted"));
+		mLeftHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftHitted"));
+
+		//右边被击飞动画
+		mRightHittedState = new TextureAtlas.AtlasRegion[2];
+		mRightHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightHitted"));
+		mRightHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightHitted"));
 
 		//左传感器 dao
 		PolygonShape shapeLeft = new PolygonShape();
@@ -126,53 +155,81 @@ public class EnemyDao extends BaseSprite implements Runnable {
 			int time = (int) delta;
 			if (x < 100 / Constant.RATE && x > 0) {    //孙悟空在天兵右边1米
 				isContacted = true;
-				//设置状态动画
-				STATE = STATE_RIGHT_ATTACK;
 				mBody.setLinearVelocity(0, 0);
-				setAnimation(mRightAttackState, 1 / 12f);
 				//每隔2秒攻击一次
 				if (time > preTime && time % 2 == 0 && mRightFixture == null && !isAttacked) {
 					mRightFixture = mBody.createFixture(mRightFixDef);
 					mRightFixture.setUserData("dao");
 					preTime = time;
+					//设置状态动画
+					STATE = State.STATE_RIGHT_ATTACK;
+					setAnimation(mRightAttackState, 0.2f);
 				} else {
 					//如果右武器不为空且攻击结束则清理
 					if (mRightFixture != null && isAttacked) {
 						mBody.destroyFixture(mRightFixture);
 						mRightFixture = null;
 						isAttacked = false;
+						//设置状态动画
+						STATE = State.STATE_IDEL_RIGHT;
+						setAnimation(mRightStandState, 1 / 12f);
 					}
 				}
 			} else if ((-x) < 100 / Constant.RATE && (-x) > 0) {  //孙悟空在天兵左边1米
 				isContacted = true;
-				//设置状态动画
-				STATE = STATE_LEFT_ATTACK;
 				mBody.setLinearVelocity(0, 0);
-				setAnimation(mLeftAttackState, 1 / 12f);
 				//每隔2秒攻击一次
 				if (time > preTime && time % 2 == 0 && mLeftFixture == null && !isAttacked) {
 					mLeftFixture = mBody.createFixture(mLeftFixDef);
 					mLeftFixture.setUserData("dao");
 					preTime = time;
+					//设置状态动画
+					STATE = State.STATE_LEFT_ATTACK;
+					setAnimation(mLeftAttackState, 0.2f);
 				} else {
 					//如果左武器不为空且攻击结束则清理
 					if (mLeftFixture != null && isAttacked) {
 						mBody.destroyFixture(mLeftFixture);
 						mLeftFixture = null;
 						isAttacked = false;
+						//设置状态动画
+						STATE = State.STATE_IDEL_LEFT;
+						setAnimation(mLeftStandState, 1 / 12f);
 					}
 				}
 			} else {
 				isContacted = false;
-				if (mLeftFixture != null && isAttacked) {
+				if (mLeftFixture != null) {
 					mBody.destroyFixture(mLeftFixture);
 					mLeftFixture = null;
 					isAttacked = false;
 				}
-				if (mRightFixture != null && isAttacked) {
+				if (mRightFixture != null) {
 					mBody.destroyFixture(mRightFixture);
 					mRightFixture = null;
 					isAttacked = false;
+				}
+			}
+
+			//设置天兵被击中状态
+			if (STATE == State.STATE_LEFT_HITED) {
+				setAnimation(mLeftHittedState, 1 / 12f);
+			} else if (STATE == State.STATE_RIGHT_HITED) {
+				setAnimation(mRightHittedState, 1 / 12f);
+			}
+
+			//孙悟空被击飞过程检测孙悟空位置 修改孙悟空状态
+			if (Monkey.STATE == State.STATE_LEFT_HITED) {
+				if (isHittedSun && x >= 300 / Constant.RATE) {
+					Monkey.STATE = State.STATE_IDEL_LEFT;
+					Play.mMonkey.getBody().setLinearVelocity(0, 0);
+					isHittedSun = false;
+				}
+			} else if (Monkey.STATE == State.STATE_RIGHT_HITED) {
+				if (isHittedSun && (-x) >= 300 / Constant.RATE) {
+					Monkey.STATE = State.STATE_IDEL_RIGHT;
+					Play.mMonkey.getBody().setLinearVelocity(0, 0);
+					isHittedSun = false;
 				}
 			}
 		}
@@ -202,8 +259,8 @@ public class EnemyDao extends BaseSprite implements Runnable {
 			}
 
 			if (!isContacted) {
-				//给刀兵随机产生一个往左或往右的方向 产生随机数[1,2]
-				STATE = (int) (Math.random() * 2) + 1;
+				//给刀兵随机产生一个往左或往右的方向 产生随机数[3,4]
+				STATE = (int) (Math.random() * 2) + 3;
 			}
 		}
 	}
@@ -228,18 +285,29 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	 * 设置状态动画
 	 */
 	private void setStateAnimation() {
-		if (STATE == STATE_RIGHT_ATTACK) {
+
+		if (STATE == State.STATE_RIGHT_ATTACK) {
 			mBody.setLinearVelocity(0, 0);
 			setAnimation(mRightAttackState, 1 / 12f);
-		} else if (STATE == STATE_LEFT_ATTACK) {
+		} else if (STATE == State.STATE_LEFT_ATTACK) {
 			mBody.setLinearVelocity(0, 0);
 			setAnimation(mLeftAttackState, 1 / 12f);
-		} else if (STATE == STATE_LEFT) {
+		} else if (STATE == State.STATE_LEFT) {
 			setAnimation(mLeftState, 1 / 12f);
 			mBody.setLinearVelocity(-0.2f, 0);
-		} else if (STATE == STATE_RIGHT) {
+		} else if (STATE == State.STATE_RIGHT) {
 			setAnimation(mRightState, 1 / 12f);
 			mBody.setLinearVelocity(0.2f, 0);
+		} else if (STATE == State.STATE_IDEL_LEFT) {
+			setAnimation(mLeftStandState, 1 / 12f);
+			mBody.setLinearVelocity(0f, 0);
+		} else if (STATE == State.STATE_IDEL_RIGHT) {
+			setAnimation(mRightStandState, 1 / 12f);
+			mBody.setLinearVelocity(0f, 0);
+		} else if (STATE == State.STATE_LEFT_HITED) {
+			setAnimation(mLeftHittedState, 1 / 12f);
+		} else if (STATE == State.STATE_LEFT_HITED) {
+			setAnimation(mRightHittedState, 1 / 12f);
 		}
 	}
 }

@@ -3,6 +3,7 @@ package com.heyzqt.entity;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.State;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**
@@ -31,16 +32,8 @@ public class Monkey extends BaseSprite {
 	//右边被击飞动画
 	private TextureAtlas.AtlasRegion[] mRightHittedState;
 
-	//孙悟空5种状态
+	//孙悟空状态
 	public static int STATE;
-	public static int STATE_IDEL_LEFT = 1;        //左边站立
-	public static int STATE_IDEL_RIGHT = 2;        //右边站立
-	public static int STATE_LEFT = 3;            //左边行走
-	public static int STATE_RIGHT = 4;            //右边行走
-	public static int STATE_LEFT_ATTACK = 5;            //左攻击
-	public static int STATE_RIGHT_ATTACK = 6;            //右攻击
-	public static int STATE_LEFT_HITED = 7;            //往左被击飞
-	public static int STATE_RIGHT_HITED = 8;            //往右被击飞
 
 	//击败敌人数目
 	private int enemyCount;
@@ -62,7 +55,7 @@ public class Monkey extends BaseSprite {
 	public Monkey(Body body) {
 		super(body);
 
-		STATE = STATE_IDEL_RIGHT;
+		STATE = State.STATE_IDEL_RIGHT;
 
 		mMonkeyAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.SUN);
 
@@ -98,9 +91,10 @@ public class Monkey extends BaseSprite {
 		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack2"));
 
 		//左边被击飞动画
-		mLeftHittedState = new TextureAtlas.AtlasRegion[2];
+		mLeftHittedState = new TextureAtlas.AtlasRegion[3];
 		mLeftHittedState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftHited"));
 		mLeftHittedState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftHited"));
+		mLeftHittedState[2] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftHited"));
 
 		//右边被击飞动画
 		mRightHittedState = new TextureAtlas.AtlasRegion[2];
@@ -110,23 +104,23 @@ public class Monkey extends BaseSprite {
 
 	@Override
 	public void update(float delta) {
-		if (STATE == STATE_IDEL_RIGHT || STATE == STATE_IDEL_LEFT) {
-			if (STATE == STATE_IDEL_RIGHT) {
+		if (STATE == State.STATE_IDEL_RIGHT || STATE == State.STATE_IDEL_LEFT) {
+			if (STATE == State.STATE_IDEL_RIGHT) {
 				setAnimation(mRightStandState, 1 / 12f);
 			} else {
 				setAnimation(mLeftStandState, 1 / 12f);
 			}
-		} else if (STATE == STATE_LEFT) {
+		} else if (STATE == State.STATE_LEFT) {
 			setAnimation(mLeftState, 1 / 12f);
-		} else if (STATE == STATE_RIGHT) {
+		} else if (STATE == State.STATE_RIGHT) {
 			setAnimation(mRightState, 1 / 12f);
-		} else if (STATE == STATE_LEFT_ATTACK) {
+		} else if (STATE == State.STATE_LEFT_ATTACK) {
 			setAnimation(mLeftAttackState, 1 / 12f);
-		} else if (STATE == STATE_RIGHT_ATTACK) {
+		} else if (STATE == State.STATE_RIGHT_ATTACK) {
 			setAnimation(mRightAttackState, 1 / 12f);
-		} else if (STATE == STATE_LEFT_HITED) {
+		} else if (STATE == State.STATE_LEFT_HITED) {
 			setAnimation(mLeftHittedState, 1 / 12f);
-		} else if (STATE == STATE_RIGHT_HITED) {
+		} else if (STATE == State.STATE_RIGHT_HITED) {
 			setAnimation(mRightHittedState, 1 / 12f);
 		}
 

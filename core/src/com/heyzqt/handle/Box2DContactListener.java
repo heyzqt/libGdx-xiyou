@@ -43,8 +43,10 @@ public class Box2DContactListener implements ContactListener {
 					enemyDao.getBody().getPosition().x;
 			if (x < 0) {
 				enemyDao.getBody().setLinearVelocity(1f, 0);
+				enemyDao.STATE = State.STATE_LEFT_HITED;
 			} else {
 				enemyDao.getBody().setLinearVelocity(-1f, 0);
+				enemyDao.STATE = State.STATE_RIGHT_HITED;
 			}
 			//天兵被攻击2次后死亡
 			if (enemyDao.attacks == 2) {
@@ -61,11 +63,13 @@ public class Box2DContactListener implements ContactListener {
 			float x = Play.mMonkey.getBody().getPosition().x -
 					enemy.getBody().getPosition().x;
 			if (x > 0) {
+				enemy.isHittedSun = true;
+				Monkey.STATE = State.STATE_LEFT_HITED;
 				Play.mMonkey.getBody().setLinearVelocity(1f, 0);
-				Monkey.STATE = Monkey.STATE_LEFT_HITED;
 			} else {
+				enemy.isHittedSun = true;
+				Monkey.STATE = State.STATE_RIGHT_HITED;
 				Play.mMonkey.getBody().setLinearVelocity(-1f, 0);
-				Monkey.STATE = Monkey.STATE_RIGHT_HITED;
 			}
 
 			//攻击结束标志
@@ -81,11 +85,13 @@ public class Box2DContactListener implements ContactListener {
 			float x = Play.mMonkey.getBody().getPosition().x -
 					enemy.getBody().getPosition().x;
 			if (x > 0) {
+				enemy.isHittedSun = true;
+				Monkey.STATE = State.STATE_LEFT_HITED;
 				Play.mMonkey.getBody().setLinearVelocity(1f, 0);
-				Monkey.STATE = Monkey.STATE_LEFT_HITED;
 			} else {
+				enemy.isHittedSun = true;
+				Monkey.STATE = State.STATE_RIGHT_HITED;
 				Play.mMonkey.getBody().setLinearVelocity(-1f, 0);
-				Monkey.STATE = Monkey.STATE_RIGHT_HITED;
 			}
 
 			//攻击结束标志
@@ -99,34 +105,6 @@ public class Box2DContactListener implements ContactListener {
 		Fixture fixtureA = contact.getFixtureA();
 		//获取刚体碰撞夹具B
 		Fixture fixtureB = contact.getFixtureB();
-
-		//持刀天兵击飞孙悟空结束后 孙悟空速度重置为0
-		if (Utils.isContacted(fixtureA, fixtureB, "monkey", "dao")) {
-			Play.mMonkey.getBody().setLinearVelocity(0, 0);
-			EnemyDao enemy = (EnemyDao) fixtureB.getBody().getUserData();
-			//孙悟空被击飞
-			float x = Play.mMonkey.getBody().getPosition().x -
-					enemy.getBody().getPosition().x;
-			if (x > 0) {
-				Monkey.STATE = Monkey.STATE_IDEL_LEFT;
-			} else {
-				Monkey.STATE = Monkey.STATE_IDEL_RIGHT;
-			}
-		}
-
-		//持刀天兵击飞孙悟空结束后 孙悟空速度重置为0
-		if (Utils.isContacted(fixtureA, fixtureB, "dao", "monkey")) {
-			Play.mMonkey.getBody().setLinearVelocity(0, 0);
-			EnemyDao enemy = (EnemyDao) fixtureA.getBody().getUserData();
-			//孙悟空被击飞
-			float x = Play.mMonkey.getBody().getPosition().x -
-					enemy.getBody().getPosition().x;
-			if (x > 0) {
-				Monkey.STATE = Monkey.STATE_IDEL_RIGHT;
-			} else {
-				Monkey.STATE = Monkey.STATE_IDEL_LEFT;
-			}
-		}
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import com.heyzqt.entity.EnemyDao;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.State;
 import com.heyzqt.handle.Utils;
 import com.heyzqt.xiyou.MyGdxGame;
 
@@ -204,7 +205,7 @@ public class Play extends GameState {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				//添加一个水平方向速度
 				mBody.setLinearVelocity(-1f, 0);
-				Monkey.STATE = Monkey.STATE_LEFT;
+				Monkey.STATE = State.STATE_LEFT;
 				return true;
 			}
 
@@ -212,7 +213,7 @@ public class Play extends GameState {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				//添加一个水平方向速度
 				mBody.setLinearVelocity(0f, 0);
-				Monkey.STATE = Monkey.STATE_IDEL_LEFT;
+				Monkey.STATE = State.STATE_IDEL_LEFT;
 			}
 		});
 
@@ -220,14 +221,14 @@ public class Play extends GameState {
 		mRightBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Monkey.STATE = Monkey.STATE_RIGHT;
+				Monkey.STATE = State.STATE_RIGHT;
 				mBody.setLinearVelocity(1f, 0);
 				return true;
 			}
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Monkey.STATE = Monkey.STATE_IDEL_RIGHT;
+				Monkey.STATE = State.STATE_IDEL_RIGHT;
 				mBody.setLinearVelocity(0, 0);
 			}
 		});
@@ -247,13 +248,13 @@ public class Play extends GameState {
 
 				//创建攻击传感器 stick
 				PolygonShape shape = new PolygonShape();
-				if (Monkey.STATE == Monkey.STATE_RIGHT ||
-						Monkey.STATE == Monkey.STATE_IDEL_RIGHT) {
-					Monkey.STATE = Monkey.STATE_RIGHT_ATTACK;
+				if (Monkey.STATE == State.STATE_RIGHT ||
+						Monkey.STATE == State.STATE_IDEL_RIGHT || Monkey.STATE == State.STATE_RIGHT_HITED) {
+					Monkey.STATE = State.STATE_RIGHT_ATTACK;
 					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
 							, new Vector2(60 / Constant.RATE, 0), 0);
 				} else {
-					Monkey.STATE = Monkey.STATE_LEFT_ATTACK;
+					Monkey.STATE = State.STATE_LEFT_ATTACK;
 					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
 							, new Vector2(-60 / Constant.RATE, 0), 0);
 				}
@@ -276,15 +277,15 @@ public class Play extends GameState {
 
 				//设置孙悟空在攻击完后的状态
 				if (mRightBtn.isPressed()) {
-					Monkey.STATE = Monkey.STATE_RIGHT;
+					Monkey.STATE = State.STATE_RIGHT;
 					mBody.setLinearVelocity(1f, 0);
 				} else if (mLeftBtn.isPressed()) {
-					Monkey.STATE = Monkey.STATE_LEFT;
+					Monkey.STATE = State.STATE_LEFT;
 					mBody.setLinearVelocity(-1f, 0);
-				} else if (Monkey.STATE == Monkey.STATE_RIGHT_ATTACK) {
-					Monkey.STATE = Monkey.STATE_IDEL_RIGHT;
-				} else if (Monkey.STATE == Monkey.STATE_LEFT_ATTACK) {
-					Monkey.STATE = Monkey.STATE_IDEL_LEFT;
+				} else if (Monkey.STATE == State.STATE_RIGHT_ATTACK) {
+					Monkey.STATE = State.STATE_IDEL_RIGHT;
+				} else if (Monkey.STATE == State.STATE_LEFT_ATTACK) {
+					Monkey.STATE = State.STATE_IDEL_LEFT;
 				}
 
 				//重新初始化孙悟空的monkey传感器

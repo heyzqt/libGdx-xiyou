@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
+import com.heyzqt.entity.Boss;
 import com.heyzqt.entity.EnemyDao;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.state.Play;
@@ -96,6 +97,50 @@ public class Box2DContactListener implements ContactListener {
 
 			//攻击结束标志
 			enemy.isAttacked = true;
+		}
+
+		//Boss攻击孙悟空
+		if (Utils.isContacted(fixtureA, fixtureB, "weapon", "monkey")) {
+			Boss boss = (Boss) fixtureA.getBody().getUserData();
+			//孙悟空被攻击次数+1
+			Play.mMonkey.attacks++;
+			//孙悟空被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					boss.getBody().getPosition().x;
+			if (x > 0) {
+				boss.isHittedSun = true;
+				Monkey.STATE = State.STATE_LEFT_HITED;
+				Play.mMonkey.getBody().setLinearVelocity(1f, 0);
+			} else {
+				boss.isHittedSun = true;
+				Monkey.STATE = State.STATE_RIGHT_HITED;
+				Play.mMonkey.getBody().setLinearVelocity(-1f, 0);
+			}
+
+			//攻击结束标志
+			boss.isAttacked = true;
+		}
+
+		//Boss攻击孙悟空
+		if (Utils.isContacted(fixtureA, fixtureB, "monkey", "weapon")) {
+			Boss boss = (Boss) fixtureB.getBody().getUserData();
+			//孙悟空被攻击次数+1
+			Play.mMonkey.attacks++;
+			//孙悟空被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					boss.getBody().getPosition().x;
+			if (x > 0) {
+				boss.isHittedSun = true;
+				Monkey.STATE = State.STATE_LEFT_HITED;
+				Play.mMonkey.getBody().setLinearVelocity(1f, 0);
+			} else {
+				boss.isHittedSun = true;
+				Monkey.STATE = State.STATE_RIGHT_HITED;
+				Play.mMonkey.getBody().setLinearVelocity(-1f, 0);
+			}
+
+			//攻击结束标志
+			boss.isAttacked = true;
 		}
 	}
 

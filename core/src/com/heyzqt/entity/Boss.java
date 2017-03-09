@@ -113,24 +113,24 @@ public class Boss extends BaseSprite implements Runnable {
 		mRightHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightHitted"));
 		mRightHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightHitted"));
 
-		//左传感器Fixture chui
+		//左传感器Fixture weapon
 		PolygonShape shapeLeft = new PolygonShape();
 		shapeLeft.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
 				, new Vector2(-60 / Constant.RATE, 0), 0);
 		mLeftFixDef = new FixtureDef();
 		mLeftFixDef.shape = shapeLeft;
 		mLeftFixDef.isSensor = true;
-		mLeftFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+		mLeftFixDef.filter.categoryBits = Constant.BOSS;
 		mLeftFixDef.filter.maskBits = Constant.PLAYER;
 
-		//右传感器Fixture chui
+		//右传感器Fixture weapon
 		PolygonShape shapeRight = new PolygonShape();
 		mRightFixDef = new FixtureDef();
 		shapeRight.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
 				, new Vector2(60 / Constant.RATE, 0), 0);
 		mRightFixDef.shape = shapeRight;
 		mRightFixDef.isSensor = true;
-		mRightFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+		mRightFixDef.filter.categoryBits = Constant.BOSS;
 		mRightFixDef.filter.maskBits = Constant.PLAYER;
 
 		//设置状态动画
@@ -170,7 +170,7 @@ public class Boss extends BaseSprite implements Runnable {
 				//每隔2秒攻击一次
 				if (time > preTime && time % 2 == 0 && mRightFixture == null && !isAttacked) {
 					mRightFixture = mBody.createFixture(mRightFixDef);
-					mRightFixture.setUserData("chui");
+					mRightFixture.setUserData("weapon");
 					preTime = time;
 					//设置状态动画
 					STATE = State.STATE_RIGHT_ATTACK;
@@ -192,7 +192,7 @@ public class Boss extends BaseSprite implements Runnable {
 				//每隔2秒攻击一次
 				if (time > preTime && time % 2 == 0 && mLeftFixture == null && !isAttacked) {
 					mLeftFixture = mBody.createFixture(mLeftFixDef);
-					mLeftFixture.setUserData("chui");
+					mLeftFixture.setUserData("weapon");
 					preTime = time;
 					//设置状态动画
 					STATE = State.STATE_LEFT_ATTACK;

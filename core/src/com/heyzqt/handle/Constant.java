@@ -34,7 +34,7 @@ public class Constant {
 	//持弓碰撞属性
 	public static final short ENEMY_GONG = 32;
 	//巨灵神碰撞属性
-	public static final short BOSS_JULING = 8;
+	public static final short BOSS = 8;
 
 	/**
 	 * 资源名

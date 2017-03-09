@@ -418,7 +418,7 @@ public class Play extends GameState {
 			polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
 			bossFixDef.shape = polygonShape;
 			bossFixDef.isSensor = true;
-			bossFixDef.filter.categoryBits = Constant.BOSS_JULING;
+			bossFixDef.filter.categoryBits = Constant.BOSS;
 			bossFixDef.filter.maskBits = Constant.PLAYER;
 
 			//设置位置
@@ -429,7 +429,7 @@ public class Play extends GameState {
 			//创建脚传感器 foot
 			polygonShape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -58 / Constant.RATE), 0);
 			bossFixDef.shape = polygonShape;
-			bossFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+			bossFixDef.filter.categoryBits = Constant.BOSS;
 			bossFixDef.filter.maskBits = Constant.BLOCK;
 			bossFixDef.isSensor = false;
 			bossBody.createFixture(bossFixDef).setUserData("bossFoot");

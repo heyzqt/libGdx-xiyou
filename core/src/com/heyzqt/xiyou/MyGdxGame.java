@@ -59,7 +59,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadMusic("sound/bgm_main.mp3", Constant.START_BGM);
 
 		//加载设置界面对话框
-		mAssetManager.loadTexture("background/aboutDialog.png",Constant.SETTING_DIALOG);
+		mAssetManager.loadTexture("background/aboutDialog.png", Constant.SETTING_DIALOG);
 
 
 		//加载选关界面Select.java资源
@@ -84,6 +84,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadTextureAtlas("role/sun.atlas", Constant.SUN);
 		//加载持刀天兵人物素材
 		mAssetManager.loadTextureAtlas("role/enemyDao.atlas", Constant.ENEMY_DAO_ROLE);
+		//加载巨灵神任务素材
+		mAssetManager.loadTextureAtlas("role/julingBoss.atlas", Constant.JULING_BOSS_ROLE);
+		//加载游戏摇杆素材
 		mAssetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);
 	}
 

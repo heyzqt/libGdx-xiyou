@@ -33,6 +33,8 @@ public class Constant {
 	public static final short ENEMY_QIANG = 16;
 	//持弓碰撞属性
 	public static final short ENEMY_GONG = 32;
+	//巨灵神碰撞属性
+	public static final short BOSS_JULING = 8;
 
 	/**
 	 * 资源名
@@ -71,6 +73,7 @@ public class Constant {
 	//游戏界面
 	public static final String SUN = "sun";
 	public static final String ENEMY_DAO_ROLE = "enemy_dao";
+	public static final String JULING_BOSS_ROLE = "juling_boss";
 	public static final String PLAY_BG = "play_bg";
 	public static final String PLAY_WIDGET = "play_widget";
 	public static final String PLAY_BLOOD = "play_blood";

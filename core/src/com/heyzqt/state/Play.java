@@ -30,6 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.heyzqt.entity.Background;
+import com.heyzqt.entity.Boss;
 import com.heyzqt.entity.EnemyDao;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.handle.Box2DContactListener;
@@ -103,6 +104,8 @@ public class Play extends GameState {
 	public static Monkey mMonkey;
 	//持刀天兵
 	private Array<EnemyDao> mEnemyDaos;
+	//Boss
+	private Boss mBoss;
 
 	/**
 	 * 刚体
@@ -145,6 +148,9 @@ public class Play extends GameState {
 
 		//创建持刀天兵
 		createEnemyDao();
+
+		//创建Boss
+		createBoss(level);
 
 		//创建主角
 		createActor();
@@ -360,6 +366,78 @@ public class Play extends GameState {
 			enemyBody.setUserData(enemyDao);
 
 			Thread thread = new Thread(enemyDao);
+			thread.start();
+		}
+	}
+
+	private void createBoss(int level) {
+
+		MapLayer mapLayer = null;
+		//设置Boss
+		switch (level) {
+			case 0:        //第一关
+				mapLayer = mMap.getLayers().get("julingBoss");
+				break;
+			case 1:        //第二关
+				mapLayer = mMap.getLayers().get("zenzhangBoss");
+				break;
+			case 2:        //第三关
+				mapLayer = mMap.getLayers().get("guangmuBoss");
+				break;
+			case 3:        //第四关
+				mapLayer = mMap.getLayers().get("duowenBoss");
+				break;
+			case 4:        //第五关
+				mapLayer = mMap.getLayers().get("erlangshenBoss");
+				break;
+		}
+
+		if (mapLayer == null) return;
+
+		//初始化boss刚体形状
+		BodyDef bossDef = new BodyDef();
+		bossDef.type = BodyDef.BodyType.DynamicBody;
+		//多边形形状
+		PolygonShape polygonShape = new PolygonShape();
+		//设置夹具
+		FixtureDef bossFixDef = new FixtureDef();
+
+		//遍历enemyDao对象层
+		for (MapObject object : mapLayer.getObjects()) {
+			//坐标
+			float x = 0;
+			float y = 0;
+			//获取对象坐标
+			if (object instanceof EllipseMapObject) {
+				EllipseMapObject ellipseMapObject = (EllipseMapObject) object;
+				x = ellipseMapObject.getEllipse().x / Constant.RATE;
+				y = ellipseMapObject.getEllipse().y / Constant.RATE;
+			}
+
+			//持刀天兵夹具
+			polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
+			bossFixDef.shape = polygonShape;
+			bossFixDef.isSensor = true;
+			bossFixDef.filter.categoryBits = Constant.BOSS_JULING;
+			bossFixDef.filter.maskBits = Constant.PLAYER;
+
+			//设置位置
+			bossDef.position.set(x, y);
+			Body bossBody = mWorld.createBody(bossDef);
+			bossBody.createFixture(bossFixDef).setUserData("boss");
+
+			//创建脚传感器 foot
+			polygonShape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -58 / Constant.RATE), 0);
+			bossFixDef.shape = polygonShape;
+			bossFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+			bossFixDef.filter.maskBits = Constant.BLOCK;
+			bossFixDef.isSensor = false;
+			bossBody.createFixture(bossFixDef).setUserData("bossFoot");
+
+			mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.JULING_BOSS_ROLE));
+			bossBody.setUserData(mBoss);
+
+			Thread thread = new Thread(mBoss);
 			thread.start();
 		}
 	}
@@ -612,6 +690,8 @@ public class Play extends GameState {
 		for (EnemyDao enemy : mEnemyDaos) {
 			enemy.render(mBatch, statetime);
 		}
+		//画Boss
+		mBoss.render(mBatch, statetime);
 
 		//画孙悟空
 		mMonkey.render(mBatch, statetime);

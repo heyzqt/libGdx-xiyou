@@ -72,7 +72,7 @@ public class Play extends GameState {
 	//地图渲染器
 	private OrthogonalTiledMapRenderer mOrthogonalTiledMapRenderer;
 	//地图编号
-	public static int level = 0;
+	public static int level = 1;
 
 	/**
 	 * 界面控件
@@ -154,9 +154,6 @@ public class Play extends GameState {
 
 		//创建主角
 		createActor();
-
-		//初始化背景
-		mBackground = new Background(Constant.PLAY_BG);
 
 		//初始化界面控件
 		TextureAtlas mBloodAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.PLAY_BLOOD);
@@ -318,7 +315,7 @@ public class Play extends GameState {
 		mEnemyDaos = new Array<EnemyDao>();
 
 		//持刀天兵对象层
-		MapLayer mapLayer = mMap.getLayers().get("enemyDao");
+		MapLayer mapLayer = mMap.getLayers().get("enemy");
 		if (mapLayer == null) return;
 
 		//初始化持刀天兵刚体形状
@@ -329,7 +326,7 @@ public class Play extends GameState {
 		//设置夹具
 		FixtureDef enemyFixDef = new FixtureDef();
 
-		//遍历enemyDao对象层
+		//遍历enemy对象层
 		for (MapObject object : mapLayer.getObjects()) {
 			//坐标
 			float x = 0;
@@ -372,26 +369,7 @@ public class Play extends GameState {
 
 	private void createBoss(int level) {
 
-		MapLayer mapLayer = null;
-		//设置Boss
-		switch (level) {
-			case 0:        //第一关
-				mapLayer = mMap.getLayers().get("julingBoss");
-				break;
-			case 1:        //第二关
-				mapLayer = mMap.getLayers().get("zenzhangBoss");
-				break;
-			case 2:        //第三关
-				mapLayer = mMap.getLayers().get("guangmuBoss");
-				break;
-			case 3:        //第四关
-				mapLayer = mMap.getLayers().get("duowenBoss");
-				break;
-			case 4:        //第五关
-				mapLayer = mMap.getLayers().get("erlangshenBoss");
-				break;
-		}
-
+		MapLayer mapLayer = mapLayer = mMap.getLayers().get("boss");
 		if (mapLayer == null) return;
 
 		//初始化Boss刚体形状
@@ -495,20 +473,27 @@ public class Play extends GameState {
 
 	private void createMap() {
 		try {
+			level = 1;
 			mMap = new TmxMapLoader().load("map/level_" + level + ".tmx");
 			Music music;
 			switch (level) {
-				case 0:        //第一关背景音乐
+				case 0:        //第一关
+					//初始化背景
+					mBackground = new Background(Constant.FIRST_GAME_BG);
+					//初始化音乐
 					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
 					music.setLooping(true);
 					music.play();
 					break;
-				case 1:        //第二关背景音乐
+				case 1:        //第二关
+					//初始化背景
+					mBackground = new Background(Constant.SECOND_GAME_BG);
+					//初始化音乐
 					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
 					music.setLooping(true);
 					music.play();
 					break;
-				case 2:        //第三关背景音乐
+				case 2:        //第三关
 					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM);
 					music.setLooping(true);
 					music.play();
@@ -606,7 +591,7 @@ public class Play extends GameState {
 			boss.setLive(false);
 			mBoss = null;
 			mWorld.destroyBody(bossBody);
-			mMonkey.beatBoss();
+			mMonkey.beatEnemy();
 		}
 		bossBody = null;
 		mContactListener.setRemoveBoss(null);

@@ -52,6 +52,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadSound("sound/btn_select.wav", Constant.BTN_SELECT_SOUND);
 		//加载第一关背景音乐
 		mAssetManager.loadMusic("sound/bgm_level_0.mp3", Constant.LEVEL_0_BGM);
+		//加载第二关背景音乐
+		mAssetManager.loadMusic("sound/bgm_level_1.mp3", Constant.LEVEL_1_BGM);
 
 		//加载开始界面Start.java资源
 		mAssetManager.loadTexture("background/start_bg.png", Constant.START_BG);
@@ -79,7 +81,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		//加载游戏界面Play.java资源
 		mAssetManager.loadNumFont();
 		mAssetManager.loadTextureAtlas("widget/playBlood.atlas", Constant.PLAY_BLOOD);
-		mAssetManager.loadTexture("map/level_static_2_bg.png", Constant.PLAY_BG);
+		mAssetManager.loadTexture("map/level_0_bg.png", Constant.FIRST_GAME_BG);
+		mAssetManager.loadTexture("map/level_1_bg.png", Constant.SECOND_GAME_BG);
 		//加载孙悟空人物素材
 		mAssetManager.loadTextureAtlas("role/sun.atlas", Constant.SUN);
 		//加载持刀天兵人物素材

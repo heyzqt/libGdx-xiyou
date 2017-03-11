@@ -74,7 +74,11 @@ public class Constant {
 	public static final String SUN = "sun";
 	public static final String ENEMY_DAO_ROLE = "enemy_dao";
 	public static final String JULING_BOSS_ROLE = "juling_boss";
-	public static final String PLAY_BG = "play_bg";
+	public static final String FIRST_GAME_BG = "first_play_bg";
+	public static final String SECOND_GAME_BG = "second_game_bg";
+	public static final String THIRD_GAME_BG = "third_game_bg";
+	public static final String FORTH_GAME_BG = "forth_game_bg";
+	public static final String FIFTH_GAME_BG = "fifth_game_bg";
 	public static final String PLAY_WIDGET = "play_widget";
 	public static final String PLAY_BLOOD = "play_blood";
 

@@ -128,9 +128,14 @@ public class Monkey extends BaseSprite {
 		mBody.setAwake(true);
 	}
 
-	//打败敌人
+	//打败敌人分数加1
 	public void beatEnemy() {
 		enemyCount++;
+	}
+
+	//打败Boss分数加2
+	public void beatBoss() {
+		enemyCount += 2;
 	}
 
 	//获得打败敌人数目

@@ -50,7 +50,7 @@ public class Boss extends BaseSprite implements Runnable {
 	//攻击是否完成
 	public boolean isAttacked = false;
 
-	//记录天兵被攻击的次数 攻击4次Boss死亡
+	//记录被攻击的次数 攻击4次Boss死亡
 	public int attacks = 0;
 
 	//Boss左右攻击夹具
@@ -157,14 +157,14 @@ public class Boss extends BaseSprite implements Runnable {
 	public void update(float delta) {
 
 		/**
-		 * 根据当前天兵与主角位置关系
-		 * 设置天兵攻击状态
+		 * 根据当前Boss与主角位置关系
+		 * 设置Boss攻击状态
 		 */
 		if (Play.mMonkey != null) {
-			//天兵与孙悟空x差值
+			//Boss与孙悟空x差值
 			float x = Play.mMonkey.getBody().getPosition().x - mBody.getPosition().x;
 			int time = (int) delta;
-			if (x < 100 / Constant.RATE && x > 0) {    //孙悟空在天兵右边1米
+			if (x < 100 / Constant.RATE && x > 0) {    //孙悟空在Boss右边1米
 				isContacted = true;
 				mBody.setLinearVelocity(0, 0);
 				//每隔2秒攻击一次
@@ -186,7 +186,7 @@ public class Boss extends BaseSprite implements Runnable {
 						setAnimation(mRightStandState, 1 / 12f);
 					}
 				}
-			} else if ((-x) < 100 / Constant.RATE && (-x) > 0) {  //孙悟空在天兵左边1米
+			} else if ((-x) < 100 / Constant.RATE && (-x) > 0) {  //孙悟空在Boss左边1米
 				isContacted = true;
 				mBody.setLinearVelocity(0, 0);
 				//每隔2秒攻击一次
@@ -222,7 +222,7 @@ public class Boss extends BaseSprite implements Runnable {
 				}
 			}
 
-			//设置天兵被击中状态
+			//设置Boss被击中状态
 			if (STATE == State.STATE_LEFT_HITED) {
 				setAnimation(mLeftHittedState, 1 / 12f);
 			} else if (STATE == State.STATE_RIGHT_HITED) {
@@ -250,12 +250,12 @@ public class Boss extends BaseSprite implements Runnable {
 	public void run() {
 
 		while (true) {
-			//判断刀兵是否存活
+			//判断Boss是否存活
 			if (!isLive) {
 				return;
 			}
 
-			//刀兵孙悟空接触时不执行下面的代码
+			//Boss孙悟空接触时不执行下面的代码
 			if (isContacted) {
 				continue;
 			}

@@ -394,7 +394,7 @@ public class Play extends GameState {
 
 		if (mapLayer == null) return;
 
-		//初始化boss刚体形状
+		//初始化Boss刚体形状
 		BodyDef bossDef = new BodyDef();
 		bossDef.type = BodyDef.BodyType.DynamicBody;
 		//多边形形状
@@ -402,7 +402,7 @@ public class Play extends GameState {
 		//设置夹具
 		FixtureDef bossFixDef = new FixtureDef();
 
-		//遍历enemyDao对象层
+		//遍历Boss对象层
 		for (MapObject object : mapLayer.getObjects()) {
 			//坐标
 			float x = 0;
@@ -414,7 +414,7 @@ public class Play extends GameState {
 				y = ellipseMapObject.getEllipse().y / Constant.RATE;
 			}
 
-			//持刀天兵夹具
+			//boss夹具
 			polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
 			bossFixDef.shape = polygonShape;
 			bossFixDef.isSensor = true;
@@ -567,7 +567,7 @@ public class Play extends GameState {
 				//设置摩擦系数为0
 				chainFixtureDef.friction = 0;
 				chainFixtureDef.filter.categoryBits = Constant.BLOCK;
-				chainFixtureDef.filter.maskBits = Constant.PLAYER | Constant.ENEMY_DAO;
+				chainFixtureDef.filter.maskBits = Constant.PLAYER | Constant.ENEMY_DAO | Constant.BOSS;
 				//设置传感器
 				chainFixtureDef.isSensor = false;
 
@@ -599,7 +599,20 @@ public class Play extends GameState {
 		}
 		removeBodies.clear();
 
-		//设置主角当前血量逻辑
+		//移除已经死亡的boss
+		Body bossBody = mContactListener.getRemoveBoss();
+		if (bossBody != null) {
+			Boss boss = (Boss) bossBody.getUserData();
+			boss.setLive(false);
+			mBoss = null;
+			mWorld.destroyBody(bossBody);
+			mMonkey.beatBoss();
+		}
+		bossBody = null;
+		mContactListener.setRemoveBoss(null);
+
+
+		//设置主角当前血量
 		bloodProgress = (Monkey.BLOOD - mMonkey.attacks) * 26;
 
 		//设置分数
@@ -691,7 +704,9 @@ public class Play extends GameState {
 			enemy.render(mBatch, statetime);
 		}
 		//画Boss
-		mBoss.render(mBatch, statetime);
+		if (mBoss != null) {
+			mBoss.render(mBatch, statetime);
+		}
 
 		//画孙悟空
 		mMonkey.render(mBatch, statetime);

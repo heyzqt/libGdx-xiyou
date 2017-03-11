@@ -22,8 +22,12 @@ public class Box2DContactListener implements ContactListener {
 	//记录要移除的天兵
 	private Array<Body> removeEnemies;
 
+	//记录要移除的Boss
+	private Body removeBoss;
+
 	public Box2DContactListener() {
 		removeEnemies = new Array<Body>();
+		removeBoss = null;
 	}
 
 	@Override
@@ -52,6 +56,27 @@ public class Box2DContactListener implements ContactListener {
 			//天兵被攻击2次后死亡
 			if (enemyDao.attacks == 2) {
 				removeEnemies.add(fixtureA.getBody());
+			}
+		}
+
+		//孙悟空攻击Boss
+		if (Utils.isContacted(fixtureA, fixtureB, "boss", "stick")) {
+			Boss boss = (Boss) fixtureA.getBody().getUserData();
+			//Boss被攻击次数+1
+			boss.attacks++;
+			//Boss被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					boss.getBody().getPosition().x;
+			if (x < 0) {
+				boss.getBody().setLinearVelocity(1f, 0);
+				boss.STATE = State.STATE_LEFT_HITED;
+			} else {
+				boss.getBody().setLinearVelocity(-1f, 0);
+				boss.STATE = State.STATE_RIGHT_HITED;
+			}
+			//boss被攻击4次后死亡
+			if (boss.attacks == 4) {
+				removeBoss = fixtureA.getBody();
 			}
 		}
 
@@ -162,5 +187,13 @@ public class Box2DContactListener implements ContactListener {
 
 	public Array<Body> getRemoveEnemies() {
 		return removeEnemies;
+	}
+
+	public Body getRemoveBoss() {
+		return removeBoss;
+	}
+
+	public void setRemoveBoss(Body removeBoss) {
+		this.removeBoss = removeBoss;
 	}
 }

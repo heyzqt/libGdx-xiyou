@@ -60,7 +60,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="boss">
+ <objectgroup name="Boss">
   <object id="18" x="2397.33" y="189.333">
    <ellipse/>
   </object>

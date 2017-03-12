@@ -420,7 +420,24 @@ public class Play extends GameState {
 			bossFixDef.isSensor = false;
 			bossBody.createFixture(bossFixDef).setUserData("bossFoot");
 
-			mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_JULING_ROLE));
+			//设置Boss
+			switch (level) {
+				case 0:        //第一关
+					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_JULING_ROLE));
+					break;
+				case 1:        //第二关
+					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_ZENGZHANG_ROLE));
+					break;
+				case 2:        //第三关
+					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_GUANGMU_ROLE));
+					break;
+				case 3:        //第四关
+					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_DUOWEN_ROLE));
+					break;
+				case 4:        //第五关
+					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_ERLANG_ROLE));
+					break;
+			}
 			bossBody.setUserData(mBoss);
 
 			Thread thread = new Thread(mBoss);

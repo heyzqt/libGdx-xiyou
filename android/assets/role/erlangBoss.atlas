@@ -5,113 +5,113 @@ filter: Nearest,Nearest
 repeat: none
 bossLeftAttack1
   rotate: false
-  xy: 1, 261
-  size: 160, 128
-  orig: 160, 128
+  xy: 1, 689
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossLeftAttack2
   rotate: false
-  xy: 1, 131
-  size: 160, 128
-  orig: 160, 128
+  xy: 1, 517
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossLeftAttack3
   rotate: false
-  xy: 163, 261
-  size: 160, 128
-  orig: 160, 128
+  xy: 183, 689
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossLeftAttack4
   rotate: false
-  xy: 1, 1
-  size: 160, 128
-  orig: 160, 128
+  xy: 1, 345
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossLeftHitted
   rotate: false
-  xy: 163, 131
-  size: 160, 128
-  orig: 160, 128
+  xy: 183, 517
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossLeftWalk1
   rotate: false
-  xy: 325, 261
-  size: 160, 128
-  orig: 160, 128
+  xy: 365, 689
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossLeftWalk2
   rotate: false
-  xy: 163, 1
-  size: 160, 128
-  orig: 160, 128
+  xy: 1, 173
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossLeftWalk3
   rotate: false
-  xy: 325, 131
-  size: 160, 128
-  orig: 160, 128
+  xy: 183, 345
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossRightAttack1
   rotate: false
-  xy: 487, 261
-  size: 160, 128
-  orig: 160, 128
+  xy: 365, 517
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossRightAttack2
   rotate: false
-  xy: 325, 1
-  size: 160, 128
-  orig: 160, 128
+  xy: 547, 689
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossRightAttack3
   rotate: false
-  xy: 487, 131
-  size: 160, 128
-  orig: 160, 128
+  xy: 1, 1
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossRightAttack4
   rotate: false
-  xy: 649, 261
-  size: 160, 128
-  orig: 160, 128
+  xy: 183, 173
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossRightHitted
   rotate: false
-  xy: 487, 1
-  size: 160, 128
-  orig: 160, 128
+  xy: 365, 345
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossRightWalk1
   rotate: false
-  xy: 649, 131
-  size: 160, 128
-  orig: 160, 128
+  xy: 547, 517
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossRightWalk2
   rotate: false
-  xy: 811, 261
-  size: 160, 128
-  orig: 160, 128
+  xy: 729, 689
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1
 bossRightWalk3
   rotate: false
-  xy: 649, 1
-  size: 160, 128
-  orig: 160, 128
+  xy: 183, 1
+  size: 180, 170
+  orig: 180, 170
   offset: 0, 0
   index: -1

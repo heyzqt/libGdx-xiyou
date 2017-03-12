@@ -72,7 +72,7 @@ public class Play extends GameState {
 	//地图渲染器
 	private OrthogonalTiledMapRenderer mOrthogonalTiledMapRenderer;
 	//地图编号
-	public static int level = 1;
+	public static int level = 0;
 
 	/**
 	 * 界面控件

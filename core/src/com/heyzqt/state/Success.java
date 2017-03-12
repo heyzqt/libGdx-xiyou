@@ -84,7 +84,7 @@ public class Success extends GameState {
 		mTimeLab = new Label(timeStr, style);
 		mTimeLab.setPosition(480, 370);
 
-		//初始化五角星和按钮
+		//初始化五角星和下一关按钮素材
 		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.SUCCESS_WIDGET);
 		mAtlasRegions = new TextureAtlas.AtlasRegion[6];
 		mAtlasRegions[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("starOff"));
@@ -94,15 +94,24 @@ public class Success extends GameState {
 		mAtlasRegions[4] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("backBtnUp"));
 		mAtlasRegions[5] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("backBtnDown"));
 
-		//初始返回地图按钮
-		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlasRegions[4]),
-				new TextureRegionDrawable(mAtlasRegions[5]));
-		mNextBtn = new ImageButton(new TextureRegionDrawable(mAtlasRegions[2]),
-				new TextureRegionDrawable(mAtlasRegions[3]));
-		mBackBtn.setPosition(450, 80);
-		mBackBtn.setSize(200, 90);
-		mNextBtn.setPosition(660, 80);
-		mNextBtn.setSize(200, 90);
+		//游戏通关
+		if (Play.level != 4) {
+			//初始返回地图按钮和下一关按钮
+			mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlasRegions[4]),
+					new TextureRegionDrawable(mAtlasRegions[5]));
+			mNextBtn = new ImageButton(new TextureRegionDrawable(mAtlasRegions[2]),
+					new TextureRegionDrawable(mAtlasRegions[3]));
+			mBackBtn.setPosition(450, 80);
+			mBackBtn.setSize(200, 90);
+			mNextBtn.setPosition(660, 80);
+			mNextBtn.setSize(200, 90);
+			mStage.addActor(mNextBtn);
+		} else {
+			mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlasRegions[4]),
+					new TextureRegionDrawable(mAtlasRegions[5]));
+			mBackBtn.setPosition(550, 80);
+			mBackBtn.setSize(200, 90);
+		}
 
 		//初始化背景音乐
 		MyGdxGame.mAssetManager.getSound(Constant.SUCCESS_BGM).play();
@@ -110,7 +119,6 @@ public class Success extends GameState {
 		mStage.addActor(mTitleLab);
 		mStage.addActor(mTimeLab);
 		mStage.addActor(mBackBtn);
-		mStage.addActor(mNextBtn);
 
 		initListener();
 	}
@@ -130,13 +138,18 @@ public class Success extends GameState {
 			}
 		});
 
-		//下一关
-		mNextBtn.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
-			}
-		});
+		if (Play.level != 4) {
+			//下一关
+			mNextBtn.addListener(new ClickListener() {
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
+					//进入下一关
+					Play.level++;
+					mGameStateManager.setState(GameStateManager.PLAY);
+				}
+			});
+		}
 	}
 
 	@Override

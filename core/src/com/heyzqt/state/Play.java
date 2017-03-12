@@ -632,7 +632,7 @@ public class Play extends GameState {
 		 */
 		if (mMonkey.getBody().getPosition().y < 0) {
 			mGameStateManager.setState(GameStateManager.FAILURE);
-		} else if (mMonkey.attacks == Monkey.BLOOD) {
+		} else if (mMonkey.attacks >= Monkey.BLOOD) {
 			mGameStateManager.setState(GameStateManager.FAILURE);
 		}
 

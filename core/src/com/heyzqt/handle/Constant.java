@@ -72,8 +72,6 @@ public class Constant {
 
 	//游戏界面
 	public static final String SUN = "sun";
-	public static final String ENEMY_DAO_ROLE = "enemy_dao";
-	public static final String JULING_BOSS_ROLE = "juling_boss";
 	public static final String FIRST_GAME_BG = "first_play_bg";
 	public static final String SECOND_GAME_BG = "second_game_bg";
 	public static final String THIRD_GAME_BG = "third_game_bg";
@@ -81,5 +79,10 @@ public class Constant {
 	public static final String FIFTH_GAME_BG = "fifth_game_bg";
 	public static final String PLAY_WIDGET = "play_widget";
 	public static final String PLAY_BLOOD = "play_blood";
-
+	//天兵素材
+	public static final String ENEMY_DAO_ROLE = "enemy_dao";
+	public static final String ENEMY_FU_ROLE = "enemy_fu";
+	public static final String ENEMY_QIANG_ROLE = "enemy_qiang";
+	//Boss素材
+	public static final String JULING_BOSS_ROLE = "juling_boss";
 }

@@ -1,117 +1,117 @@
 
-enemyDao.png
+enemyFu.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 enemyLeftAttack1
   rotate: false
-  xy: 1, 261
-  size: 100, 128
-  orig: 100, 128
+  xy: 1, 651
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyLeftAttack2
   rotate: false
-  xy: 1, 131
-  size: 100, 128
-  orig: 100, 128
+  xy: 1, 521
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyLeftAttack3
   rotate: false
-  xy: 103, 261
-  size: 100, 128
-  orig: 100, 128
+  xy: 183, 651
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyLeftAttack4
   rotate: false
-  xy: 1, 1
-  size: 100, 128
-  orig: 100, 128
+  xy: 1, 391
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyLeftHitted
   rotate: false
-  xy: 103, 131
-  size: 100, 128
-  orig: 100, 128
+  xy: 183, 521
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyLeftWalk1
   rotate: false
-  xy: 205, 261
-  size: 100, 128
-  orig: 100, 128
+  xy: 365, 651
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyLeftWalk2
   rotate: false
-  xy: 103, 1
-  size: 100, 128
-  orig: 100, 128
+  xy: 1, 261
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyLeftWalk3
   rotate: false
-  xy: 205, 131
-  size: 100, 128
-  orig: 100, 128
+  xy: 183, 391
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyRightAttack1
   rotate: false
-  xy: 307, 261
-  size: 100, 128
-  orig: 100, 128
+  xy: 365, 521
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyRightAttack2
   rotate: false
-  xy: 205, 1
-  size: 100, 128
-  orig: 100, 128
+  xy: 547, 651
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyRightAttack3
   rotate: false
-  xy: 307, 131
-  size: 100, 128
-  orig: 100, 128
+  xy: 1, 131
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyRightAttack4
   rotate: false
-  xy: 409, 261
-  size: 100, 128
-  orig: 100, 128
+  xy: 183, 261
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyRightHitted
   rotate: false
-  xy: 307, 1
-  size: 100, 128
-  orig: 100, 128
+  xy: 365, 391
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyRightWalk1
   rotate: false
-  xy: 409, 131
-  size: 100, 128
-  orig: 100, 128
+  xy: 547, 521
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyRightWalk2
   rotate: false
-  xy: 511, 261
-  size: 100, 128
-  orig: 100, 128
+  xy: 729, 651
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1
 enemyRightWalk3
   rotate: false
-  xy: 409, 1
-  size: 100, 128
-  orig: 100, 128
+  xy: 1, 1
+  size: 180, 128
+  orig: 180, 128
   offset: 0, 0
   index: -1

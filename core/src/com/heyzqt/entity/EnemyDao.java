@@ -75,48 +75,48 @@ public class EnemyDao extends BaseSprite implements Runnable {
 
 		//初始化静止图片
 		mLeftStandState = new TextureAtlas.AtlasRegion[2];
-		mLeftStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftStand"));
-		mLeftStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftStand"));
+		mLeftStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftWalk1"));
+		mLeftStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftWalk1"));
 
 		mRightStandState = new TextureAtlas.AtlasRegion[2];
-		mRightStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightStand"));
-		mRightStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightStand"));
+		mRightStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightWalk1"));
+		mRightStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightWalk1"));
 
 		//初始化右走图片
 		mRightState = new TextureAtlas.AtlasRegion[3];
-		mRightState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightStand"));
-		mRightState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightW1"));
-		mRightState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightW2"));
+		mRightState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightWalk1"));
+		mRightState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightWalk2"));
+		mRightState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightWalk3"));
 
 		//初始化左走图片
 		mLeftState = new TextureAtlas.AtlasRegion[3];
-		mLeftState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftStand"));
-		mLeftState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW1"));
-		mLeftState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftW2"));
+		mLeftState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftWalk1"));
+		mLeftState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftWalk2"));
+		mLeftState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftWalk3"));
 
 		//初始化左攻击图片
 		mLeftAttackState = new TextureAtlas.AtlasRegion[4];
-		mLeftAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftAttack1"));
-		mLeftAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftAttack2"));
-		mLeftAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftAttack3"));
-		mLeftAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftAttack3"));
+		mLeftAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftAttack1"));
+		mLeftAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftAttack2"));
+		mLeftAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftAttack3"));
+		mLeftAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftAttack3"));
 
 		//初始化右攻击图片
 		mRightAttackState = new TextureAtlas.AtlasRegion[4];
-		mRightAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightAttack1"));
-		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightAttack2"));
-		mRightAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightAttack3"));
-		mRightAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightAttack4"));
+		mRightAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightAttack1"));
+		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightAttack2"));
+		mRightAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightAttack3"));
+		mRightAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightAttack4"));
 
 		//左边被击飞动画
 		mLeftHittedState = new TextureAtlas.AtlasRegion[2];
-		mLeftHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftHitted"));
-		mLeftHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoLeftHitted"));
+		mLeftHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftHitted"));
+		mLeftHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyLeftHitted"));
 
 		//右边被击飞动画
 		mRightHittedState = new TextureAtlas.AtlasRegion[2];
-		mRightHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightHitted"));
-		mRightHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyDaoRightHitted"));
+		mRightHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightHitted"));
+		mRightHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("enemyRightHitted"));
 
 		//左传感器 dao
 		PolygonShape shapeLeft = new PolygonShape();

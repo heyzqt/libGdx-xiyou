@@ -85,8 +85,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadTexture("map/level_1_bg.png", Constant.SECOND_GAME_BG);
 		//加载孙悟空人物素材
 		mAssetManager.loadTextureAtlas("role/sun.atlas", Constant.SUN);
-		//加载持刀天兵人物素材
+		//加载天兵人物素材
 		mAssetManager.loadTextureAtlas("role/enemyDao.atlas", Constant.ENEMY_DAO_ROLE);
+		mAssetManager.loadTextureAtlas("role/enemyFu.atlas", Constant.ENEMY_FU_ROLE);
+		mAssetManager.loadTextureAtlas("role/enemyQiang.atlas", Constant.ENEMY_QIANG_ROLE);
 		//加载巨灵神任务素材
 		mAssetManager.loadTextureAtlas("role/julingBoss.atlas", Constant.JULING_BOSS_ROLE);
 		//加载游戏摇杆素材

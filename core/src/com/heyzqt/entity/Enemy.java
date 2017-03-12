@@ -16,7 +16,7 @@ import com.heyzqt.xiyou.MyGdxGame;
  *
  * 持刀天兵精灵类
  */
-public class EnemyDao extends BaseSprite implements Runnable {
+public class Enemy extends BaseSprite implements Runnable {
 
 	//天兵图片集合
 	private TextureAtlas mAtlas;
@@ -65,13 +65,19 @@ public class EnemyDao extends BaseSprite implements Runnable {
 	//记录update()上一次时间
 	private int preTime;
 
-	public EnemyDao(Body body) {
+	public Enemy(Body body, String type) {
 
 		super(body);
 
 		STATE = State.STATE_LEFT;
 
-		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_DAO_ROLE);
+		if (type.equals("enemy")) {
+			mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_DAO_ROLE);
+		} else if (type.equals("enemyFu")) {
+			mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_FU_ROLE);
+		} else if (type.equals("enemyQiang")) {
+			mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_QIANG_ROLE);
+		}
 
 		//初始化静止图片
 		mLeftStandState = new TextureAtlas.AtlasRegion[2];

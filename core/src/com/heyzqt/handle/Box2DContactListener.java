@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
 import com.heyzqt.entity.Boss;
-import com.heyzqt.entity.EnemyDao;
+import com.heyzqt.entity.Enemy;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.state.Play;
 
@@ -39,22 +39,22 @@ public class Box2DContactListener implements ContactListener {
 		Fixture fixtureB = contact.getFixtureB();
 
 		//孙悟空攻击持刀天兵
-		if (Utils.isContacted(fixtureA, fixtureB, "enemyDao", "stick")) {
-			EnemyDao enemyDao = (EnemyDao) fixtureA.getBody().getUserData();
+		if (Utils.isContacted(fixtureA, fixtureB, "enemy", "stick")) {
+			Enemy enemy = (Enemy) fixtureA.getBody().getUserData();
 			//天兵被攻击次数+1
-			enemyDao.attacks++;
+			enemy.attacks++;
 			//天兵被击飞
 			float x = Play.mMonkey.getBody().getPosition().x -
-					enemyDao.getBody().getPosition().x;
+					enemy.getBody().getPosition().x;
 			if (x < 0) {
-				enemyDao.getBody().setLinearVelocity(1f, 0);
-				enemyDao.STATE = State.STATE_LEFT_HITED;
+				enemy.getBody().setLinearVelocity(1f, 0);
+				enemy.STATE = State.STATE_LEFT_HITED;
 			} else {
-				enemyDao.getBody().setLinearVelocity(-1f, 0);
-				enemyDao.STATE = State.STATE_RIGHT_HITED;
+				enemy.getBody().setLinearVelocity(-1f, 0);
+				enemy.STATE = State.STATE_RIGHT_HITED;
 			}
 			//天兵被攻击2次后死亡
-			if (enemyDao.attacks == 2) {
+			if (enemy.attacks == 2) {
 				removeEnemies.add(fixtureA.getBody());
 			}
 		}
@@ -82,7 +82,7 @@ public class Box2DContactListener implements ContactListener {
 
 		//持刀天兵攻击孙悟空
 		if (Utils.isContacted(fixtureA, fixtureB, "dao", "monkey")) {
-			EnemyDao enemy = (EnemyDao) fixtureA.getBody().getUserData();
+			Enemy enemy = (Enemy) fixtureA.getBody().getUserData();
 			//孙悟空被攻击次数+1
 			Play.mMonkey.attacks++;
 			//孙悟空被击飞
@@ -104,7 +104,7 @@ public class Box2DContactListener implements ContactListener {
 
 		//持刀天兵攻击孙悟空
 		if (Utils.isContacted(fixtureA, fixtureB, "monkey", "dao")) {
-			EnemyDao enemy = (EnemyDao) fixtureB.getBody().getUserData();
+			Enemy enemy = (Enemy) fixtureB.getBody().getUserData();
 			//孙悟空被攻击次数+1
 			Play.mMonkey.attacks++;
 			//孙悟空被击飞

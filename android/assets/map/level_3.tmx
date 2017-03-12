@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="32" tileheight="32" nextobjectid="11">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="32" tileheight="32" nextobjectid="19">
  <tileset firstgid="1" name="level_100006_parts" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="level_100006_parts.png" width="1024" height="1024"/>
   <tile id="836">
@@ -117,12 +117,6 @@
   <object id="3" x="1310.67" y="350.667">
    <ellipse/>
   </object>
-  <object id="4" x="1444" y="322.667">
-   <ellipse/>
-  </object>
-  <object id="5" x="1790.67" y="324">
-   <ellipse/>
-  </object>
   <object id="6" x="1856" y="354.667">
    <ellipse/>
   </object>
@@ -130,6 +124,28 @@
    <ellipse/>
   </object>
   <object id="9" x="2398.67" y="317.333">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="enemyQiang">
+  <object id="14" x="1662.67" y="321.333">
+   <ellipse/>
+  </object>
+  <object id="15" x="737.333" y="386.667">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="enemyFu">
+  <object id="11" x="1408" y="349.333">
+   <ellipse/>
+  </object>
+  <object id="12" x="1504" y="348">
+   <ellipse/>
+  </object>
+  <object id="13" x="1566.67" y="289.333">
+   <ellipse/>
+  </object>
+  <object id="18" x="701.333" y="385.333">
    <ellipse/>
   </object>
  </objectgroup>

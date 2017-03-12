@@ -31,7 +31,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.heyzqt.entity.Background;
 import com.heyzqt.entity.Boss;
-import com.heyzqt.entity.EnemyDao;
+import com.heyzqt.entity.Enemy;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
@@ -103,7 +103,7 @@ public class Play extends GameState {
 	//游戏主角
 	public static Monkey mMonkey;
 	//持刀天兵
-	private Array<EnemyDao> mEnemyDaos;
+	private Array<Enemy> mEnemyDaos;
 	//Boss
 	private Boss mBoss;
 
@@ -146,8 +146,8 @@ public class Play extends GameState {
 		//创建地图
 		createMap();
 
-		//创建持刀天兵
-		createEnemyDao();
+		//创建天兵
+		createEnemy();
 
 		//创建Boss
 		createBoss(level);
@@ -311,59 +311,66 @@ public class Play extends GameState {
 		});
 	}
 
-	private void createEnemyDao() {
-		mEnemyDaos = new Array<EnemyDao>();
+	private void createEnemy() {
+		mEnemyDaos = new Array<Enemy>();
 
-		//持刀天兵对象层
-		MapLayer mapLayer = mMap.getLayers().get("enemy");
-		if (mapLayer == null) return;
+		Array<MapLayer> mapLayers = new Array<MapLayer>();
+		//天兵对象层
+		mapLayers.add(mMap.getLayers().get("enemy"));
+		mapLayers.add(mMap.getLayers().get("enemyFu"));
+		mapLayers.add(mMap.getLayers().get("enemyQiang"));
 
-		//初始化持刀天兵刚体形状
-		BodyDef enemyDef = new BodyDef();
-		enemyDef.type = BodyDef.BodyType.DynamicBody;
-		//多边形形状
-		PolygonShape polygonShape = new PolygonShape();
-		//设置夹具
-		FixtureDef enemyFixDef = new FixtureDef();
+		for (MapLayer mapLayer : mapLayers) {
+			if(mapLayer == null)
+				continue;
 
-		//遍历enemy对象层
-		for (MapObject object : mapLayer.getObjects()) {
-			//坐标
-			float x = 0;
-			float y = 0;
-			//获取对象坐标
-			if (object instanceof EllipseMapObject) {
-				EllipseMapObject ellipseMapObject = (EllipseMapObject) object;
-				x = ellipseMapObject.getEllipse().x / Constant.RATE;
-				y = ellipseMapObject.getEllipse().y / Constant.RATE;
+			//初始化持刀天兵刚体形状
+			BodyDef enemyDef = new BodyDef();
+			enemyDef.type = BodyDef.BodyType.DynamicBody;
+			//多边形形状
+			PolygonShape polygonShape = new PolygonShape();
+			//设置夹具
+			FixtureDef enemyFixDef = new FixtureDef();
+
+			//遍历enemy对象层
+			for (MapObject object : mapLayer.getObjects()) {
+				//坐标
+				float x = 0;
+				float y = 0;
+				//获取对象坐标
+				if (object instanceof EllipseMapObject) {
+					EllipseMapObject ellipseMapObject = (EllipseMapObject) object;
+					x = ellipseMapObject.getEllipse().x / Constant.RATE;
+					y = ellipseMapObject.getEllipse().y / Constant.RATE;
+				}
+
+				//持刀天兵夹具
+				polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
+				enemyFixDef.shape = polygonShape;
+				enemyFixDef.isSensor = true;
+				enemyFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+				enemyFixDef.filter.maskBits = Constant.PLAYER;
+
+				//设置位置
+				enemyDef.position.set(x, y);
+				Body enemyBody = mWorld.createBody(enemyDef);
+				enemyBody.createFixture(enemyFixDef).setUserData("enemy");
+
+				//创建脚传感器 foot
+				polygonShape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -58 / Constant.RATE), 0);
+				enemyFixDef.shape = polygonShape;
+				enemyFixDef.filter.categoryBits = Constant.ENEMY_DAO;
+				enemyFixDef.filter.maskBits = Constant.BLOCK;
+				enemyFixDef.isSensor = false;
+				enemyBody.createFixture(enemyFixDef).setUserData("enemyFoot");
+
+				Enemy enemy = new Enemy(enemyBody,mapLayer.getName());
+				mEnemyDaos.add(enemy);
+				enemyBody.setUserData(enemy);
+
+				Thread thread = new Thread(enemy);
+				thread.start();
 			}
-
-			//持刀天兵夹具
-			polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
-			enemyFixDef.shape = polygonShape;
-			enemyFixDef.isSensor = true;
-			enemyFixDef.filter.categoryBits = Constant.ENEMY_DAO;
-			enemyFixDef.filter.maskBits = Constant.PLAYER;
-
-			//设置位置
-			enemyDef.position.set(x, y);
-			Body enemyBody = mWorld.createBody(enemyDef);
-			enemyBody.createFixture(enemyFixDef).setUserData("enemyDao");
-
-			//创建脚传感器 foot
-			polygonShape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -58 / Constant.RATE), 0);
-			enemyFixDef.shape = polygonShape;
-			enemyFixDef.filter.categoryBits = Constant.ENEMY_DAO;
-			enemyFixDef.filter.maskBits = Constant.BLOCK;
-			enemyFixDef.isSensor = false;
-			enemyBody.createFixture(enemyFixDef).setUserData("enemyFoot");
-
-			EnemyDao enemyDao = new EnemyDao(enemyBody);
-			mEnemyDaos.add(enemyDao);
-			enemyBody.setUserData(enemyDao);
-
-			Thread thread = new Thread(enemyDao);
-			thread.start();
 		}
 	}
 
@@ -572,7 +579,7 @@ public class Play extends GameState {
 		Array<Body> removeBodies = mContactListener.getRemoveEnemies();
 		for (Body removeBody : removeBodies) {
 			//设置天兵状态为死亡
-			EnemyDao enemy = (EnemyDao) removeBody.getUserData();
+			Enemy enemy = (Enemy) removeBody.getUserData();
 			enemy.setLive(false);
 			//移除天兵
 			mEnemyDaos.removeValue(enemy, true);
@@ -686,7 +693,7 @@ public class Play extends GameState {
 
 		mBatch.setProjectionMatrix(mCamera.combined);
 		//画持刀天兵
-		for (EnemyDao enemy : mEnemyDaos) {
+		for (Enemy enemy : mEnemyDaos) {
 			enemy.render(mBatch, statetime);
 		}
 		//画Boss

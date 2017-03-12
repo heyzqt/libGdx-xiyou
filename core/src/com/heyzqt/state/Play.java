@@ -321,8 +321,9 @@ public class Play extends GameState {
 		mapLayers.add(mMap.getLayers().get("enemyQiang"));
 
 		for (MapLayer mapLayer : mapLayers) {
-			if(mapLayer == null)
+			if (mapLayer == null) {
 				continue;
+			}
 
 			//初始化持刀天兵刚体形状
 			BodyDef enemyDef = new BodyDef();
@@ -364,7 +365,7 @@ public class Play extends GameState {
 				enemyFixDef.isSensor = false;
 				enemyBody.createFixture(enemyFixDef).setUserData("enemyFoot");
 
-				Enemy enemy = new Enemy(enemyBody,mapLayer.getName());
+				Enemy enemy = new Enemy(enemyBody, mapLayer.getName());
 				mEnemyDaos.add(enemy);
 				enemyBody.setUserData(enemy);
 
@@ -419,7 +420,7 @@ public class Play extends GameState {
 			bossFixDef.isSensor = false;
 			bossBody.createFixture(bossFixDef).setUserData("bossFoot");
 
-			mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.JULING_BOSS_ROLE));
+			mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_JULING_ROLE));
 			bossBody.setUserData(mBoss);
 
 			Thread thread = new Thread(mBoss);
@@ -671,7 +672,7 @@ public class Play extends GameState {
 		//设置绘图矩阵
 		mBatch.setProjectionMatrix(mUICamera.combined);
 		//画背景
-		if(mBackground!=null){
+		if (mBackground != null) {
 			mBackground.render(mBatch);
 		}
 

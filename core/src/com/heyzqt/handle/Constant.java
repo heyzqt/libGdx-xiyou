@@ -84,5 +84,10 @@ public class Constant {
 	public static final String ENEMY_FU_ROLE = "enemy_fu";
 	public static final String ENEMY_QIANG_ROLE = "enemy_qiang";
 	//Boss素材
-	public static final String JULING_BOSS_ROLE = "juling_boss";
+	public static final String BOSS_JULING_ROLE = "juling_boss";
+	public static final String BOSS_ZENGZHANG_ROLE = "zengzhang_boss";
+	public static final String BOSS_GUANGMU_ROLE = "guangmu_boss";
+	public static final String BOSS_DUOWEN_ROLE = "duowen_boss";
+	public static final String BOSS_ERLANG_ROLE = "erlang_boss";
+
 }

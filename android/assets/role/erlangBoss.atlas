@@ -1,117 +1,117 @@
 
-julingBoss.png
+erlangBoss.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 bossLeftAttack1
   rotate: false
-  xy: 1, 651
-  size: 180, 128
-  orig: 180, 128
+  xy: 1, 261
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossLeftAttack2
   rotate: false
-  xy: 1, 521
-  size: 180, 128
-  orig: 180, 128
+  xy: 1, 131
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossLeftAttack3
   rotate: false
-  xy: 183, 651
-  size: 180, 128
-  orig: 180, 128
+  xy: 163, 261
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossLeftAttack4
   rotate: false
-  xy: 1, 391
-  size: 180, 128
-  orig: 180, 128
+  xy: 1, 1
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossLeftHitted
   rotate: false
-  xy: 183, 521
-  size: 180, 128
-  orig: 180, 128
+  xy: 163, 131
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossLeftWalk1
   rotate: false
-  xy: 365, 651
-  size: 180, 128
-  orig: 180, 128
+  xy: 325, 261
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossLeftWalk2
   rotate: false
-  xy: 1, 261
-  size: 180, 128
-  orig: 180, 128
+  xy: 163, 1
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossLeftWalk3
   rotate: false
-  xy: 183, 391
-  size: 180, 128
-  orig: 180, 128
+  xy: 325, 131
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossRightAttack1
   rotate: false
-  xy: 365, 521
-  size: 180, 128
-  orig: 180, 128
+  xy: 487, 261
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossRightAttack2
   rotate: false
-  xy: 547, 651
-  size: 180, 128
-  orig: 180, 128
+  xy: 325, 1
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossRightAttack3
   rotate: false
-  xy: 1, 131
-  size: 180, 128
-  orig: 180, 128
+  xy: 487, 131
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossRightAttack4
   rotate: false
-  xy: 183, 261
-  size: 180, 128
-  orig: 180, 128
+  xy: 649, 261
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossRightHitted
   rotate: false
-  xy: 365, 391
-  size: 180, 128
-  orig: 180, 128
+  xy: 487, 1
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossRightWalk1
   rotate: false
-  xy: 547, 521
-  size: 180, 128
-  orig: 180, 128
+  xy: 649, 131
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossRightWalk2
   rotate: false
-  xy: 729, 651
-  size: 180, 128
-  orig: 180, 128
+  xy: 811, 261
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1
 bossRightWalk3
   rotate: false
-  xy: 1, 1
-  size: 180, 128
-  orig: 180, 128
+  xy: 649, 1
+  size: 160, 128
+  orig: 160, 128
   offset: 0, 0
   index: -1

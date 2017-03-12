@@ -70,48 +70,48 @@ public class Boss extends BaseSprite implements Runnable {
 
 		//初始化静止图片
 		mLeftStandState = new TextureAtlas.AtlasRegion[2];
-		mLeftStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftWalk1"));
-		mLeftStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftWalk1"));
+		mLeftStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftWalk1"));
+		mLeftStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftWalk1"));
 
 		mRightStandState = new TextureAtlas.AtlasRegion[2];
-		mRightStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightWalk1"));
-		mRightStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightWalk1"));
+		mRightStandState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightWalk1"));
+		mRightStandState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightWalk1"));
 
 		//初始化右走图片
 		mRightState = new TextureAtlas.AtlasRegion[3];
-		mRightState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightWalk1"));
-		mRightState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightWalk2"));
-		mRightState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightWalk3"));
+		mRightState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightWalk1"));
+		mRightState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightWalk2"));
+		mRightState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightWalk3"));
 
 		//初始化左走图片
 		mLeftState = new TextureAtlas.AtlasRegion[3];
-		mLeftState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftWalk1"));
-		mLeftState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftWalk2"));
-		mLeftState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftWalk3"));
+		mLeftState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftWalk1"));
+		mLeftState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftWalk2"));
+		mLeftState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftWalk3"));
 
 		//初始化左攻击图像
 		mLeftAttackState = new TextureAtlas.AtlasRegion[4];
-		mLeftAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftAttack1"));
-		mLeftAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftAttack2"));
-		mLeftAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftAttack3"));
-		mLeftAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftAttack4"));
+		mLeftAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftAttack1"));
+		mLeftAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftAttack2"));
+		mLeftAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftAttack3"));
+		mLeftAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftAttack4"));
 
 		//初始化右攻击图像
 		mRightAttackState = new TextureAtlas.AtlasRegion[4];
-		mRightAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightAttack1"));
-		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightAttack2"));
-		mRightAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightAttack3"));
-		mRightAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightAttack4"));
+		mRightAttackState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightAttack1"));
+		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightAttack2"));
+		mRightAttackState[2] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightAttack3"));
+		mRightAttackState[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightAttack4"));
 
 		//左边被击飞动画
 		mLeftHittedState = new TextureAtlas.AtlasRegion[2];
-		mLeftHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftHitted"));
-		mLeftHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossLeftHitted"));
+		mLeftHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftHitted"));
+		mLeftHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossLeftHitted"));
 
 		//右边被击飞动画
 		mRightHittedState = new TextureAtlas.AtlasRegion[2];
-		mRightHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightHitted"));
-		mRightHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("julingBossRightHitted"));
+		mRightHittedState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightHitted"));
+		mRightHittedState[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("bossRightHitted"));
 
 		//左传感器Fixture weapon
 		PolygonShape shapeLeft = new PolygonShape();

@@ -1,0 +1,117 @@
+
+duoBoss.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bossLeftAttack1
+  rotate: false
+  xy: 1, 261
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossLeftAttack2
+  rotate: false
+  xy: 1, 131
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossLeftAttack3
+  rotate: false
+  xy: 193, 261
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossLeftAttack4
+  rotate: false
+  xy: 193, 261
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossRightAttack3
+  rotate: false
+  xy: 193, 261
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossRightAttack4
+  rotate: false
+  xy: 193, 261
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossLeftHitted
+  rotate: false
+  xy: 1, 1
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossLeftWalk1
+  rotate: false
+  xy: 193, 131
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossLeftWalk2
+  rotate: false
+  xy: 385, 261
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossLeftWalk3
+  rotate: false
+  xy: 193, 1
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossRightAttack1
+  rotate: false
+  xy: 385, 131
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossRightAttack2
+  rotate: false
+  xy: 577, 261
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossRightHitted
+  rotate: false
+  xy: 385, 1
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossRightWalk1
+  rotate: false
+  xy: 577, 131
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossRightWalk2
+  rotate: false
+  xy: 769, 261
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1
+bossRightWalk3
+  rotate: false
+  xy: 577, 1
+  size: 190, 128
+  orig: 190, 128
+  offset: 0, 0
+  index: -1

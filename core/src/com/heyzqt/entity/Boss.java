@@ -262,6 +262,18 @@ public class Boss extends BaseSprite implements Runnable {
 
 			setStateAnimation();
 
+			//天兵不能往右走出地图最大宽度
+			if (mBody.getPosition().x >= 31) {
+				STATE = State.STATE_LEFT;
+				mBody.setLinearVelocity(-0.2f, 0);
+			}
+
+			//天兵不能往左走出地图最小宽度
+			if (mBody.getPosition().x <= 1) {
+				STATE = State.STATE_RIGHT;
+				mBody.setLinearVelocity(0.2f, 0);
+			}
+
 			try {
 				Thread.sleep(1500);
 			} catch (InterruptedException e) {

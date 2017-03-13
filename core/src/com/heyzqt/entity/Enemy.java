@@ -69,7 +69,7 @@ public class Enemy extends BaseSprite implements Runnable {
 
 		super(body);
 
-		STATE = State.STATE_LEFT;
+		STATE = State.STATE_RIGHT;
 
 		if (type.equals("enemy")) {
 			mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_DAO_ROLE);
@@ -257,6 +257,18 @@ public class Enemy extends BaseSprite implements Runnable {
 			}
 
 			setStateAnimation();
+
+			//限制天兵不能往右走出地图最大宽度
+			if (mBody.getPosition().x >= 31) {
+				STATE = State.STATE_LEFT;
+				mBody.setLinearVelocity(-0.2f, 0);
+			}
+
+			//限制天兵不能往左走出地图最小宽度
+			if (mBody.getPosition().x <= 1) {
+				STATE = State.STATE_RIGHT;
+				mBody.setLinearVelocity(0.2f, 0);
+			}
 
 			try {
 				Thread.sleep(1500);

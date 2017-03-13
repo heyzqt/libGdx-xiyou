@@ -14,7 +14,7 @@ public class GameStateManager {
 	/**
 	 * 游戏状态管理栈
 	 */
-	private Stack<GameState> mGameStates;
+	protected Stack<GameState> mGameStates;
 
 	public final static int START = 0;   //开始设置界面
 	public final static int PLAY = 1;    //游戏界面
@@ -44,10 +44,10 @@ public class GameStateManager {
 	public GameState getState(int state) {
 		if (state == START) return new Start(this);
 		if (state == PLAY) return new Play(this);
-		if(state == FAILURE) return new Failure(this);
-		if(state == SUCCESS) return new Success(this);
-		if(state == SELECT) return new Select(this);
-		if(state == LOADING) return new Loading(this);
+		if (state == FAILURE) return new Failure(this);
+		if (state == SUCCESS) return new Success(this);
+		if (state == SELECT) return new Select(this);
+		if (state == LOADING) return new Loading(this);
 		return null;
 	}
 

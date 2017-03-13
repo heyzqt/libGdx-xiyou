@@ -400,16 +400,24 @@ public class Play extends GameState {
 				y = ellipseMapObject.getEllipse().y / Constant.RATE;
 			}
 
+			//设置位置
+			bossDef.position.set(x, y);
+			Body bossBody = mWorld.createBody(bossDef);
+
+			//二郎神标志
+			if (Play.level == 4) {
+				polygonShape.setAsBox(20 / Constant.RATE, 10 / Constant.RATE, new Vector2(0, -20 / Constant.RATE), 0);
+				bossFixDef.shape = polygonShape;
+				bossFixDef.isSensor = true;
+				bossBody.createFixture(bossFixDef).setUserData("erlang");
+			}
+
 			//boss夹具
 			polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
 			bossFixDef.shape = polygonShape;
 			bossFixDef.isSensor = true;
 			bossFixDef.filter.categoryBits = Constant.BOSS;
 			bossFixDef.filter.maskBits = Constant.PLAYER;
-
-			//设置位置
-			bossDef.position.set(x, y);
-			Body bossBody = mWorld.createBody(bossDef);
 			bossBody.createFixture(bossFixDef).setUserData("boss");
 
 			//创建脚传感器 foot

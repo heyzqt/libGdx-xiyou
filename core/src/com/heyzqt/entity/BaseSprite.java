@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.state.Play;
 
 /**
  * Created by heyzqt on 2017/2/7.
@@ -43,25 +44,33 @@ public class BaseSprite {
 		update(delta);
 
 		batch.begin();
-		batch.draw(mAnimation.getKeyFrame(delta, true),
-				mBody.getPosition().x * Constant.RATE - mWidth / 2,
-				mBody.getPosition().y * Constant.RATE - mHeight / 2);
+		//二郎神
+		if (Play.level == 4 && mBody.getFixtureList().first().getUserData().equals("erlang")) {
+			batch.draw(mAnimation.getKeyFrame(delta, true),
+					mBody.getPosition().x * Constant.RATE - mWidth / 2,
+					mBody.getPosition().y * Constant.RATE - mHeight / 2 + 20);
+		} else {
+			//除开二郎神外的其他人物
+			batch.draw(mAnimation.getKeyFrame(delta, true),
+					mBody.getPosition().x * Constant.RATE - mWidth / 2,
+					mBody.getPosition().y * Constant.RATE - mHeight / 2);
+		}
 		batch.end();
 	}
 
-	public Body getBody(){
+	public Body getBody() {
 		return mBody;
 	}
 
-	public Vector2 getPosition(){
+	public Vector2 getPosition() {
 		return mBody.getPosition();
 	}
 
-	public float getWidth(){
+	public float getWidth() {
 		return mWidth;
 	}
 
-	public float getHeight(){
+	public float getHeight() {
 		return mHeight;
 	}
 }

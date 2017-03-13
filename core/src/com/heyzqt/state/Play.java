@@ -622,7 +622,7 @@ public class Play extends GameState {
 
 
 		//设置主角当前血量
-		bloodProgress = (Monkey.BLOOD - mMonkey.attacks) * 26;
+		bloodProgress = (Monkey.BLOOD - mMonkey.attacks) * 20;
 
 		//设置分数
 		mScore.setText(mMonkey.getEnemyCount() + "");
@@ -701,10 +701,10 @@ public class Play extends GameState {
 		//画血槽
 		mBatch.draw(mBloodProgressBG, 130, mScore.getY() - 55);
 		if (bloodProgress >= 0) {
-			mBatch.draw(mBloodProgress, 133, mScore.getY() - 53, bloodProgress, 26);
+			mBatch.draw(mBloodProgress, 130, mScore.getY() - 53, bloodProgress, 26);
 		}
 		//画孙悟空头像
-		mBatch.draw(mSunAvatar, 80, mScore.getY() - 80, 70, 80);
+		mBatch.draw(mSunAvatar, 78, mScore.getY() - 80, 70, 80);
 		//画分数
 		mScoreFont.draw(mBatch, "分数:", 725, mScore.getY() - 20);
 		mBatch.end();

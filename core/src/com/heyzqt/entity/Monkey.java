@@ -40,17 +40,17 @@ public class Monkey extends BaseSprite {
 
 	//敌人总数
 	private int allEnemiesCount;
-	public int level_1_enemies = 4;        //第一关敌人总数
-	public int level_2_enemies = 4;        //第二关敌人总数
-	public int level_3_enemies = 4;        //第三关敌人总数
-	public int level_4_enemies = 4;        //第四关敌人总数
-	public int level_5_enemies = 4;        //第五关敌人总数
+	public int level_1_enemies = 6;        //第一关敌人总数
+	public int level_2_enemies = 12;        //第二关敌人总数
+	public int level_3_enemies = 14;        //第三关敌人总数
+	public int level_4_enemies = 14;        //第四关敌人总数
+	public int level_5_enemies = 18;        //第五关敌人总数
 
 	//被攻击次数
 	public int attacks = 0;
 
 	//孙悟空的总血量
-	public final static int BLOOD = 6;
+	public final static int BLOOD = 8;
 
 	public Monkey(Body body) {
 		super(body);

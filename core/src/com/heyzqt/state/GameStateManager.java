@@ -56,6 +56,11 @@ public class GameStateManager {
 		mGameStates.push(getState(state));
 	}
 
+	//入栈
+	public void pushState(Play play) {
+		mGameStates.push(play);
+	}
+
 	//出栈
 	public void popState() {
 		GameState state = mGameStates.pop();

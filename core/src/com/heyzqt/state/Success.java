@@ -146,7 +146,7 @@ public class Success extends GameState {
 					MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 					//进入下一关
 					Play.level++;
-					mGameStateManager.setState(GameStateManager.PLAY);
+					mGameStateManager.setState(GameStateManager.LOADING);
 				}
 			});
 		}

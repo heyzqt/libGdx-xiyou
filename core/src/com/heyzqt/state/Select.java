@@ -61,7 +61,7 @@ public class Select extends GameState {
 				sound.play();
 				//进入第一关
 				Play.level = 0;
-				mGameStateManager.setState(GameStateManager.PLAY);
+				mGameStateManager.setState(GameStateManager.LOADING);
 				return true;
 			}
 		});
@@ -74,7 +74,7 @@ public class Select extends GameState {
 				sound.play();
 				//进入第二关
 				Play.level = 1;
-				mGameStateManager.setState(GameStateManager.PLAY);
+				mGameStateManager.setState(GameStateManager.LOADING);
 				return true;
 			}
 		});
@@ -87,7 +87,7 @@ public class Select extends GameState {
 				sound.play();
 				//进入第三关
 				Play.level = 2;
-				mGameStateManager.setState(GameStateManager.PLAY);
+				mGameStateManager.setState(GameStateManager.LOADING);
 				return true;
 			}
 		});
@@ -100,7 +100,7 @@ public class Select extends GameState {
 				sound.play();
 				//进入第四关
 				Play.level = 3;
-				mGameStateManager.setState(GameStateManager.PLAY);
+				mGameStateManager.setState(GameStateManager.LOADING);
 				return true;
 			}
 		});

@@ -2,7 +2,6 @@ package com.heyzqt.state;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -25,10 +24,6 @@ public class Failure extends GameState {
 	//所有控件图片
 	private TextureAtlas mAtlas;
 	private TextureAtlas.AtlasRegion[] mAtlasRegions;
-	//亮五角星
-	private Image mStarOnImg;
-	//暗五角星
-	private Image mStarOffImg;
 	//返回按钮
 	private ImageButton mBackBtn;
 	//重新开始按钮
@@ -92,13 +87,6 @@ public class Failure extends GameState {
 		mAtlasRegions[3] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("restartBtnDown"));
 		mAtlasRegions[4] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("backBtnUp"));
 		mAtlasRegions[5] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("backBtnDown"));
-		//初始化五角星
-		mStarOnImg = new Image(mAtlasRegions[1]);
-		mStarOffImg = new Image(mAtlasRegions[0]);
-//		mStarOnImg.setPosition(300,240);
-//		mStarOnImg.setScale(0.7f);
-//		mStarOffImg.setPosition(375,240);
-//		mStarOffImg.setScale(0.7f);
 
 		//初始化返回控件
 		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlasRegions[4]),
@@ -116,8 +104,6 @@ public class Failure extends GameState {
 
 		mStage.addActor(mPlaceLab);
 		mStage.addActor(mTimeLab);
-//		mStage.addActor(mStarOnImg);
-//		mStage.addActor(mStarOffImg);
 		mStage.addActor(mBackBtn);
 		mStage.addActor(mRestartBtn);
 
@@ -145,7 +131,7 @@ public class Failure extends GameState {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
-				mGameStateManager.setState(GameStateManager.PLAY);
+				mGameStateManager.setState(GameStateManager.LOADING);
 			}
 		});
 	}

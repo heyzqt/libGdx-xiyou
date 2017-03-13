@@ -29,8 +29,6 @@ public class Loading extends GameState {
 	private TextureAtlas.AtlasRegion mAfterBg;
 	private TextureAtlas.AtlasRegion mFlag;
 
-	//判断更新
-	private boolean isFirstUpdated = true;
 	//时间
 	private float preTime = 0;
 	private float stateTime = 0;
@@ -38,6 +36,14 @@ public class Loading extends GameState {
 
 	//进度条进度
 	private int mProgress = 0;
+
+	//判断更新
+	private boolean isFirstUpdated = true;
+	//判断跳转
+	private boolean isJump = true;
+
+	//预加载Play界面
+	private Play mPlay;
 
 	public Loading(GameStateManager manager) {
 		super(manager);
@@ -75,8 +81,8 @@ public class Loading extends GameState {
 		mAfterBg = mAtlas.findRegion("after");
 		mFlag = mAtlas.findRegion("flag");
 
-		//预加载游戏界面
-		mGameStateManager.pushState(GameStateManager.PLAY);
+		//预加载Play界面
+		mPlay = new Play(mGameStateManager);
 	}
 
 	@Override
@@ -121,9 +127,11 @@ public class Loading extends GameState {
 		mBatch.end();
 
 		//5秒后跳转到游戏界面
-		if (mProgress > ENDTIME) {
+		if (mProgress > ENDTIME && isJump) {
 			//出栈 加载界面
 			mGameStateManager.popState();
+			mGameStateManager.pushState(mPlay);
+			isJump = false;
 		}
 	}
 
@@ -134,7 +142,7 @@ public class Loading extends GameState {
 
 	@Override
 	public void dispose() {
-		mBackground.dispose();
-		mAtlas.dispose();
+		mBackground = null;
+		mAtlas = null;
 	}
 }

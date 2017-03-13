@@ -79,6 +79,11 @@ public class Constant {
 	public static final String FIFTH_GAME_BG = "fifth_game_bg";
 	public static final String PLAY_WIDGET = "play_widget";
 	public static final String PLAY_BLOOD = "play_blood";
+
+	//加载界面
+	public static final String LOADING_BG = "loading_bg";
+	public static final String LOADING_WIDGET = "loading_widget";
+
 	//天兵素材
 	public static final String ENEMY_DAO_ROLE = "enemy_dao";
 	public static final String ENEMY_FU_ROLE = "enemy_fu";

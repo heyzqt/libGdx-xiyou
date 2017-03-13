@@ -21,6 +21,7 @@ public class GameStateManager {
 	public final static int FAILURE = 2;  //失败界面
 	public final static int SUCCESS = 3;  //成功界面
 	public final static int SELECT = 4;    //选关界面
+	public final static int LOADING = 5;    //加载界面
 
 	public GameStateManager(MyGdxGame game) {
 		this.mGame = game;
@@ -46,6 +47,7 @@ public class GameStateManager {
 		if(state == FAILURE) return new Failure(this);
 		if(state == SUCCESS) return new Success(this);
 		if(state == SELECT) return new Select(this);
+		if(state == LOADING) return new Loading(this);
 		return null;
 	}
 

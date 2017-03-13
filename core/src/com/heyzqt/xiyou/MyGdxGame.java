@@ -97,6 +97,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadTextureAtlas("role/erlangBoss.atlas", Constant.BOSS_ERLANG_ROLE);
 		//加载游戏摇杆素材
 		mAssetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);
+
+		//加载界面背景和游戏素材
+		mAssetManager.loadTexture("background/loading_bg.png", Constant.LOADING_BG);
+		mAssetManager.loadTextureAtlas("widget/loading.atlas", Constant.LOADING_WIDGET);
 	}
 
 	@Override

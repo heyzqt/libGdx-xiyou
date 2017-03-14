@@ -11,6 +11,7 @@ import com.heyzqt.entity.Boss;
 import com.heyzqt.entity.Enemy;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.state.Play;
+import com.heyzqt.xiyou.MyGdxGame;
 
 /**
  * Created by heyzqt on 2017/2/7.
@@ -43,6 +44,8 @@ public class Box2DContactListener implements ContactListener {
 			Enemy enemy = (Enemy) fixtureA.getBody().getUserData();
 			//天兵被攻击次数+1
 			enemy.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
 			//天兵被击飞
 			float x = Play.mMonkey.getBody().getPosition().x -
 					enemy.getBody().getPosition().x;
@@ -64,6 +67,8 @@ public class Box2DContactListener implements ContactListener {
 			Boss boss = (Boss) fixtureA.getBody().getUserData();
 			//Boss被攻击次数+1
 			boss.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
 			//Boss被击飞
 			float x = Play.mMonkey.getBody().getPosition().x -
 					boss.getBody().getPosition().x;
@@ -85,6 +90,8 @@ public class Box2DContactListener implements ContactListener {
 			Enemy enemy = (Enemy) fixtureA.getBody().getUserData();
 			//孙悟空被攻击次数+1
 			Play.mMonkey.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
 			//孙悟空被击飞
 			float x = Play.mMonkey.getBody().getPosition().x -
 					enemy.getBody().getPosition().x;
@@ -107,6 +114,8 @@ public class Box2DContactListener implements ContactListener {
 			Enemy enemy = (Enemy) fixtureB.getBody().getUserData();
 			//孙悟空被攻击次数+1
 			Play.mMonkey.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
 			//孙悟空被击飞
 			float x = Play.mMonkey.getBody().getPosition().x -
 					enemy.getBody().getPosition().x;
@@ -129,6 +138,8 @@ public class Box2DContactListener implements ContactListener {
 			Boss boss = (Boss) fixtureA.getBody().getUserData();
 			//孙悟空被攻击次数+1
 			Play.mMonkey.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
 			//孙悟空被击飞
 			float x = Play.mMonkey.getBody().getPosition().x -
 					boss.getBody().getPosition().x;
@@ -151,6 +162,8 @@ public class Box2DContactListener implements ContactListener {
 			Boss boss = (Boss) fixtureB.getBody().getUserData();
 			//孙悟空被攻击次数+1
 			Play.mMonkey.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
 			//孙悟空被击飞
 			float x = Play.mMonkey.getBody().getPosition().x -
 					boss.getBody().getPosition().x;

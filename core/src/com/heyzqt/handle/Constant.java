@@ -43,7 +43,12 @@ public class Constant {
 	public static final String BTN_COMMON_SOUND = "btn_common_sound";
 	public static final String BTN_SELECT_SOUND = "btn_select_sound";
 
-	//第一关至第五关卡背景音效
+	//孙悟空被击打音效
+	public static final String SOUND_SUN_GET_HURT = "sfx_role_get_hurt_1";
+	//天兵被击打音效
+	public static final String SOUND_ENEMY_GET_HURT = "sfx_enemy_get_hurt";
+
+	//第一关至第五关卡背景音乐
 	public static final String LEVEL_0_BGM = "bgm_level_0";
 	public static final String LEVEL_1_BGM = "bgm_level_1";
 	public static final String LEVEL_2_BGM = "bgm_level_2";

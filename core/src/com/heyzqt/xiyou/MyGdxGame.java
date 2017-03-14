@@ -56,6 +56,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadMusic("sound/bgm_level_1.mp3", Constant.LEVEL_1_BGM);
 		//加载第五关背景音乐
 		mAssetManager.loadMusic("sound/bgm_level_2.mp3", Constant.LEVEL_2_BGM);
+		//加载击打音效
+		mAssetManager.loadSound("sound/sfx_enemy_get_hurt.mp3",Constant.SOUND_ENEMY_GET_HURT);
+		mAssetManager.loadSound("sound/sfx_role_get_hurt_1.mp3",Constant.SOUND_SUN_GET_HURT);
 
 		//加载开始界面Start.java资源
 		mAssetManager.loadTexture("background/start_bg.png", Constant.START_BG);
@@ -64,7 +67,6 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//加载设置界面对话框
 		mAssetManager.loadTexture("background/aboutDialog.png", Constant.SETTING_DIALOG);
-
 
 		//加载选关界面Select.java资源
 		mAssetManager.loadTexture("background/world_map_bg.jpg", Constant.SELECT_BG);

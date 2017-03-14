@@ -53,6 +53,9 @@ public class Loading extends GameState {
 	public void init() {
 		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.LOADING_WIDGET);
 
+		//背景音乐
+		MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).play();
+
 		//背景
 		mBackground = MyGdxGame.mAssetManager.getTexture(Constant.LOADING_BG);
 
@@ -142,6 +145,12 @@ public class Loading extends GameState {
 
 	@Override
 	public void dispose() {
+		//关闭背景音乐
+		MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).stop();
+
+		//游戏界面音乐播放
+		mPlay.initMusic();
+
 		mBackground = null;
 		mAtlas = null;
 	}

@@ -124,7 +124,7 @@ public class Success extends GameState {
 	}
 
 	private void initListener() {
-		//返回地图按钮
+		//返回开始界面按钮
 		mBackBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -187,7 +187,6 @@ public class Success extends GameState {
 
 	@Override
 	public void dispose() {
-
 		//清空所有演员
 		mStage.getActors().clear();
 		//清空舞台

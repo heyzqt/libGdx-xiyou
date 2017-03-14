@@ -52,8 +52,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadSound("sound/btn_select.wav", Constant.BTN_SELECT_SOUND);
 		//加载第一关背景音乐
 		mAssetManager.loadMusic("sound/bgm_level_0.mp3", Constant.LEVEL_0_BGM);
-		//加载第二关背景音乐
+		//加载第二、三、四关背景音乐
 		mAssetManager.loadMusic("sound/bgm_level_1.mp3", Constant.LEVEL_1_BGM);
+		//加载第五关背景音乐
+		mAssetManager.loadMusic("sound/bgm_level_2.mp3", Constant.LEVEL_2_BGM);
 
 		//加载开始界面Start.java资源
 		mAssetManager.loadTexture("background/start_bg.png", Constant.START_BG);

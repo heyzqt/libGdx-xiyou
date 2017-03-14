@@ -126,6 +126,9 @@ public class Play extends GameState {
 	//游戏渲染时间
 	private float statetime;
 
+	//判断是否该播放音乐
+	public static boolean isPlay = false;
+
 	public Play(GameStateManager manager) {
 		super(manager);
 		init();
@@ -507,38 +510,14 @@ public class Play extends GameState {
 	private void createMap() {
 		try {
 			mMap = new TmxMapLoader().load("map/level_" + level + ".tmx");
-			Music music;
 			switch (level) {
 				case 0:        //第一关
 					//初始化背景
 					mBackground = new Background(Constant.FIRST_GAME_BG);
-					//初始化音乐
-					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
-					music.setLooping(true);
-					music.play();
 					break;
 				case 1:        //第二关
 					//初始化背景
 					mBackground = new Background(Constant.SECOND_GAME_BG);
-					//初始化音乐
-					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
-					music.setLooping(true);
-					music.play();
-					break;
-				case 2:        //第三关
-					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
-					music.setLooping(true);
-					music.play();
-					break;
-				case 3:        //第四关背景音乐
-					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
-					music.setLooping(true);
-					music.play();
-					break;
-				case 4:        //第五关背景音乐
-					music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
-					music.setLooping(true);
-					music.play();
 					break;
 			}
 		} catch (Exception e) {
@@ -590,6 +569,40 @@ public class Play extends GameState {
 
 				mWorld.createBody(bodyDef).createFixture(chainFixtureDef).setUserData("block");
 			}
+		}
+	}
+
+	public void initMusic() {
+
+		Music music;
+		switch (level) {
+			case 0:        //第一关
+				//初始化音乐
+				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
+				music.setLooping(true);
+				music.play();
+				break;
+			case 1:        //第二关
+				//初始化音乐
+				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
+				music.setLooping(true);
+				music.play();
+				break;
+			case 2:        //第三关
+				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
+				music.setLooping(true);
+				music.play();
+				break;
+			case 3:        //第四关背景音乐
+				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
+				music.setLooping(true);
+				music.play();
+				break;
+			case 4:        //第五关背景音乐
+				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM);
+				music.setLooping(true);
+				music.play();
+				break;
 		}
 	}
 
@@ -781,9 +794,6 @@ public class Play extends GameState {
 
 	@Override
 	public void handleInput() {
-		if (Gdx.input.justTouched()) {
-			mBody.applyForceToCenter(0, 300, true);
-		}
 	}
 
 	@Override
@@ -794,16 +804,16 @@ public class Play extends GameState {
 				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).stop();
 				break;
 			case 1:        //第二关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).stop();
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).stop();
 				break;
 			case 2:        //第三关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).stop();
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).stop();
 				break;
 			case 3:        //第四关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).stop();
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).stop();
 				break;
 			case 4:        //第五关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).stop();
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM).stop();
 				break;
 		}
 

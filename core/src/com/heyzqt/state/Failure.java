@@ -112,7 +112,7 @@ public class Failure extends GameState {
 
 	private void initListener() {
 
-		//返回地图按钮
+		//返回开始界面按钮
 		mBackBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

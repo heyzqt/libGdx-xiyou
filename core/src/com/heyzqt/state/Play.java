@@ -120,14 +120,14 @@ public class Play extends GameState {
 	private Fixture mStandFix;
 	private FixtureDef mStandFixDef;
 
+	//音乐
+	private Music mMusic;
+
 	/**
 	 * 其他
 	 */
 	//游戏渲染时间
 	private float statetime;
-
-	//判断是否该播放音乐
-	public static boolean isPlay = false;
 
 	public Play(GameStateManager manager) {
 		super(manager);
@@ -573,35 +573,53 @@ public class Play extends GameState {
 	}
 
 	public void initMusic() {
-
-		Music music;
 		switch (level) {
 			case 0:        //第一关
 				//初始化音乐
-				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
-				music.setLooping(true);
-				music.play();
+				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
+				mMusic.setLooping(true);
+				mMusic.play();
 				break;
 			case 1:        //第二关
 				//初始化音乐
-				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
-				music.setLooping(true);
-				music.play();
+				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
+				mMusic.setLooping(true);
+				mMusic.play();
 				break;
 			case 2:        //第三关
-				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
-				music.setLooping(true);
-				music.play();
+				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
+				mMusic.setLooping(true);
+				mMusic.play();
 				break;
 			case 3:        //第四关背景音乐
-				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
-				music.setLooping(true);
-				music.play();
+				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
+				mMusic.setLooping(true);
+				mMusic.play();
 				break;
 			case 4:        //第五关背景音乐
-				music = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM);
-				music.setLooping(true);
-				music.play();
+				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM);
+				mMusic.setLooping(true);
+				mMusic.play();
+				break;
+		}
+	}
+
+	public void pauseMusic() {
+		switch (level) {
+			case 0:        //第一关
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).pause();
+				break;
+			case 1:        //第二关
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).pause();
+				break;
+			case 2:        //第三关
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).pause();
+				break;
+			case 3:        //第四关背景音乐
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).pause();
+				break;
+			case 4:        //第五关背景音乐
+				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM).pause();
 				break;
 		}
 	}

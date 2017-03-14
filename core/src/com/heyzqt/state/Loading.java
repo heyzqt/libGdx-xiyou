@@ -53,9 +53,6 @@ public class Loading extends GameState {
 	public void init() {
 		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.LOADING_WIDGET);
 
-		//背景音乐
-		MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).play();
-
 		//背景
 		mBackground = MyGdxGame.mAssetManager.getTexture(Constant.LOADING_BG);
 
@@ -93,6 +90,13 @@ public class Loading extends GameState {
 		if (isFirstUpdated) {
 			preTime = delta;
 			isFirstUpdated = false;
+		}
+
+		//背景音乐
+		if (Start.isPlay) {
+			MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).play();
+		} else {
+			MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).pause();
 		}
 	}
 
@@ -149,7 +153,11 @@ public class Loading extends GameState {
 		MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).stop();
 
 		//游戏界面音乐播放
-		mPlay.initMusic();
+		if (Start.isPlay) {
+			mPlay.initMusic();
+		} else {
+			mPlay.pauseMusic();
+		}
 
 		mBackground = null;
 		mAtlas = null;

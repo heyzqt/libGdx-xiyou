@@ -32,9 +32,11 @@ import com.badlogic.gdx.utils.Array;
 import com.heyzqt.entity.Background;
 import com.heyzqt.entity.Boss;
 import com.heyzqt.entity.Enemy;
+import com.heyzqt.entity.FireBall;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.FireBallController;
 import com.heyzqt.handle.State;
 import com.heyzqt.handle.Utils;
 import com.heyzqt.xiyou.MyGdxGame;
@@ -94,6 +96,8 @@ public class Play extends GameState {
 	private ImageButton mJumpBtn;
 	//攻击按钮
 	private ImageButton mAttackBtn;
+	//火球攻击按钮
+	private ImageButton mBallBtn;
 
 	/**
 	 * 精灵
@@ -106,6 +110,8 @@ public class Play extends GameState {
 	private Array<Enemy> mEnemyDaos;
 	//Boss
 	private Boss mBoss;
+	//火球Controller
+	private FireBallController mBallController;
 
 	/**
 	 * 刚体
@@ -185,16 +191,28 @@ public class Play extends GameState {
 		mAttackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("attackBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("attackBtnDown")));
 		mAttackBtn.setPosition(1000, 35);
+		//火球按钮
+		mBallBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("attackBallBtnUp")),
+				new TextureRegionDrawable(mAtlas.findRegion("attackBallBtnDown")));
+		mBallBtn.getImage().setSize(138,138);
+		mBallBtn.setPosition(850, 35);
 		//跳跃按钮
 		mJumpBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("jumpBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("jumpBtnDown")));
 		mJumpBtn.setPosition(1130, 140);
+
+		//初始化火球
+		mBallController = new FireBallController();
+		mBallController.setName("fireballcontroller");
 
 		mStage.addActor(mScore);
 		mStage.addActor(mLeftBtn);
 		mStage.addActor(mRightBtn);
 		mStage.addActor(mAttackBtn);
 		mStage.addActor(mJumpBtn);
+		mStage.addActor(mBallBtn);
+		//添加火球组到舞台
+		mStage.addActor(mBallController);
 
 		//初始化孙悟空所有按钮的监听事件
 		initListener();
@@ -297,6 +315,23 @@ public class Play extends GameState {
 				//重新初始化孙悟空的monkey传感器
 				mStandFix = mBody.createFixture(mStandFixDef);
 				mStandFix.setUserData("monkey");
+			}
+		});
+
+		//火球按钮
+		mBallBtn.addListener(new ClickListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				FireBallController ballsController = (FireBallController) mStage.getRoot().findActor("fireballcontroller");
+				if (ballsController.getChildren().size >= 3) { // 限制火球的数量为3个
+					return false;
+				}
+				FireBall ball = ballsController.createFireBall();
+				//设置火球出现位置
+				ball.setX(mMonkey.getBody().getPosition().x * Constant.RATE);
+				ball.setY(mMonkey.getBody().getPosition().y * Constant.RATE);
+				ballsController.AddFireBalls(ball);
+				return true;
 			}
 		});
 
@@ -760,6 +795,9 @@ public class Play extends GameState {
 
 		//画孙悟空
 		mMonkey.render(mBatch, statetime);
+
+		//更新火球逻辑
+		//mBallController.update(mStage);
 
 		/**
 		 * 画舞台

@@ -180,6 +180,98 @@ public class Box2DContactListener implements ContactListener {
 			//攻击结束标志
 			boss.isAttacked = true;
 		}
+
+		//火球攻击天兵
+		if (Utils.isContacted(fixtureA, fixtureB, "enemy", "ball")) {
+			Enemy enemy = (Enemy) fixtureA.getBody().getUserData();
+			//天兵被攻击次数+1
+			enemy.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			//天兵被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					enemy.getBody().getPosition().x;
+			if (x < 0) {
+				enemy.getBody().setLinearVelocity(1f, 0);
+				enemy.STATE = State.STATE_LEFT_HITED;
+			} else {
+				enemy.getBody().setLinearVelocity(-1f, 0);
+				enemy.STATE = State.STATE_RIGHT_HITED;
+			}
+			//天兵被攻击2次后死亡
+			if (enemy.attacks == 2) {
+				removeEnemies.add(fixtureA.getBody());
+			}
+		}
+
+		//火球攻击天兵
+		if (Utils.isContacted(fixtureA, fixtureB, "ball", "enemy")) {
+			Enemy enemy = (Enemy) fixtureB.getBody().getUserData();
+			//天兵被攻击次数+1
+			enemy.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			//天兵被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					enemy.getBody().getPosition().x;
+			if (x < 0) {
+				enemy.getBody().setLinearVelocity(1f, 0);
+				enemy.STATE = State.STATE_LEFT_HITED;
+			} else {
+				enemy.getBody().setLinearVelocity(-1f, 0);
+				enemy.STATE = State.STATE_RIGHT_HITED;
+			}
+			//天兵被攻击2次后死亡
+			if (enemy.attacks == 2) {
+				removeEnemies.add(fixtureB.getBody());
+			}
+		}
+
+		//孙悟空攻击Boss
+		if (Utils.isContacted(fixtureA, fixtureB, "boss", "ball")) {
+			Boss boss = (Boss) fixtureA.getBody().getUserData();
+			//Boss被攻击次数+1
+			boss.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			//Boss被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					boss.getBody().getPosition().x;
+			if (x < 0) {
+				boss.getBody().setLinearVelocity(1f, 0);
+				boss.STATE = State.STATE_LEFT_HITED;
+			} else {
+				boss.getBody().setLinearVelocity(-1f, 0);
+				boss.STATE = State.STATE_RIGHT_HITED;
+			}
+			//boss被攻击4次后死亡
+			if (boss.attacks == 4) {
+				removeBoss = fixtureA.getBody();
+			}
+		}
+
+		//孙悟空攻击Boss
+		if (Utils.isContacted(fixtureA, fixtureB, "ball", "boss")) {
+			Boss boss = (Boss) fixtureB.getBody().getUserData();
+			//Boss被攻击次数+1
+			boss.attacks++;
+			//播放音乐
+			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			//Boss被击飞
+			float x = Play.mMonkey.getBody().getPosition().x -
+					boss.getBody().getPosition().x;
+			if (x < 0) {
+				boss.getBody().setLinearVelocity(1f, 0);
+				boss.STATE = State.STATE_LEFT_HITED;
+			} else {
+				boss.getBody().setLinearVelocity(-1f, 0);
+				boss.STATE = State.STATE_RIGHT_HITED;
+			}
+			//boss被攻击4次后死亡
+			if (boss.attacks == 4) {
+				removeBoss = fixtureB.getBody();
+			}
+		}
 	}
 
 	@Override

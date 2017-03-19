@@ -372,6 +372,7 @@ public class Play extends GameState {
 					ballBody.setUserData(ball);
 					mBallController.addFireBalls(ball);
 				}
+				MyGdxGame.mAssetManager.getSound(Constant.FIREBALL_SOUND).play();
 				return true;
 			}
 		});

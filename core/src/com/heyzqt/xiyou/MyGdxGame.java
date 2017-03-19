@@ -17,6 +17,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private OrthographicCamera mCamera;
 	private OrthographicCamera mUICamera;
 
+	//舞台宽高
 	public final static int VIEW_WIDTH = 960;
 	public final static int VIEW_HEIGHT = 640;
 
@@ -57,8 +58,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		//加载第五关背景音乐
 		mAssetManager.loadMusic("sound/bgm_level_2.mp3", Constant.LEVEL_2_BGM);
 		//加载击打音效
-		mAssetManager.loadSound("sound/sfx_enemy_get_hurt.mp3",Constant.SOUND_ENEMY_GET_HURT);
-		mAssetManager.loadSound("sound/sfx_role_get_hurt_1.mp3",Constant.SOUND_SUN_GET_HURT);
+		mAssetManager.loadSound("sound/sfx_enemy_get_hurt.mp3", Constant.SOUND_ENEMY_GET_HURT);
+		mAssetManager.loadSound("sound/sfx_role_get_hurt_1.mp3", Constant.SOUND_SUN_GET_HURT);
 
 		//加载开始界面Start.java资源
 		mAssetManager.loadTexture("background/start_bg.png", Constant.START_BG);
@@ -101,6 +102,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		mAssetManager.loadTextureAtlas("role/erlangBoss.atlas", Constant.BOSS_ERLANG_ROLE);
 		//加载游戏摇杆素材
 		mAssetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);
+		//加载火球素材
+		mAssetManager.loadTextureAtlas("widget/fireball.atlas", Constant.FIREBALL_WIDGET);
 
 		//加载界面背景和游戏素材
 		mAssetManager.loadTexture("background/loading_bg.png", Constant.LOADING_BG);

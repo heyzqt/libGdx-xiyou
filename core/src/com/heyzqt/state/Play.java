@@ -194,7 +194,7 @@ public class Play extends GameState {
 		//火球按钮
 		mBallBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("attackBallBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("attackBallBtnDown")));
-		mBallBtn.getImage().setSize(138,138);
+		mBallBtn.getImage().setSize(138, 138);
 		mBallBtn.setPosition(850, 35);
 		//跳跃按钮
 		mJumpBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("jumpBtnUp")),
@@ -203,7 +203,6 @@ public class Play extends GameState {
 
 		//初始化火球
 		mBallController = new FireBallController();
-		mBallController.setName("fireballcontroller");
 
 		mStage.addActor(mScore);
 		mStage.addActor(mLeftBtn);
@@ -211,8 +210,6 @@ public class Play extends GameState {
 		mStage.addActor(mAttackBtn);
 		mStage.addActor(mJumpBtn);
 		mStage.addActor(mBallBtn);
-		//添加火球组到舞台
-		mStage.addActor(mBallController);
 
 		//初始化孙悟空所有按钮的监听事件
 		initListener();
@@ -322,15 +319,59 @@ public class Play extends GameState {
 		mBallBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				FireBallController ballsController = (FireBallController) mStage.getRoot().findActor("fireballcontroller");
-				if (ballsController.getChildren().size >= 3) { // 限制火球的数量为3个
+				if (mBallController.balls.size >= 3) { // 限制火球的数量为3个
 					return false;
 				}
-				FireBall ball = ballsController.createFireBall();
+
+				//初始化刚体属性
+				BodyDef ballDef = new BodyDef();
+				Body ballBody;
+				FixtureDef ballFixDef = new FixtureDef();
+				Fixture ballFix;
+				PolygonShape ballShape = new PolygonShape();
+
+				//设置形状
+				ballDef.type = BodyDef.BodyType.KinematicBody;
+				//position是刚体中心点的位置
+				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT ||
+						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED) {
+					ballDef.position.set(mMonkey.getBody().getPosition().x + 0.5f, mMonkey.getBody().getPosition().y);
+				} else {
+					ballDef.position.set(mMonkey.getBody().getPosition().x - 0.5f, mMonkey.getBody().getPosition().y);
+				}
+				ballBody = mWorld.createBody(ballDef);
+				ballShape.setAsBox(50 / Constant.RATE, 30 / Constant.RATE);
+				ballFixDef.shape = ballShape;
+				ballFixDef.filter.categoryBits = Constant.FIREBALL;
+				ballFixDef.filter.maskBits = Constant.ENEMY_DAO | Constant.BOSS;
+				ballFixDef.isSensor = true;
+				ballFix = ballBody.createFixture(ballFixDef);
+				ballFix.setUserData("ball");
+
 				//设置火球出现位置
-				ball.setX(mMonkey.getBody().getPosition().x * Constant.RATE);
-				ball.setY(mMonkey.getBody().getPosition().y * Constant.RATE);
-				ballsController.AddFireBalls(ball);
+				if (mMonkey.STATE == State.STATE_IDEL_RIGHT) {
+					//孙悟空往右边行动
+					FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
+					ballBody.setUserData(ball);
+					mBallController.addFireBalls(ball);
+				} else if (mMonkey.STATE == State.STATE_RIGHT || mMonkey.STATE == State.STATE_RIGHT_HITED) {
+					mMonkey.STATE = State.STATE_IDEL_RIGHT;
+					mMonkey.getBody().setLinearVelocity(0, 0);
+					FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
+					ballBody.setUserData(ball);
+					mBallController.addFireBalls(ball);
+				} else if (mMonkey.STATE == State.STATE_IDEL_LEFT) {
+					//孙悟空往左边行动
+					FireBall ball = mBallController.createFireBall(ballBody, FireBall.LEFT);
+					ballBody.setUserData(ball);
+					mBallController.addFireBalls(ball);
+				} else if (mMonkey.STATE == State.STATE_LEFT || mMonkey.STATE == State.STATE_LEFT_HITED) {
+					mMonkey.STATE = State.STATE_IDEL_LEFT;
+					mMonkey.getBody().setLinearVelocity(0, 0);
+					FireBall ball = mBallController.createFireBall(ballBody, FireBall.LEFT);
+					ballBody.setUserData(ball);
+					mBallController.addFireBalls(ball);
+				}
 				return true;
 			}
 		});
@@ -363,7 +404,7 @@ public class Play extends GameState {
 				continue;
 			}
 
-			//初始化持刀天兵刚体形状
+			//初始化天兵刚体形状
 			BodyDef enemyDef = new BodyDef();
 			enemyDef.type = BodyDef.BodyType.DynamicBody;
 			//多边形形状
@@ -383,7 +424,7 @@ public class Play extends GameState {
 					y = ellipseMapObject.getEllipse().y / Constant.RATE;
 				}
 
-				//持刀天兵夹具
+				//天兵夹具
 				polygonShape.setAsBox(30 / Constant.RATE, 60 / Constant.RATE);
 				enemyFixDef.shape = polygonShape;
 				enemyFixDef.isSensor = true;
@@ -616,17 +657,8 @@ public class Play extends GameState {
 				mMusic.play();
 				break;
 			case 1:        //第二关
-				//初始化音乐
-				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
-				mMusic.setLooping(true);
-				mMusic.play();
-				break;
 			case 2:        //第三关
-				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
-				mMusic.setLooping(true);
-				mMusic.play();
-				break;
-			case 3:        //第四关背景音乐
+			case 3:        //第四关
 				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
 				mMusic.setLooping(true);
 				mMusic.play();
@@ -645,11 +677,7 @@ public class Play extends GameState {
 				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).pause();
 				break;
 			case 1:        //第二关
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).pause();
-				break;
 			case 2:        //第三关
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).pause();
-				break;
 			case 3:        //第四关背景音乐
 				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).pause();
 				break;
@@ -796,8 +824,12 @@ public class Play extends GameState {
 		//画孙悟空
 		mMonkey.render(mBatch, statetime);
 
+		//画火球
+		for (FireBall ball : mBallController.balls) {
+			ball.render(mBatch, statetime);
+		}
 		//更新火球逻辑
-		//mBallController.update(mStage);
+		mBallController.update(mWorld);
 
 		/**
 		 * 画舞台
@@ -860,11 +892,7 @@ public class Play extends GameState {
 				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).stop();
 				break;
 			case 1:        //第二关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).stop();
-				break;
 			case 2:        //第三关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).stop();
-				break;
 			case 3:        //第四关背景音乐
 				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).stop();
 				break;

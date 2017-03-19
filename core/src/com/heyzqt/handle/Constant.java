@@ -25,6 +25,8 @@ public class Constant {
 	public final static float RATE = 100;
 	//主角刚体碰撞属性
 	public static final short PLAYER = 2;
+	//火球碰撞属性
+	public static final short FIREBALL = 2;
 	//砖块碰撞属性
 	public static final short BLOCK = 4;
 	//持刀天兵碰撞属性
@@ -33,7 +35,7 @@ public class Constant {
 	public static final short ENEMY_QIANG = 16;
 	//持弓碰撞属性
 	public static final short ENEMY_GONG = 32;
-	//巨灵神碰撞属性
+	//BOSS碰撞属性
 	public static final short BOSS = 8;
 
 	/**
@@ -82,6 +84,7 @@ public class Constant {
 	public static final String FIFTH_GAME_BG = "fifth_game_bg";
 	public static final String PLAY_WIDGET = "play_widget";
 	public static final String PLAY_BLOOD = "play_blood";
+	public static final String FIREBALL_WIDGET = "fireball_widget";
 
 	//加载界面
 	public static final String LOADING_BG = "loading_bg";

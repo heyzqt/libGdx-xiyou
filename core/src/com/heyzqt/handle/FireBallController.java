@@ -1,12 +1,9 @@
 package com.heyzqt.handle;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Array;
 import com.heyzqt.entity.FireBall;
 
 
@@ -15,38 +12,60 @@ import com.heyzqt.entity.FireBall;
  *
  * 光球管理类
  */
-public class FireBallController extends Group {
+public class FireBallController {
 
-	private TextureRegion region;
-	private Sound bang;
+	public Array<FireBall> balls;
 
 	//更新火球逻辑
-	public void update(Stage stage) {
+	public void update(World world) {
+		for (int i = 0; i < balls.size; i++) {
+			FireBall ball = balls.get(i);
+			if (!checkAlive(ball)) {
+				balls.removeValue(ball, true);
+				world.destroyBody(ball.getBody());
+			}
+		}
 	}
 
 	public FireBallController() {
-		region = new TextureRegion(new Texture("widget/fireball.png"));
+		balls = new Array<FireBall>();
 	}
 
-	public void AddFireBalls(FireBall ball) {
-		if (this.getChildren().size >= 3) { // 如果火球数量大于等于3个就结束
+	public void addFireBalls(FireBall ball) {
+		if (balls.size >= 3) { // 如果火球数量大于等于3个就结束
 			return;
 		}
-		ball.addAction(Actions.moveTo(ball.getX() + 1100, ball.getY(), 2f)); // 设置火球的移动
-		this.addActor(ball);
+		// 设置火球移动速度
+		if (ball.STATE == FireBall.RIGHT) {
+			ball.getBody().setLinearVelocity(1f, 0f);
+		} else {
+			ball.getBody().setLinearVelocity(-1f, 0f);
+		}
+		balls.add(ball);
 	}
 
 	//攻击敌人
-	public Boolean attackEnemy(Actor target, Actor ball) {
+	public Boolean attackEnemy(Actor target, FireBall ball) {
 		return false;
 	}
 
-	//敌人是否存活
-	public Boolean checkAlive(Actor projectile) {
-		return false;
+	/**
+	 * 检查火球是否到达目的地
+	 * 火球到达目的地之前所含动作数量为1
+	 * 到达后动作数量为0
+	 *
+	 * @return 到达返回true 否则返回false
+	 */
+	public Boolean checkAlive(FireBall ball) {
+		float result = ball.getBody().getPosition().x * Constant.RATE -
+				ball.startPosition;
+		if (result >= 400 || (-result) >= 400) {
+			return false;
+		}
+		return true;
 	}
 
-	public FireBall createFireBall() {
-		return new FireBall(region);
+	public FireBall createFireBall(Body body, int state) {
+		return new FireBall(body, state);
 	}
 }

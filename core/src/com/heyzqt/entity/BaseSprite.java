@@ -38,6 +38,10 @@ public class BaseSprite {
 		mHeight = regions[0].getRegionHeight();
 	}
 
+	public Animation getAnimation() {
+		return mAnimation;
+	}
+
 	public void update(float delta) {
 	}
 

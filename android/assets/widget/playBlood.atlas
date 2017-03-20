@@ -5,12 +5,26 @@ filter: Nearest,Nearest
 repeat: none
 blood
   rotate: false
-  xy: 1, 39
+  xy: 1, 71
   size: 160, 30
   orig: 160, 30
   offset: 0, 0
   index: -1
 blood_border
+  rotate: false
+  xy: 1, 39
+  size: 160, 30
+  orig: 160, 30
+  offset: 0, 0
+  index: -1
+blue
+  rotate: false
+  xy: 163, 71
+  size: 160, 30
+  orig: 160, 30
+  offset: 0, 0
+  index: -1
+blue_border
   rotate: false
   xy: 1, 7
   size: 160, 30
@@ -22,5 +36,19 @@ sunAvatar
   xy: 163, 1
   size: 68, 68
   orig: 68, 68
+  offset: 0, 0
+  index: -1
+hp
+  rotate: false
+  xy: 233, 21
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+mp
+  rotate: false
+  xy: 283, 21
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1

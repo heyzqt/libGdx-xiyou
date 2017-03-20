@@ -52,6 +52,10 @@ public class Monkey extends BaseSprite {
 	//孙悟空的总血量
 	public final static int BLOOD = 8;
 
+	//孙悟空的MP
+	public final static int MP_VALUE = 8;
+	public static int MP;
+
 	public Monkey(Body body) {
 		super(body);
 
@@ -91,10 +95,9 @@ public class Monkey extends BaseSprite {
 		mRightAttackState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightAttack2"));
 
 		//左边被击飞动画
-		mLeftHittedState = new TextureAtlas.AtlasRegion[3];
+		mLeftHittedState = new TextureAtlas.AtlasRegion[2];
 		mLeftHittedState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftHited"));
 		mLeftHittedState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftHited"));
-		mLeftHittedState[2] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunLeftHited"));
 
 		//右边被击飞动画
 		mRightHittedState = new TextureAtlas.AtlasRegion[2];
@@ -104,6 +107,7 @@ public class Monkey extends BaseSprite {
 
 	@Override
 	public void update(float delta) {
+
 		if (STATE == State.STATE_IDEL_RIGHT || STATE == State.STATE_IDEL_LEFT) {
 			if (STATE == State.STATE_IDEL_RIGHT) {
 				setAnimation(mRightStandState, 1 / 12f);
@@ -115,9 +119,9 @@ public class Monkey extends BaseSprite {
 		} else if (STATE == State.STATE_RIGHT) {
 			setAnimation(mRightState, 1 / 12f);
 		} else if (STATE == State.STATE_LEFT_ATTACK) {
-			setAnimation(mLeftAttackState, 1 / 12f);
+			setAnimation(mLeftAttackState, 1f);
 		} else if (STATE == State.STATE_RIGHT_ATTACK) {
-			setAnimation(mRightAttackState, 1 / 12f);
+			setAnimation(mRightAttackState, 1f);
 		} else if (STATE == State.STATE_LEFT_HITED) {
 			setAnimation(mLeftHittedState, 1 / 12f);
 		} else if (STATE == State.STATE_RIGHT_HITED) {

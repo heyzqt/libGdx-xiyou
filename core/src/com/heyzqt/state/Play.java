@@ -84,7 +84,10 @@ public class Play extends GameState {
 	//血槽
 	private TextureRegion mBloodProgress;
 	private TextureRegion mBloodProgressBG;
-	private float bloodProgress;        //血槽值
+	private float bloodValue;        //血槽值
+	//mp槽
+	private TextureRegion mMPProgress;
+	private TextureRegion mMPProgressBG;
 	//分数
 	private Label mScore;
 	private BitmapFont mScoreFont;
@@ -174,6 +177,9 @@ public class Play extends GameState {
 		//初始化血槽
 		mBloodProgressBG = mBloodAtlas.findRegion("blood_border");
 		mBloodProgress = mBloodAtlas.findRegion("blood");
+		//初始化mp
+		mMPProgressBG = mBloodAtlas.findRegion("blue_border");
+		mMPProgress = mBloodAtlas.findRegion("blue");
 		//初始化分数
 		mScoreFont = new BitmapFont(Gdx.files.internal("font/text48.fnt"));
 		mScoreFont.getData().setScale(0.8f, 1f);
@@ -295,6 +301,7 @@ public class Play extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
 				if (mFixture != null) {
 					mBody.destroyFixture(mFixture);
 				}
@@ -322,6 +329,14 @@ public class Play extends GameState {
 		mBallBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+				//MP为0时无法使用技能
+				if (Monkey.MP == 0) {
+					return false;
+				} else {
+					Monkey.MP--;
+				}
+
 				if (mBallController.balls.size >= 3) { // 限制火球的数量为3个
 					return false;
 				}
@@ -566,6 +581,7 @@ public class Play extends GameState {
 
 		mMonkey = new Monkey(mBody);
 		mBody.setUserData(mMonkey);
+		mMonkey.MP = Monkey.MP_VALUE;
 
 		//设置敌人总数
 		switch (level) {
@@ -728,7 +744,7 @@ public class Play extends GameState {
 
 
 		//设置主角当前血量
-		bloodProgress = (Monkey.BLOOD - mMonkey.attacks) * 20;
+		bloodValue = (Monkey.BLOOD - mMonkey.attacks) * 20;
 
 		//设置分数
 		mScore.setText(mMonkey.getEnemyCount() + "");
@@ -805,9 +821,14 @@ public class Play extends GameState {
 
 		mBatch.begin();
 		//画血槽
-		mBatch.draw(mBloodProgressBG, 130, mScore.getY() - 55);
-		if (bloodProgress >= 0) {
-			mBatch.draw(mBloodProgress, 130, mScore.getY() - 53, bloodProgress, 26);
+		mBatch.draw(mBloodProgressBG, 130, mScore.getY() - 46);
+		if (bloodValue >= 0) {
+			mBatch.draw(mBloodProgress, 130, mScore.getY() - 44, bloodValue, 26);
+		}
+		//画mp槽
+		mBatch.draw(mMPProgressBG, 126, mScore.getY() - 64);
+		if (Monkey.MP > 0) {
+			mBatch.draw(mMPProgress, 126, mScore.getY() - 62, Monkey.MP * 20f, 26);
 		}
 		//画孙悟空头像
 		mBatch.draw(mSunAvatar, 78, mScore.getY() - 80, 70, 80);

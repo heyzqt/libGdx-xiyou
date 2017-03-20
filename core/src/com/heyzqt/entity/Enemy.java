@@ -50,7 +50,7 @@ public class Enemy extends BaseSprite implements Runnable {
 	//攻击是否完成
 	public boolean isAttacked = false;
 
-	//记录天兵被攻击的次数 攻击两次天兵死亡
+	//记录天兵被攻击的次数
 	public int attacks = 0;
 
 	//天兵左右攻击夹具
@@ -72,11 +72,11 @@ public class Enemy extends BaseSprite implements Runnable {
 		STATE = State.STATE_RIGHT;
 
 		if (type.equals("enemy")) {
-			mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_DAO_ROLE);
+			mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.ENEMY_DAO_ROLE);
 		} else if (type.equals("enemyFu")) {
-			mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_FU_ROLE);
+			mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.ENEMY_FU_ROLE);
 		} else if (type.equals("enemyQiang")) {
-			mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.ENEMY_QIANG_ROLE);
+			mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.ENEMY_QIANG_ROLE);
 		}
 
 		//初始化静止图片
@@ -239,6 +239,16 @@ public class Enemy extends BaseSprite implements Runnable {
 				}
 			}
 		}
+
+		//限制天兵不能往右走出地图最大宽度
+		if (mBody.getPosition().x >= 31) {
+			STATE = State.STATE_LEFT;
+			setStateAnimation();
+		} else if (mBody.getPosition().x <= 1) {
+			//限制天兵不能往左走出地图最小宽度
+			STATE = State.STATE_RIGHT;
+			setStateAnimation();
+		}
 	}
 
 
@@ -256,20 +266,6 @@ public class Enemy extends BaseSprite implements Runnable {
 				continue;
 			}
 
-			setStateAnimation();
-
-			//限制天兵不能往右走出地图最大宽度
-			if (mBody.getPosition().x >= 31) {
-				STATE = State.STATE_LEFT;
-				mBody.setLinearVelocity(-0.2f, 0);
-			}
-
-			//限制天兵不能往左走出地图最小宽度
-			if (mBody.getPosition().x <= 1) {
-				STATE = State.STATE_RIGHT;
-				mBody.setLinearVelocity(0.2f, 0);
-			}
-
 			try {
 				Thread.sleep(1500);
 			} catch (InterruptedException e) {
@@ -279,6 +275,7 @@ public class Enemy extends BaseSprite implements Runnable {
 			if (!isContacted) {
 				//给刀兵随机产生一个往左或往右的方向 产生随机数[3,4]
 				STATE = (int) (Math.random() * 2) + 3;
+				setStateAnimation();
 			}
 		}
 	}

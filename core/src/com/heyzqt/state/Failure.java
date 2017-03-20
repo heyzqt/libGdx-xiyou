@@ -68,18 +68,18 @@ public class Failure extends GameState {
 		timeStr = Utils.changeSecondToHMS(Utils.time);
 
 		//地点样式
-		Label.LabelStyle placeStyle = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.PLACE_COLOR);
+		Label.LabelStyle placeStyle = new Label.LabelStyle(MyGdxGame.assetManager.getFont(), Constant.PLACE_COLOR);
 		mPlaceLab = new Label(titleStr, placeStyle);
 		mPlaceLab.setFontScale(1.3f);
 		mPlaceLab.setPosition(390, 425);
 
 		//时间样式
-		Label.LabelStyle timeStyle = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.TIME_COLOR);
+		Label.LabelStyle timeStyle = new Label.LabelStyle(MyGdxGame.assetManager.getFont(), Constant.TIME_COLOR);
 		mTimeLab = new Label(timeStr, timeStyle);
 		mTimeLab.setPosition(480, 360);
 
 		//五角星与按钮
-		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.FAILURE_WIDGET);
+		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.FAILURE_WIDGET);
 		mAtlasRegions = new TextureAtlas.AtlasRegion[6];
 		mAtlasRegions[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("starOff"));
 		mAtlasRegions[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("starOn"));
@@ -100,7 +100,7 @@ public class Failure extends GameState {
 		mRestartBtn.setPosition(660, 100);
 
 		//初始化背景音乐
-		MyGdxGame.mAssetManager.getSound(Constant.FAILURE_BGM).play();
+		MyGdxGame.assetManager.getSound(Constant.FAILURE_BGM).play();
 
 		mStage.addActor(mPlaceLab);
 		mStage.addActor(mTimeLab);
@@ -121,7 +121,7 @@ public class Failure extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
+				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 				mGameStateManager.setState(GameStateManager.START);
 			}
 		});
@@ -130,7 +130,7 @@ public class Failure extends GameState {
 		mRestartBtn.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
+				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 				mGameStateManager.setState(GameStateManager.LOADING);
 			}
 		});
@@ -147,7 +147,7 @@ public class Failure extends GameState {
 		mCamera.setToOrtho(false, MyGdxGame.VIEW_WIDTH, MyGdxGame.VIEW_HEIGHT);
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
-		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.FAILURE_BG), 0, 0);
+		mBatch.draw(MyGdxGame.assetManager.getTexture(Constant.FAILURE_BG), 0, 0);
 
 		//画出暗的星星
 		for (int i = 0; i < 5; i++) {

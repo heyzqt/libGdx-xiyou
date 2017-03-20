@@ -38,7 +38,7 @@ public class FireBall extends BaseSprite {
 	}
 
 	private void init() {
-		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.FIREBALL_WIDGET);
+		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.FIREBALL_WIDGET);
 
 		mLeftState = new TextureAtlas.AtlasRegion[2];
 		mLeftState[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("leftfireball"));

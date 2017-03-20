@@ -15,7 +15,7 @@ public class Background {
 
 	public Background(String key) {
 
-		mTexture = MyGdxGame.mAssetManager.getTexture(key);
+		mTexture = MyGdxGame.assetManager.getTexture(key);
 	}
 
 	public void render(SpriteBatch batch) {

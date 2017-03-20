@@ -37,10 +37,10 @@ public class SettingDialog {
 
 	private void init() {
 		//获取资源
-		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.START_SETTING);
+		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.START_SETTING);
 
 		//初始化对话框
-		mWindow = new Image(new TextureRegion(MyGdxGame.mAssetManager.getTexture(Constant.SETTING_DIALOG)));
+		mWindow = new Image(new TextureRegion(MyGdxGame.assetManager.getTexture(Constant.SETTING_DIALOG)));
 		mWindow.setPosition(MyGdxGame.VIEW_WIDTH / 2 - 25, MyGdxGame.VIEW_HEIGHT / 2 - 130);
 
 		//初始化返回按钮

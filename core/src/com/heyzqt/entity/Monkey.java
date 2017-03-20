@@ -57,7 +57,7 @@ public class Monkey extends BaseSprite {
 
 		STATE = State.STATE_IDEL_RIGHT;
 
-		mMonkeyAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.SUN);
+		mMonkeyAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.SUN);
 
 		//初始化静止图片
 		mLeftStandState = new TextureAtlas.AtlasRegion[2];

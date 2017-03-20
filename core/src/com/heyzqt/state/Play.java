@@ -168,7 +168,7 @@ public class Play extends GameState {
 		createActor();
 
 		//初始化界面控件
-		TextureAtlas mBloodAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.PLAY_BLOOD);
+		TextureAtlas mBloodAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.PLAY_BLOOD);
 		//初始化头像
 		mSunAvatar = mBloodAtlas.findRegion("sunAvatar");
 		//初始化血槽
@@ -177,11 +177,11 @@ public class Play extends GameState {
 		//初始化分数
 		mScoreFont = new BitmapFont(Gdx.files.internal("font/text48.fnt"));
 		mScoreFont.getData().setScale(0.8f, 1f);
-		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.mAssetManager.getNumFont(), null);
+		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.assetManager.getNumFont(), null);
 		mScore = new Label("0", style);
 		mScore.setPosition(1100, 590);
 		//初始化操作杆
-		TextureAtlas mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.PLAY_WIDGET);
+		TextureAtlas mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.PLAY_WIDGET);
 		//左行动按钮
 		mLeftBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("leftBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("leftBtnDown")));
@@ -343,7 +343,7 @@ public class Play extends GameState {
 					ballDef.position.set(mMonkey.getBody().getPosition().x - 0.5f, mMonkey.getBody().getPosition().y);
 				}
 				ballBody = mWorld.createBody(ballDef);
-				ballShape.setAsBox(50 / Constant.RATE, 30 / Constant.RATE);
+				ballShape.setAsBox(50 / Constant.RATE, 20 / Constant.RATE);
 				ballFixDef.shape = ballShape;
 				ballFixDef.filter.categoryBits = Constant.FIREBALL;
 				ballFixDef.filter.maskBits = Constant.ENEMY_DAO | Constant.BOSS;
@@ -375,7 +375,7 @@ public class Play extends GameState {
 					ballBody.setUserData(ball);
 					mBallController.addFireBalls(ball);
 				}
-				MyGdxGame.mAssetManager.getSound(Constant.FIREBALL_SOUND).play();
+				MyGdxGame.assetManager.getSound(Constant.FIREBALL_SOUND).play();
 				return true;
 			}
 		});
@@ -514,19 +514,19 @@ public class Play extends GameState {
 			//设置Boss
 			switch (level) {
 				case 0:        //第一关
-					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_JULING_ROLE));
+					mBoss = new Boss(bossBody, MyGdxGame.assetManager.getTextureAtlas(Constant.BOSS_JULING_ROLE));
 					break;
 				case 1:        //第二关
-					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_ZENGZHANG_ROLE));
+					mBoss = new Boss(bossBody, MyGdxGame.assetManager.getTextureAtlas(Constant.BOSS_ZENGZHANG_ROLE));
 					break;
 				case 2:        //第三关
-					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_GUANGMU_ROLE));
+					mBoss = new Boss(bossBody, MyGdxGame.assetManager.getTextureAtlas(Constant.BOSS_GUANGMU_ROLE));
 					break;
 				case 3:        //第四关
-					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_DUOWEN_ROLE));
+					mBoss = new Boss(bossBody, MyGdxGame.assetManager.getTextureAtlas(Constant.BOSS_DUOWEN_ROLE));
 					break;
 				case 4:        //第五关
-					mBoss = new Boss(bossBody, MyGdxGame.mAssetManager.getTextureAtlas(Constant.BOSS_ERLANG_ROLE));
+					mBoss = new Boss(bossBody, MyGdxGame.assetManager.getTextureAtlas(Constant.BOSS_ERLANG_ROLE));
 					break;
 			}
 			bossBody.setUserData(mBoss);
@@ -656,19 +656,19 @@ public class Play extends GameState {
 		switch (level) {
 			case 0:        //第一关
 				//初始化音乐
-				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM);
+				mMusic = MyGdxGame.assetManager.getMusic(Constant.LEVEL_0_BGM);
 				mMusic.setLooping(true);
 				mMusic.play();
 				break;
 			case 1:        //第二关
 			case 2:        //第三关
 			case 3:        //第四关
-				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM);
+				mMusic = MyGdxGame.assetManager.getMusic(Constant.LEVEL_1_BGM);
 				mMusic.setLooping(true);
 				mMusic.play();
 				break;
 			case 4:        //第五关背景音乐
-				mMusic = MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM);
+				mMusic = MyGdxGame.assetManager.getMusic(Constant.LEVEL_2_BGM);
 				mMusic.setLooping(true);
 				mMusic.play();
 				break;
@@ -678,15 +678,15 @@ public class Play extends GameState {
 	public void pauseMusic() {
 		switch (level) {
 			case 0:        //第一关
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).pause();
+				MyGdxGame.assetManager.getMusic(Constant.LEVEL_0_BGM).pause();
 				break;
 			case 1:        //第二关
 			case 2:        //第三关
 			case 3:        //第四关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).pause();
+				MyGdxGame.assetManager.getMusic(Constant.LEVEL_1_BGM).pause();
 				break;
 			case 4:        //第五关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM).pause();
+				MyGdxGame.assetManager.getMusic(Constant.LEVEL_2_BGM).pause();
 				break;
 		}
 	}
@@ -895,15 +895,15 @@ public class Play extends GameState {
 		//关闭背景音乐
 		switch (level) {
 			case 0:        //第一关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_0_BGM).stop();
+				MyGdxGame.assetManager.getMusic(Constant.LEVEL_0_BGM).stop();
 				break;
 			case 1:        //第二关背景音乐
 			case 2:        //第三关背景音乐
 			case 3:        //第四关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_1_BGM).stop();
+				MyGdxGame.assetManager.getMusic(Constant.LEVEL_1_BGM).stop();
 				break;
 			case 4:        //第五关背景音乐
-				MyGdxGame.mAssetManager.getMusic(Constant.LEVEL_2_BGM).stop();
+				MyGdxGame.assetManager.getMusic(Constant.LEVEL_2_BGM).stop();
 				break;
 		}
 

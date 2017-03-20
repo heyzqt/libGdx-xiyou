@@ -46,7 +46,7 @@ public class Box2DContactListener implements ContactListener {
 			//天兵被攻击次数+1
 			enemy.attacks++;
 			//播放音乐
-			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			MyGdxGame.assetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
 			//天兵被击飞
 			checkHitted(enemy, "enemy");
 			//天兵被攻击次数等于生命值后死亡
@@ -61,7 +61,7 @@ public class Box2DContactListener implements ContactListener {
 			//Boss被攻击次数+1
 			boss.attacks++;
 			//播放音乐
-			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			MyGdxGame.assetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
 			//Boss被击飞
 			checkHitted(boss, "boss");
 			//boss被攻击次数等于生命值后死亡
@@ -98,7 +98,7 @@ public class Box2DContactListener implements ContactListener {
 			//天兵被攻击次数+1
 			enemy.attacks++;
 			//播放音乐
-			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			MyGdxGame.assetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
 			//天兵被击飞
 			checkHitted(enemy, "enemy");
 			//天兵被攻击次数等于生命值后死亡
@@ -113,7 +113,7 @@ public class Box2DContactListener implements ContactListener {
 			//天兵被攻击次数+1
 			enemy.attacks++;
 			//播放音乐
-			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			MyGdxGame.assetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
 			//天兵被击飞
 			checkHitted(enemy, "enemy");
 			//天兵被攻击次数等于生命值后死亡
@@ -128,7 +128,7 @@ public class Box2DContactListener implements ContactListener {
 			//Boss被攻击次数+1
 			boss.attacks++;
 			//播放音乐
-			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			MyGdxGame.assetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
 			//Boss被击飞
 			checkHitted(boss, "boss");
 			//boss被攻击次数等于生命值后死亡
@@ -143,7 +143,7 @@ public class Box2DContactListener implements ContactListener {
 			//Boss被攻击次数+1
 			boss.attacks++;
 			//播放音乐
-			MyGdxGame.mAssetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			MyGdxGame.assetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
 			//Boss被击飞
 			checkHitted(boss, "boss");
 			//boss被攻击次数等于生命值后死亡
@@ -197,7 +197,7 @@ public class Box2DContactListener implements ContactListener {
 		//孙悟空被攻击次数+1
 		Play.mMonkey.attacks++;
 		//播放音乐
-		MyGdxGame.mAssetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
+		MyGdxGame.assetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
 		//孙悟空被击飞
 		checkHitted(enemy, "monkey");
 
@@ -214,7 +214,7 @@ public class Box2DContactListener implements ContactListener {
 		//孙悟空被攻击次数+1
 		Play.mMonkey.attacks++;
 		//播放音乐
-		MyGdxGame.mAssetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
+		MyGdxGame.assetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
 		//孙悟空被击飞
 		checkHitted(boss,"monkey");
 

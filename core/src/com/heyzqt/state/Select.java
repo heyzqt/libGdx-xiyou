@@ -33,7 +33,7 @@ public class Select extends GameState {
 	private void init() {
 
 		//初始化选关素材
-		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.SELECT_WIDGET);
+		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.SELECT_WIDGET);
 		mSouthDoorBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectForth")));
 		mSouthPlaBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectThird")));
 		mWestPlaBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectSecond")));
@@ -57,7 +57,7 @@ public class Select extends GameState {
 		mSouthDoorBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_SELECT_SOUND);
+				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_SELECT_SOUND);
 				sound.play();
 				//进入第一关
 				Play.level = 0;
@@ -70,7 +70,7 @@ public class Select extends GameState {
 		mSouthPlaBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_SELECT_SOUND);
+				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_SELECT_SOUND);
 				sound.play();
 				//进入第二关
 				Play.level = 1;
@@ -83,7 +83,7 @@ public class Select extends GameState {
 		mWestPlaBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_SELECT_SOUND);
+				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_SELECT_SOUND);
 				sound.play();
 				//进入第三关
 				Play.level = 2;
@@ -96,7 +96,7 @@ public class Select extends GameState {
 		mNorthPlaBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_SELECT_SOUND);
+				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_SELECT_SOUND);
 				sound.play();
 				//进入第四关
 				Play.level = 3;
@@ -116,7 +116,7 @@ public class Select extends GameState {
 
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
-		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.SELECT_BG), 0, 0);
+		mBatch.draw(MyGdxGame.assetManager.getTexture(Constant.SELECT_BG), 0, 0);
 		mBatch.end();
 
 		mStage.act();

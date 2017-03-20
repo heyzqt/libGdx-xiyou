@@ -74,18 +74,18 @@ public class Success extends GameState {
 
 
 		//初始化标题
-		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.PLACE_COLOR);
+		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.assetManager.getFont(), Constant.PLACE_COLOR);
 		mTitleLab = new Label(titleStr, style);
 		mTitleLab.setFontScale(1.5f);
 		mTitleLab.setPosition(mGame.VIEW_WIDTH / 2 + 60, mGame.VIEW_HEIGHT - 50);
 
 		//初始化时间
-		style = new Label.LabelStyle(MyGdxGame.mAssetManager.getFont(), Constant.TIME_COLOR);
+		style = new Label.LabelStyle(MyGdxGame.assetManager.getFont(), Constant.TIME_COLOR);
 		mTimeLab = new Label(timeStr, style);
 		mTimeLab.setPosition(480, 370);
 
 		//初始化五角星和下一关按钮素材
-		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.SUCCESS_WIDGET);
+		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.SUCCESS_WIDGET);
 		mAtlasRegions = new TextureAtlas.AtlasRegion[6];
 		mAtlasRegions[0] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("starOff"));
 		mAtlasRegions[1] = new TextureAtlas.AtlasRegion(mAtlas.findRegion("starOn"));
@@ -114,7 +114,7 @@ public class Success extends GameState {
 		}
 
 		//初始化背景音乐
-		MyGdxGame.mAssetManager.getSound(Constant.SUCCESS_BGM).play();
+		MyGdxGame.assetManager.getSound(Constant.SUCCESS_BGM).play();
 
 		mStage.addActor(mTitleLab);
 		mStage.addActor(mTimeLab);
@@ -133,7 +133,7 @@ public class Success extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
+				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 				mGameStateManager.setState(GameStateManager.START);
 			}
 		});
@@ -143,7 +143,7 @@ public class Success extends GameState {
 			mNextBtn.addListener(new ClickListener() {
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND).play();
+					MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 					//进入下一关
 					Play.level++;
 					mGameStateManager.setState(GameStateManager.LOADING);
@@ -164,7 +164,7 @@ public class Success extends GameState {
 		mCamera.setToOrtho(false, MyGdxGame.VIEW_WIDTH, MyGdxGame.VIEW_HEIGHT);
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
-		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.SUCCESS_BG), 0, 0);
+		mBatch.draw(MyGdxGame.assetManager.getTexture(Constant.SUCCESS_BG), 0, 0);
 		//画出亮的星星
 		int i = 0;
 		for (; i < winGrades; i++) {

@@ -16,6 +16,8 @@ import java.util.HashMap;
  */
 public class AssetManager {
 
+	private static AssetManager assetManager;
+
 	private HashMap<String, Texture> textures;
 	private HashMap<String, TextureAtlas> atlas;
 	private BitmapFont mFont;
@@ -23,11 +25,18 @@ public class AssetManager {
 	private HashMap<String, Sound> sounds;
 	private BitmapFont mNumFont;
 
-	public AssetManager() {
+	private AssetManager() {
 		textures = new HashMap<String, Texture>();
 		atlas = new HashMap<String, TextureAtlas>();
 		musics = new HashMap<String, Music>();
 		sounds = new HashMap<String, Sound>();
+	}
+
+	public static AssetManager getInstance() {
+		if (assetManager == null) {
+			assetManager = new AssetManager();
+		}
+		return assetManager;
 	}
 
 	//加载字体

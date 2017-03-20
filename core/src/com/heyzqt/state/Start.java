@@ -56,7 +56,7 @@ public class Start extends GameState {
 	private void init() {
 
 		//开始界面控件初始化
-		mAtlas = MyGdxGame.mAssetManager.getTextureAtlas(Constant.START_SETTING);
+		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.START_SETTING);
 		mStartBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("startBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("startBtnDown")));
 		mSettingBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("settingBtnUp")),
@@ -70,7 +70,7 @@ public class Start extends GameState {
 		Drawable checkOn = new TextureRegionDrawable(mAtlas.findRegion("musicBtnOn"));
 		Drawable checkOff = new TextureRegionDrawable(mAtlas.findRegion("musicBtnOff"));
 		CheckBox.CheckBoxStyle boxStyle = new CheckBox.CheckBoxStyle(checkOff, checkOn,
-				MyGdxGame.mAssetManager.getFont(), Color.BLUE);
+				MyGdxGame.assetManager.getFont(), Color.BLUE);
 		mCheckBox = new CheckBox("", boxStyle);
 		mCheckBox.setSize(255, 100);
 		mCheckBox.setPosition(mGame.VIEW_WIDTH / 2 + 38, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 40);
@@ -94,7 +94,7 @@ public class Start extends GameState {
 		mBackButton.setPosition(mGame.VIEW_WIDTH / 2 + 26, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 180);
 
 		//背景音乐
-		Music music = MyGdxGame.mAssetManager.getMusic(Constant.START_BGM);
+		Music music = MyGdxGame.assetManager.getMusic(Constant.START_BGM);
 		music.setLooping(true);
 		music.play();
 
@@ -112,7 +112,7 @@ public class Start extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND);
+				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND);
 				sound.play();
 				mGameStateManager.setState(GameStateManager.SELECT);
 			}
@@ -128,7 +128,7 @@ public class Start extends GameState {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				isStart = false;
-				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND);
+				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND);
 				sound.play();
 			}
 		});
@@ -169,7 +169,7 @@ public class Start extends GameState {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				isStart = true;
-				Sound sound = MyGdxGame.mAssetManager.getSound(Constant.BTN_COMMON_SOUND);
+				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND);
 				sound.play();
 			}
 		});
@@ -197,9 +197,9 @@ public class Start extends GameState {
 
 		//更新音乐状态
 		if (!isPlay) {
-			MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).pause();
+			MyGdxGame.assetManager.getMusic(Constant.START_BGM).pause();
 		} else {
-			MyGdxGame.mAssetManager.getMusic(Constant.START_BGM).play();
+			MyGdxGame.assetManager.getMusic(Constant.START_BGM).play();
 		}
 	}
 
@@ -209,7 +209,7 @@ public class Start extends GameState {
 
 		mBatch.setProjectionMatrix(mCamera.combined);
 		mBatch.begin();
-		mBatch.draw(MyGdxGame.mAssetManager.getTexture(Constant.START_BG), 0, 0);
+		mBatch.draw(MyGdxGame.assetManager.getTexture(Constant.START_BG), 0, 0);
 		mBatch.end();
 
 		update(Gdx.graphics.getDeltaTime());

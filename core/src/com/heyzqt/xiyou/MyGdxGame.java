@@ -23,7 +23,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private GameStateManager mManager;
 
-	public static AssetManager mAssetManager;
+	public static AssetManager assetManager;
 
 	@Override
 	public void create() {
@@ -43,72 +43,72 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void loadAssets() {
-		mAssetManager = new AssetManager();
+		assetManager = AssetManager.getInstance();
 
 		//加载字体
-		mAssetManager.loadFont();
+		assetManager.loadFont();
 
 		//加载按钮音效
-		mAssetManager.loadSound("sound/btn_common.wav", Constant.BTN_COMMON_SOUND);
-		mAssetManager.loadSound("sound/btn_select.wav", Constant.BTN_SELECT_SOUND);
+		assetManager.loadSound("sound/btn_common.wav", Constant.BTN_COMMON_SOUND);
+		assetManager.loadSound("sound/btn_select.wav", Constant.BTN_SELECT_SOUND);
 		//加载第一关背景音乐
-		mAssetManager.loadMusic("sound/bgm_level_0.mp3", Constant.LEVEL_0_BGM);
+		assetManager.loadMusic("sound/bgm_level_0.mp3", Constant.LEVEL_0_BGM);
 		//加载第二、三、四关背景音乐
-		mAssetManager.loadMusic("sound/bgm_level_1.mp3", Constant.LEVEL_1_BGM);
+		assetManager.loadMusic("sound/bgm_level_1.mp3", Constant.LEVEL_1_BGM);
 		//加载第五关背景音乐
-		mAssetManager.loadMusic("sound/bgm_level_2.mp3", Constant.LEVEL_2_BGM);
+		assetManager.loadMusic("sound/bgm_level_2.mp3", Constant.LEVEL_2_BGM);
 		//加载击打音效
-		mAssetManager.loadSound("sound/sfx_enemy_get_hurt.mp3", Constant.SOUND_ENEMY_GET_HURT);
-		mAssetManager.loadSound("sound/sfx_role_get_hurt_1.mp3", Constant.SOUND_SUN_GET_HURT);
+		assetManager.loadSound("sound/sfx_enemy_get_hurt.mp3", Constant.SOUND_ENEMY_GET_HURT);
+		assetManager.loadSound("sound/sfx_role_get_hurt_1.mp3", Constant.SOUND_SUN_GET_HURT);
 
 		//加载开始界面Start.java资源
-		mAssetManager.loadTexture("background/start_bg.png", Constant.START_BG);
-		mAssetManager.loadTextureAtlas("widget/start_setting.atlas", Constant.START_SETTING);
-		mAssetManager.loadMusic("sound/bgm_main.mp3", Constant.START_BGM);
+		assetManager.loadTexture("background/start_bg.png", Constant.START_BG);
+		assetManager.loadTextureAtlas("widget/start_setting.atlas", Constant.START_SETTING);
+		assetManager.loadMusic("sound/bgm_main.mp3", Constant.START_BGM);
 
 		//加载设置界面对话框
-		mAssetManager.loadTexture("background/aboutDialog.png", Constant.SETTING_DIALOG);
+		assetManager.loadTexture("background/aboutDialog.png", Constant.SETTING_DIALOG);
 
 		//加载选关界面Select.java资源
-		mAssetManager.loadTexture("background/world_map_bg.jpg", Constant.SELECT_BG);
-		mAssetManager.loadTextureAtlas("widget/select.atlas", Constant.SELECT_WIDGET);
+		assetManager.loadTexture("background/world_map_bg.jpg", Constant.SELECT_BG);
+		assetManager.loadTextureAtlas("widget/select.atlas", Constant.SELECT_WIDGET);
 
 		//加载失败界面Failure.java资源
-		mAssetManager.loadSound("sound/bgm_lose.mp3", Constant.FAILURE_BGM);
-		mAssetManager.loadTexture("background/failure_bg.png", Constant.FAILURE_BG);
-		mAssetManager.loadTextureAtlas("widget/failure.atlas", Constant.FAILURE_WIDGET);
+		assetManager.loadSound("sound/bgm_lose.mp3", Constant.FAILURE_BGM);
+		assetManager.loadTexture("background/failure_bg.png", Constant.FAILURE_BG);
+		assetManager.loadTextureAtlas("widget/failure.atlas", Constant.FAILURE_WIDGET);
 
 		//加载成功界面Success.java资源
-		mAssetManager.loadSound("sound/bgm_win.mp3", Constant.SUCCESS_BGM);
-		mAssetManager.loadTexture("background/success_bg.png", Constant.SUCCESS_BG);
-		mAssetManager.loadTextureAtlas("widget/success.atlas", Constant.SUCCESS_WIDGET);
+		assetManager.loadSound("sound/bgm_win.mp3", Constant.SUCCESS_BGM);
+		assetManager.loadTexture("background/success_bg.png", Constant.SUCCESS_BG);
+		assetManager.loadTextureAtlas("widget/success.atlas", Constant.SUCCESS_WIDGET);
 
 		//加载游戏界面Play.java资源
-		mAssetManager.loadNumFont();
-		mAssetManager.loadTextureAtlas("widget/playBlood.atlas", Constant.PLAY_BLOOD);
-		mAssetManager.loadTexture("map/level_0_bg.png", Constant.FIRST_GAME_BG);
-		mAssetManager.loadTexture("map/level_1_bg.png", Constant.SECOND_GAME_BG);
+		assetManager.loadNumFont();
+		assetManager.loadTextureAtlas("widget/playBlood.atlas", Constant.PLAY_BLOOD);
+		assetManager.loadTexture("map/level_0_bg.png", Constant.FIRST_GAME_BG);
+		assetManager.loadTexture("map/level_1_bg.png", Constant.SECOND_GAME_BG);
 		//加载孙悟空人物素材
-		mAssetManager.loadTextureAtlas("role/sun.atlas", Constant.SUN);
+		assetManager.loadTextureAtlas("role/sun.atlas", Constant.SUN);
 		//加载天兵人物素材
-		mAssetManager.loadTextureAtlas("role/enemyDao.atlas", Constant.ENEMY_DAO_ROLE);
-		mAssetManager.loadTextureAtlas("role/enemyFu.atlas", Constant.ENEMY_FU_ROLE);
-		mAssetManager.loadTextureAtlas("role/enemyQiang.atlas", Constant.ENEMY_QIANG_ROLE);
+		assetManager.loadTextureAtlas("role/enemyDao.atlas", Constant.ENEMY_DAO_ROLE);
+		assetManager.loadTextureAtlas("role/enemyFu.atlas", Constant.ENEMY_FU_ROLE);
+		assetManager.loadTextureAtlas("role/enemyQiang.atlas", Constant.ENEMY_QIANG_ROLE);
 		//加载Boss人物素材
-		mAssetManager.loadTextureAtlas("role/julingBoss.atlas", Constant.BOSS_JULING_ROLE);
-		mAssetManager.loadTextureAtlas("role/zengBoss.atlas", Constant.BOSS_ZENGZHANG_ROLE);
-		mAssetManager.loadTextureAtlas("role/guangBoss.atlas", Constant.BOSS_GUANGMU_ROLE);
-		mAssetManager.loadTextureAtlas("role/duoBoss.atlas", Constant.BOSS_DUOWEN_ROLE);
-		mAssetManager.loadTextureAtlas("role/erlangBoss.atlas", Constant.BOSS_ERLANG_ROLE);
+		assetManager.loadTextureAtlas("role/julingBoss.atlas", Constant.BOSS_JULING_ROLE);
+		assetManager.loadTextureAtlas("role/zengBoss.atlas", Constant.BOSS_ZENGZHANG_ROLE);
+		assetManager.loadTextureAtlas("role/guangBoss.atlas", Constant.BOSS_GUANGMU_ROLE);
+		assetManager.loadTextureAtlas("role/duoBoss.atlas", Constant.BOSS_DUOWEN_ROLE);
+		assetManager.loadTextureAtlas("role/erlangBoss.atlas", Constant.BOSS_ERLANG_ROLE);
 		//加载游戏摇杆素材
-		mAssetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);
+		assetManager.loadTextureAtlas("widget/playWidget.atlas", Constant.PLAY_WIDGET);
 		//加载火球素材
-		mAssetManager.loadTextureAtlas("widget/fireball.atlas", Constant.FIREBALL_WIDGET);
-		mAssetManager.loadSound("sound/fireball.mp3",Constant.FIREBALL_SOUND);
+		assetManager.loadTextureAtlas("widget/fireball.atlas", Constant.FIREBALL_WIDGET);
+		assetManager.loadSound("sound/fireball.mp3", Constant.FIREBALL_SOUND);
 
 		//加载界面背景和游戏素材
-		mAssetManager.loadTexture("background/loading_bg.png", Constant.LOADING_BG);
-		mAssetManager.loadTextureAtlas("widget/loading.atlas", Constant.LOADING_WIDGET);
+		assetManager.loadTexture("background/loading_bg.png", Constant.LOADING_BG);
+		assetManager.loadTextureAtlas("widget/loading.atlas", Constant.LOADING_WIDGET);
 	}
 
 	@Override

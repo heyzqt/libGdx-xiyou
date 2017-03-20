@@ -51,10 +51,11 @@ public class Monkey extends BaseSprite {
 
 	//孙悟空的总血量
 	public final static int BLOOD = 8;
+	public static int HP = BLOOD;
 
 	//孙悟空的MP
 	public final static int MP_VALUE = 8;
-	public static int MP;
+	public static int MP = MP_VALUE;
 
 	public Monkey(Body body) {
 		super(body);
@@ -162,4 +163,19 @@ public class Monkey extends BaseSprite {
 		this.allEnemiesCount = allEnemiesCount;
 	}
 
+	//孙悟空血量加1
+	public void addBlood() {
+		if (HP == BLOOD) {
+			return;
+		}
+		HP++;
+	}
+
+	//孙悟空MP加1
+	public void addMP() {
+		if (MP == MP_VALUE) {
+			return;
+		}
+		MP++;
+	}
 }

@@ -30,10 +30,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.heyzqt.entity.Background;
+import com.heyzqt.entity.Blue;
 import com.heyzqt.entity.Boss;
 import com.heyzqt.entity.Enemy;
 import com.heyzqt.entity.FireBall;
 import com.heyzqt.entity.Monkey;
+import com.heyzqt.entity.Tao;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
 import com.heyzqt.handle.FireBallController;
@@ -84,7 +86,6 @@ public class Play extends GameState {
 	//血槽
 	private TextureRegion mBloodProgress;
 	private TextureRegion mBloodProgressBG;
-	private float bloodValue;        //血槽值
 	//mp槽
 	private TextureRegion mMPProgress;
 	private TextureRegion mMPProgressBG;
@@ -115,6 +116,10 @@ public class Play extends GameState {
 	private Boss mBoss;
 	//火球Controller
 	private FireBallController mBallController;
+	//蟠桃
+	private Array<Tao> mTaos;
+	//蓝瓶子
+	private Array<Blue> mBlues;
 
 	/**
 	 * 刚体
@@ -169,6 +174,10 @@ public class Play extends GameState {
 
 		//创建主角
 		createActor();
+
+		//初始化蟠桃与蓝瓶
+		mTaos = new Array<Tao>();
+		mBlues = new Array<Blue>();
 
 		//初始化界面控件
 		TextureAtlas mBloodAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.PLAY_BLOOD);
@@ -330,15 +339,15 @@ public class Play extends GameState {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
+				if (mBallController.balls.size >= 3) { // 限制火球的数量为3个
+					return false;
+				}
+
 				//MP为0时无法使用技能
 				if (Monkey.MP == 0) {
 					return false;
 				} else {
 					Monkey.MP--;
-				}
-
-				if (mBallController.balls.size >= 3) { // 限制火球的数量为3个
-					return false;
 				}
 
 				//初始化刚体属性
@@ -581,7 +590,18 @@ public class Play extends GameState {
 
 		mMonkey = new Monkey(mBody);
 		mBody.setUserData(mMonkey);
-		mMonkey.MP = Monkey.MP_VALUE;
+
+		//开始新关卡时，检查孙悟空血量与MP
+		if (mMonkey.MP <= Monkey.MP_VALUE - 2) {
+			mMonkey.MP += 2;
+		} else {
+			mMonkey.MP = Monkey.MP_VALUE;
+		}
+		if (mMonkey.HP <= Monkey.BLOOD - 2) {
+			mMonkey.HP += 2;
+		} else {
+			mMonkey.HP = Monkey.BLOOD;
+		}
 
 		//设置敌人总数
 		switch (level) {
@@ -721,6 +741,20 @@ public class Play extends GameState {
 			//设置天兵状态为死亡
 			Enemy enemy = (Enemy) removeBody.getUserData();
 			enemy.setLive(false);
+
+			//生成蟠桃
+			if (Utils.isCreated(3)) {
+				Tao tao = new Tao(mWorld, enemy.getPosition().x, enemy.getPosition().y);
+				tao.getBody().setUserData(tao);
+				mTaos.add(tao);
+			}
+			//生成蓝瓶
+			if (Utils.isCreated(4)) {
+				Blue blue = new Blue(mWorld, enemy.getPosition().x + 0.2f, enemy.getPosition().y);
+				blue.getBody().setUserData(blue);
+				mBlues.add(blue);
+			}
+
 			//移除天兵
 			mEnemyDaos.removeValue(enemy, true);
 			//销毁刚体
@@ -735,6 +769,16 @@ public class Play extends GameState {
 		if (bossBody != null) {
 			Boss boss = (Boss) bossBody.getUserData();
 			boss.setLive(false);
+
+			//生成蟠桃
+			Tao tao = new Tao(mWorld, boss.getPosition().x, boss.getPosition().y);
+			tao.getBody().setUserData(tao);
+			mTaos.add(tao);
+			//生成蓝瓶
+			Blue blue = new Blue(mWorld, boss.getPosition().x + 0.2f, boss.getPosition().y);
+			blue.getBody().setUserData(blue);
+			mBlues.add(blue);
+
 			mBoss = null;
 			mWorld.destroyBody(bossBody);
 			mMonkey.beatEnemy();
@@ -742,9 +786,29 @@ public class Play extends GameState {
 		bossBody = null;
 		mContactListener.setRemoveBoss(null);
 
+		//移除桃子
+		Array<Body> removeTaos = mContactListener.getRemoveTaos();
+		for (Body removeBody : removeTaos) {
+			Tao tao = (Tao) removeBody.getUserData();
+			mTaos.removeValue(tao, true);
+			//销毁刚体
+			mWorld.destroyBody(removeBody);
+			//孙悟空血量加1
+			mMonkey.addBlood();
+		}
+		removeTaos.clear();
 
-		//设置主角当前血量
-		bloodValue = (Monkey.BLOOD - mMonkey.attacks) * 20;
+		//移除蓝瓶
+		Array<Body> removeBlues = mContactListener.getRemoveBlues();
+		for (Body removeBody : removeBlues) {
+			Blue blue = (Blue) removeBody.getUserData();
+			mBlues.removeValue(blue, true);
+			//销毁刚体
+			mWorld.destroyBody(removeBody);
+			//孙悟空MP加1
+			mMonkey.addMP();
+		}
+		removeBlues.clear();
 
 		//设置分数
 		mScore.setText(mMonkey.getEnemyCount() + "");
@@ -822,8 +886,8 @@ public class Play extends GameState {
 		mBatch.begin();
 		//画血槽
 		mBatch.draw(mBloodProgressBG, 130, mScore.getY() - 46);
-		if (bloodValue >= 0) {
-			mBatch.draw(mBloodProgress, 130, mScore.getY() - 44, bloodValue, 26);
+		if (Monkey.HP >= 0) {
+			mBatch.draw(mBloodProgress, 130, mScore.getY() - 44, Monkey.HP * 20f, 26);
 		}
 		//画mp槽
 		mBatch.draw(mMPProgressBG, 126, mScore.getY() - 64);
@@ -848,6 +912,16 @@ public class Play extends GameState {
 
 		//画孙悟空
 		mMonkey.render(mBatch, statetime);
+
+		//画蟠桃
+		for (Tao tao : mTaos) {
+			tao.render(mBatch, statetime);
+		}
+
+		//画蓝瓶
+		for (Blue blue : mBlues) {
+			blue.render(mBatch, statetime);
+		}
 
 		//画火球
 		for (FireBall ball : mBallController.balls) {

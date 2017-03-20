@@ -27,9 +27,17 @@ public class Box2DContactListener implements ContactListener {
 	//记录要移除的Boss
 	private Body removeBoss;
 
+	//记录要移除的Tao
+	private Array<Body> removeTaos;
+
+	//记录要移除的Blue
+	private Array<Body> removeBlues;
+
 	public Box2DContactListener() {
 		removeEnemies = new Array<Body>();
 		removeBoss = null;
+		removeTaos = new Array<Body>();
+		removeBlues = new Array<Body>();
 	}
 
 	@Override
@@ -151,6 +159,26 @@ public class Box2DContactListener implements ContactListener {
 				removeBoss = fixtureB.getBody();
 			}
 		}
+
+		// 孙悟空碰到桃子
+		if (Utils.isContacted(fixtureA, fixtureB, "monkey", "tao")) {
+			removeTaos.add(fixtureB.getBody());
+		}
+
+		// 孙悟空碰到桃子
+		if (Utils.isContacted(fixtureA, fixtureB, "tao", "monkey")) {
+			removeTaos.add(fixtureA.getBody());
+		}
+
+		// 孙悟空碰到瓶子
+		if (Utils.isContacted(fixtureA, fixtureB, "monkey", "blue")) {
+			removeBlues.add(fixtureB.getBody());
+		}
+
+		// 孙悟空碰到瓶子
+		if (Utils.isContacted(fixtureA, fixtureB, "blue", "monkey")) {
+			removeBlues.add(fixtureA.getBody());
+		}
 	}
 
 	//检查精灵被击飞状态
@@ -194,8 +222,8 @@ public class Box2DContactListener implements ContactListener {
 	//天兵攻击孙悟空
 	private void enemyAttackSun(Fixture enemyFix, Fixture sunFix) {
 		Enemy enemy = (Enemy) enemyFix.getBody().getUserData();
-		//孙悟空被攻击次数+1
-		Play.mMonkey.attacks++;
+		//孙悟空血量减1
+		Monkey.HP--;
 		//播放音乐
 		MyGdxGame.assetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
 		//孙悟空被击飞
@@ -211,12 +239,12 @@ public class Box2DContactListener implements ContactListener {
 	//Boss攻击孙悟空
 	private void bossAttackSun(Fixture bossFix, Fixture sunFix) {
 		Boss boss = (Boss) bossFix.getBody().getUserData();
-		//孙悟空被攻击次数+1
-		Play.mMonkey.attacks++;
+		//孙悟空血量减1
+		Monkey.HP--;
 		//播放音乐
 		MyGdxGame.assetManager.getSound(Constant.SOUND_SUN_GET_HURT).play();
 		//孙悟空被击飞
-		checkHitted(boss,"monkey");
+		checkHitted(boss, "monkey");
 
 		//Boss击中孙悟空
 		boss.isHittedSun = true;
@@ -247,5 +275,13 @@ public class Box2DContactListener implements ContactListener {
 
 	public void setRemoveBoss(Body removeBoss) {
 		this.removeBoss = removeBoss;
+	}
+
+	public Array<Body> getRemoveTaos() {
+		return removeTaos;
+	}
+
+	public Array<Body> getRemoveBlues() {
+		return removeBlues;
 	}
 }

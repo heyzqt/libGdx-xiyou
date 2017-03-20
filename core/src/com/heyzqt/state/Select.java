@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.heyzqt.entity.Monkey;
 import com.heyzqt.handle.Constant;
 import com.heyzqt.xiyou.MyGdxGame;
 
@@ -59,6 +60,8 @@ public class Select extends GameState {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_SELECT_SOUND);
 				sound.play();
+				Monkey.HP = Monkey.BLOOD;
+				Monkey.MP = Monkey.MP_VALUE;
 				//进入第一关
 				Play.level = 0;
 				mGameStateManager.setState(GameStateManager.LOADING);
@@ -72,6 +75,8 @@ public class Select extends GameState {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_SELECT_SOUND);
 				sound.play();
+				Monkey.HP = Monkey.BLOOD;
+				Monkey.MP = Monkey.MP_VALUE;
 				//进入第二关
 				Play.level = 1;
 				mGameStateManager.setState(GameStateManager.LOADING);
@@ -85,6 +90,8 @@ public class Select extends GameState {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_SELECT_SOUND);
 				sound.play();
+				Monkey.HP = Monkey.BLOOD;
+				Monkey.MP = Monkey.MP_VALUE;
 				//进入第三关
 				Play.level = 2;
 				mGameStateManager.setState(GameStateManager.LOADING);
@@ -98,6 +105,8 @@ public class Select extends GameState {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_SELECT_SOUND);
 				sound.play();
+				Monkey.HP = Monkey.BLOOD;
+				Monkey.MP = Monkey.MP_VALUE;
 				//进入第四关
 				Play.level = 3;
 				mGameStateManager.setState(GameStateManager.LOADING);

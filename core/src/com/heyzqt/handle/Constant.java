@@ -27,6 +27,10 @@ public class Constant {
 	public static final short PLAYER = 2;
 	//火球碰撞属性
 	public static final short FIREBALL = 2;
+	//桃子碰撞属性
+	public static final short TAO = 8;
+	//蓝瓶碰撞属性
+	public static final short BLUE = 8;
 	//砖块碰撞属性
 	public static final short BLOCK = 4;
 	//持刀天兵碰撞属性

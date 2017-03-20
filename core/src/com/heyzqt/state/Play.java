@@ -135,6 +135,9 @@ public class Play extends GameState {
 	//游戏渲染时间
 	private float statetime;
 
+	//是否开启调试模式
+	private boolean Debug = true;
+
 	public Play(GameStateManager manager) {
 		super(manager);
 		init();
@@ -841,13 +844,15 @@ public class Play extends GameState {
 		/**
 		 * 物理世界
 		 */
-		mBox2DCamera.position.set(mMonkey.getPosition().x + MyGdxGame.VIEW_WIDTH / 4 / Constant.RATE,
-				MyGdxGame.VIEW_HEIGHT / 2 / Constant.RATE, 0);
-		//调整2D相机
-		adjustBox2DCamera();
-		mBox2DCamera.update();
-		//渲染物理世界
-		mBox2DRender.render(mWorld, mBox2DCamera.combined);
+		if (Debug) {
+			mBox2DCamera.position.set(mMonkey.getPosition().x + MyGdxGame.VIEW_WIDTH / 4 / Constant.RATE,
+					MyGdxGame.VIEW_HEIGHT / 2 / Constant.RATE, 0);
+			//调整2D相机
+			adjustBox2DCamera();
+			mBox2DCamera.update();
+			//渲染物理世界
+			mBox2DRender.render(mWorld, mBox2DCamera.combined);
+		}
 	}
 
 	/**

@@ -19,6 +19,8 @@ public class BaseSprite {
 
 	protected Animation mAnimation;
 
+	public int STATE;
+
 	protected float mWidth;
 
 	protected float mHeight;
@@ -29,8 +31,6 @@ public class BaseSprite {
 
 	/**
 	 * 设置主角动画
-	 * @param regions
-	 * @param delta
 	 */
 	public void setAnimation(TextureRegion[] regions, float delta) {
 		mAnimation = new Animation(delta, regions);
@@ -38,7 +38,8 @@ public class BaseSprite {
 		mHeight = regions[0].getRegionHeight();
 	}
 
-	public void update(float delta) {}
+	public void update(float delta) {
+	}
 
 	public void render(SpriteBatch batch, float delta) {
 		update(delta);

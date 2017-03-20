@@ -35,9 +35,6 @@ public class Boss extends BaseSprite implements Runnable {
 	//右边被击飞动画
 	private TextureAtlas.AtlasRegion[] mRightHittedState;
 
-	//Boss状态
-	public int STATE;
-
 	//Boss是否存活
 	private boolean isLive = true;
 
@@ -61,6 +58,9 @@ public class Boss extends BaseSprite implements Runnable {
 
 	//记录update()上一次时间
 	private int preTime;
+
+	//生命值
+	public final static int LIVE = 6;
 
 	public Boss(Body body, TextureAtlas atlas) {
 		super(body);

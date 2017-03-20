@@ -38,9 +38,6 @@ public class Enemy extends BaseSprite implements Runnable {
 	//右边被击飞动画
 	private TextureAtlas.AtlasRegion[] mRightHittedState;
 
-	//天兵状态
-	public int STATE;
-
 	//天兵是否存活
 	private boolean isLive = true;
 
@@ -64,6 +61,9 @@ public class Enemy extends BaseSprite implements Runnable {
 
 	//记录update()上一次时间
 	private int preTime;
+
+	//生命值
+	public final static int LIVE = 4;
 
 	public Enemy(Body body, String type) {
 

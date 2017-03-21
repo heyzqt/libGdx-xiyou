@@ -133,6 +133,7 @@ public class Play extends GameState {
 	//孙悟空形状夹具
 	private Fixture mStandFix;
 	private FixtureDef mStandFixDef;
+	private Fixture mAttackFixture;
 
 	//音乐
 	private Music mMusic;
@@ -142,6 +143,12 @@ public class Play extends GameState {
 	 */
 	//游戏渲染时间
 	private float statetime;
+
+	//释放攻击时间
+	private float preAttackTime = 0;
+
+	//攻击是否结束
+	private boolean isFinished = true;
 
 	//是否开启调试模式
 	private boolean Debug = true;
@@ -274,26 +281,28 @@ public class Play extends GameState {
 
 		//攻击按钮
 		mAttackBtn.addListener(new ClickListener() {
-			Fixture mFixture;
-
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-				if (mStandFix != null) {
-					mBody.destroyFixture(mStandFix);
-				}
 				//设置速度为0
 				mBody.setLinearVelocity(0, 0);
 
 				//创建攻击传感器 stick
 				PolygonShape shape = new PolygonShape();
 				if (Monkey.STATE == State.STATE_RIGHT ||
-						Monkey.STATE == State.STATE_IDEL_RIGHT || Monkey.STATE == State.STATE_RIGHT_HITED) {
+						Monkey.STATE == State.STATE_IDEL_RIGHT
+						|| Monkey.STATE == State.STATE_RIGHT_HITED
+						|| Monkey.STATE == State.STATE_RIGHT_ATTACK) {
 					Monkey.STATE = State.STATE_RIGHT_ATTACK;
+					if (mAttackFixture != null) {
+						return true;
+					}
 					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
 							, new Vector2(60 / Constant.RATE, 0), 0);
 				} else {
 					Monkey.STATE = State.STATE_LEFT_ATTACK;
+					if (mAttackFixture != null) {
+						return true;
+					}
 					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
 							, new Vector2(-60 / Constant.RATE, 0), 0);
 				}
@@ -303,34 +312,14 @@ public class Play extends GameState {
 				mAttackFixDef.filter.categoryBits = Constant.PLAYER;
 				mAttackFixDef.filter.maskBits = Constant.ENEMY_DAO;
 				mAttackFixDef.isSensor = true;
-				mFixture = mBody.createFixture(mAttackFixDef);
-				mFixture.setUserData("stick");
+				mAttackFixture = mBody.createFixture(mAttackFixDef);
+				mAttackFixture.setUserData("stick");
 				return true;
 			}
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
-				if (mFixture != null) {
-					mBody.destroyFixture(mFixture);
-				}
-
-				//设置孙悟空在攻击完后的状态
-				if (mRightBtn.isPressed()) {
-					Monkey.STATE = State.STATE_RIGHT;
-					mBody.setLinearVelocity(1f, 0);
-				} else if (mLeftBtn.isPressed()) {
-					Monkey.STATE = State.STATE_LEFT;
-					mBody.setLinearVelocity(-1f, 0);
-				} else if (Monkey.STATE == State.STATE_RIGHT_ATTACK) {
-					Monkey.STATE = State.STATE_IDEL_RIGHT;
-				} else if (Monkey.STATE == State.STATE_LEFT_ATTACK) {
-					Monkey.STATE = State.STATE_IDEL_LEFT;
-				}
-
-				//重新初始化孙悟空的monkey传感器
-				mStandFix = mBody.createFixture(mStandFixDef);
-				mStandFix.setUserData("monkey");
+				preAttackTime = statetime;
 			}
 		});
 
@@ -731,6 +720,28 @@ public class Play extends GameState {
 	public void update(float delta) {
 
 		mWorld.step(1 / 60f, 1, 1);
+
+		/**
+		 * 检测孙悟空的攻击
+		 */
+		//检测攻击动画的播放
+		float result = delta - preAttackTime;
+		if (!mAttackBtn.isPressed() && mMonkey.STATE == State.STATE_RIGHT_ATTACK) {
+			if (result > Monkey.ATTACKTIME) {
+				mMonkey.STATE = State.STATE_IDEL_RIGHT;
+			}
+		}
+		if (!mAttackBtn.isPressed() && mMonkey.STATE == State.STATE_LEFT_ATTACK) {
+			if (result > Monkey.ATTACKTIME) {
+				mMonkey.STATE = State.STATE_IDEL_LEFT;
+			}
+		}
+		//销毁攻击Fixture
+		if (mAttackFixture != null && Monkey.STATE != State.STATE_RIGHT_ATTACK
+				&& Monkey.STATE != State.STATE_LEFT_ATTACK) {
+			mBody.destroyFixture(mAttackFixture);
+			mAttackFixture = null;
+		}
 
 		/**
 		 * 处理主角与天兵战斗逻辑

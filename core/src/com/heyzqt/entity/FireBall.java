@@ -1,7 +1,6 @@
 package com.heyzqt.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.heyzqt.handle.Constant;
 import com.heyzqt.xiyou.MyGdxGame;
@@ -13,7 +12,6 @@ import com.heyzqt.xiyou.MyGdxGame;
  */
 public class FireBall extends BaseSprite {
 
-	private Vector2 target;
 	private int power;
 
 	//光球当前状态

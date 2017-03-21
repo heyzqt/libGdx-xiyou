@@ -42,6 +42,13 @@ public class BaseSprite {
 		return mAnimation;
 	}
 
+	public boolean isAnimationFinished(float delta) {
+		if (mAnimation.isAnimationFinished(delta)) {
+			return true;
+		}
+		return false;
+	}
+
 	public void update(float delta) {
 	}
 

@@ -57,6 +57,9 @@ public class Monkey extends BaseSprite {
 	public final static int MP_VALUE = 8;
 	public static int MP = MP_VALUE;
 
+	//攻击动画总时间
+	public final static float ATTACKTIME = 2f;
+
 	public Monkey(Body body) {
 		super(body);
 

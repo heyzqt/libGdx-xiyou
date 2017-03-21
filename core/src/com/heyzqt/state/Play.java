@@ -102,6 +102,12 @@ public class Play extends GameState {
 	private ImageButton mAttackBtn;
 	//火球攻击按钮
 	private ImageButton mBallBtn;
+	//unclicked火球攻击按钮
+	private ImageButton mUnclickedBallBtn;
+	//升龙斩攻击按钮
+	private ImageButton mJumpAttackBtn;
+	//unclicked升龙斩攻击按钮
+	private ImageButton mUnclickedJumpBtn;
 
 	/**
 	 * 精灵
@@ -135,6 +141,11 @@ public class Play extends GameState {
 	private FixtureDef mStandFixDef;
 	private Fixture mAttackFixture;
 
+	/**
+	 * 素材
+	 */
+	//游戏操作杆素材
+	private TextureAtlas mPlayAtlas;
 	//音乐
 	private Music mMusic;
 
@@ -203,27 +214,42 @@ public class Play extends GameState {
 		mScore = new Label("0", style);
 		mScore.setPosition(1100, 590);
 		//初始化操作杆
-		TextureAtlas mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.PLAY_WIDGET);
+		mPlayAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.PLAY_WIDGET);
 		//左行动按钮
-		mLeftBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("leftBtnUp")),
-				new TextureRegionDrawable(mAtlas.findRegion("leftBtnDown")));
+		mLeftBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("leftBtnUp")),
+				new TextureRegionDrawable(mPlayAtlas.findRegion("leftBtnDown")));
 		mLeftBtn.setPosition(100, 20);
 		//右行动按钮
-		mRightBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("rightBtnUp")),
-				new TextureRegionDrawable(mAtlas.findRegion("rightBtnDown")));
+		mRightBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("rightBtnUp")),
+				new TextureRegionDrawable(mPlayAtlas.findRegion("rightBtnDown")));
 		mRightBtn.setPosition(260, 20);
 		//攻击按钮
-		mAttackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("attackBtnUp")),
-				new TextureRegionDrawable(mAtlas.findRegion("attackBtnDown")));
+		mAttackBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackBtnUp")),
+				new TextureRegionDrawable(mPlayAtlas.findRegion("attackBtnDown")));
 		mAttackBtn.setPosition(1000, 35);
-		//火球按钮
-		mBallBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("attackBallBtnUp")),
-				new TextureRegionDrawable(mAtlas.findRegion("attackBallBtnDown")));
+		//火球攻击按钮
+		mBallBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackBallBtnUp")),
+				new TextureRegionDrawable(mPlayAtlas.findRegion("attackBallBtnDown")));
 		mBallBtn.getImage().setSize(138, 138);
 		mBallBtn.setPosition(850, 35);
+		//Unclicked火球
+		mUnclickedBallBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackBallBtnUnclicked")));
+		mUnclickedBallBtn.getImage().setSize(138, 138);
+		mUnclickedBallBtn.setPosition(850, 35);
+		mUnclickedBallBtn.setVisible(false);
+		//升龙斩攻击按钮
+		mJumpAttackBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackJumpBtnUp")),
+				new TextureRegionDrawable(mPlayAtlas.findRegion("attackJumpBtnDown")));
+		mJumpAttackBtn.getImage().setSize(138, 138);
+		mJumpAttackBtn.setPosition(700, 35);
+		//Unclicked升龙斩
+		mUnclickedJumpBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackJumpBtnUnclicked")));
+		mUnclickedJumpBtn.getImage().setSize(138, 138);
+		mUnclickedJumpBtn.setPosition(700, 35);
+		mUnclickedJumpBtn.setVisible(false);
 		//跳跃按钮
-		mJumpBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("jumpBtnUp")),
-				new TextureRegionDrawable(mAtlas.findRegion("jumpBtnDown")));
+		mJumpBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("jumpBtnUp")),
+				new TextureRegionDrawable(mPlayAtlas.findRegion("jumpBtnDown")));
 		mJumpBtn.setPosition(1130, 140);
 
 		//初始化火球
@@ -235,6 +261,9 @@ public class Play extends GameState {
 		mStage.addActor(mAttackBtn);
 		mStage.addActor(mJumpBtn);
 		mStage.addActor(mBallBtn);
+		mStage.addActor(mUnclickedBallBtn);
+		mStage.addActor(mJumpAttackBtn);
+		mStage.addActor(mUnclickedJumpBtn);
 
 		//初始化孙悟空所有按钮的监听事件
 		initListener();
@@ -328,13 +357,15 @@ public class Play extends GameState {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
+				mMonkey.STATE = State.STATE_RIGHT_FIREBALL;
+
 				if (mBallController.balls.size >= 3) { // 限制火球的数量为3个
 					return false;
 				}
 
 				//MP为0时无法使用技能
 				if (Monkey.MP == 0) {
-					return false;
+					return true;
 				} else {
 					Monkey.MP--;
 				}
@@ -350,7 +381,8 @@ public class Play extends GameState {
 				ballDef.type = BodyDef.BodyType.KinematicBody;
 				//position是刚体中心点的位置
 				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT ||
-						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED) {
+						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED
+						|| mMonkey.STATE == State.STATE_RIGHT_FIREBALL) {
 					ballDef.position.set(mMonkey.getBody().getPosition().x + 0.5f, mMonkey.getBody().getPosition().y);
 				} else {
 					ballDef.position.set(mMonkey.getBody().getPosition().x - 0.5f, mMonkey.getBody().getPosition().y);
@@ -364,31 +396,46 @@ public class Play extends GameState {
 				ballFix = ballBody.createFixture(ballFixDef);
 				ballFix.setUserData("ball");
 
-				//设置火球出现位置
-				if (mMonkey.STATE == State.STATE_IDEL_RIGHT) {
-					//孙悟空往右边行动
-					FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
-					ballBody.setUserData(ball);
-					mBallController.addFireBalls(ball);
-				} else if (mMonkey.STATE == State.STATE_RIGHT || mMonkey.STATE == State.STATE_RIGHT_HITED) {
-					mMonkey.STATE = State.STATE_IDEL_RIGHT;
-					mMonkey.getBody().setLinearVelocity(0, 0);
-					FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
-					ballBody.setUserData(ball);
-					mBallController.addFireBalls(ball);
-				} else if (mMonkey.STATE == State.STATE_IDEL_LEFT) {
-					//孙悟空往左边行动
-					FireBall ball = mBallController.createFireBall(ballBody, FireBall.LEFT);
-					ballBody.setUserData(ball);
-					mBallController.addFireBalls(ball);
-				} else if (mMonkey.STATE == State.STATE_LEFT || mMonkey.STATE == State.STATE_LEFT_HITED) {
-					mMonkey.STATE = State.STATE_IDEL_LEFT;
-					mMonkey.getBody().setLinearVelocity(0, 0);
-					FireBall ball = mBallController.createFireBall(ballBody, FireBall.LEFT);
-					ballBody.setUserData(ball);
-					mBallController.addFireBalls(ball);
-				}
+				FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
+				ballBody.setUserData(ball);
+				mBallController.addFireBalls(ball);
+
+//				//设置火球出现位置
+//				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT_FIREBALL) {
+//					//孙悟空往右边行动
+//					FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
+//					ballBody.setUserData(ball);
+//					mBallController.addFireBalls(ball);
+//				} else if (mMonkey.STATE == State.STATE_RIGHT || mMonkey.STATE == State.STATE_RIGHT_HITED) {
+//					mMonkey.STATE = State.STATE_IDEL_RIGHT;
+//					FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
+//					ballBody.setUserData(ball);
+//					mBallController.addFireBalls(ball);
+//				} else if (mMonkey.STATE == State.STATE_IDEL_LEFT) {
+//					//孙悟空往左边行动
+//					FireBall ball = mBallController.createFireBall(ballBody, FireBall.LEFT);
+//					ballBody.setUserData(ball);
+//					mBallController.addFireBalls(ball);
+//				} else if (mMonkey.STATE == State.STATE_LEFT || mMonkey.STATE == State.STATE_LEFT_HITED) {
+//					mMonkey.STATE = State.STATE_IDEL_LEFT;
+//					FireBall ball = mBallController.createFireBall(ballBody, FireBall.LEFT);
+//					ballBody.setUserData(ball);
+//					mBallController.addFireBalls(ball);
+//				}
+				mMonkey.getBody().setLinearVelocity(0, 0);
 				MyGdxGame.assetManager.getSound(Constant.FIREBALL_SOUND).play();
+				return true;
+			}
+		});
+
+		//升龙斩攻击按钮
+		mJumpAttackBtn.addListener(new ClickListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+				if (Monkey.MP > 0) {
+					Monkey.MP--;
+				}
 				return true;
 			}
 		});
@@ -726,6 +773,7 @@ public class Play extends GameState {
 		 */
 		//检测攻击动画的播放
 		float result = delta - preAttackTime;
+		//火球动画最后一帧释放技能
 		if (!mAttackBtn.isPressed() && mMonkey.STATE == State.STATE_RIGHT_ATTACK) {
 			if (result > Monkey.ATTACKTIME) {
 				mMonkey.STATE = State.STATE_IDEL_RIGHT;
@@ -829,18 +877,18 @@ public class Play extends GameState {
 		 */
 		if (mMonkey.getBody().getPosition().y < 0) {
 			mGameStateManager.setState(GameStateManager.FAILURE);
-		} else if (mMonkey.attacks >= Monkey.BLOOD) {
+		} else if (mMonkey.HP <= 0) {
 			mGameStateManager.setState(GameStateManager.FAILURE);
 		}
 
 		/**
 		 * 主角通关 并判断星级
+		 * 血量1星 时间2星 分数2星
 		 */
 		if (mMonkey.getBody().getPosition().x * Constant.RATE > tileWidth * tileSize) {
 			mGameStateManager.setState(GameStateManager.SUCCESS);
-			Success.winGrades = (Monkey.BLOOD - mMonkey.attacks);
 			//血量判断
-			if ((Monkey.BLOOD - mMonkey.attacks) >= Monkey.BLOOD / 2) {
+			if (mMonkey.HP >= Monkey.BLOOD / 2) {
 				Success.winGrades = 1;
 			} else {
 				Success.winGrades = 0;
@@ -861,6 +909,21 @@ public class Play extends GameState {
 			} else {
 				Success.winGrades += 1;
 			}
+		}
+
+		//检测技能按钮状态
+		if (mMonkey.MP > 0) {
+			mBallBtn.setVisible(true);
+			mUnclickedBallBtn.setVisible(false);
+
+			mJumpAttackBtn.setVisible(true);
+			mUnclickedJumpBtn.setVisible(false);
+		} else {
+			mBallBtn.setVisible(false);
+			mUnclickedBallBtn.setVisible(true);
+
+			mJumpAttackBtn.setVisible(false);
+			mUnclickedJumpBtn.setVisible(true);
 		}
 	}
 

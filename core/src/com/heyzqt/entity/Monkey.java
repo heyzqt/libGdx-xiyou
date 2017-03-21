@@ -31,6 +31,10 @@ public class Monkey extends BaseSprite {
 	private TextureAtlas.AtlasRegion[] mLeftHittedState;
 	//右边被击飞动画
 	private TextureAtlas.AtlasRegion[] mRightHittedState;
+	//左 火球动画
+	private TextureAtlas.AtlasRegion[] mLeftFireballState;
+	//右 火球动画
+	private TextureAtlas.AtlasRegion[] mRightFireballState;
 
 	//孙悟空状态
 	public static int STATE;
@@ -45,9 +49,6 @@ public class Monkey extends BaseSprite {
 	public int level_3_enemies = 14;        //第三关敌人总数
 	public int level_4_enemies = 14;        //第四关敌人总数
 	public int level_5_enemies = 18;        //第五关敌人总数
-
-	//被攻击次数
-	public int attacks = 0;
 
 	//孙悟空的总血量
 	public final static int BLOOD = 8;
@@ -107,6 +108,13 @@ public class Monkey extends BaseSprite {
 		mRightHittedState = new TextureAtlas.AtlasRegion[2];
 		mRightHittedState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightHited"));
 		mRightHittedState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightHited"));
+
+		//右 火球攻击
+		mRightFireballState = new TextureAtlas.AtlasRegion[4];
+		mRightFireballState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightFireAttack1"));
+		mRightFireballState[1] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightFireAttack2"));
+		mRightFireballState[2] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightFireAttack3"));
+		mRightFireballState[3] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightFireAttack4"));
 	}
 
 	@Override
@@ -130,6 +138,8 @@ public class Monkey extends BaseSprite {
 			setAnimation(mLeftHittedState, 1 / 12f);
 		} else if (STATE == State.STATE_RIGHT_HITED) {
 			setAnimation(mRightHittedState, 1 / 12f);
+		} else if (STATE == State.STATE_RIGHT_FIREBALL) {
+			setAnimation(mRightFireballState, 1 / 15f);
 		}
 
 		//设置孙悟空一直是苏醒状态

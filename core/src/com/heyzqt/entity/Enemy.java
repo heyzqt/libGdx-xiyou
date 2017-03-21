@@ -151,6 +151,9 @@ public class Enemy extends BaseSprite implements Runnable {
 	@Override
 	public void update(float delta) {
 
+		//设置天兵一直是苏醒状态
+		mBody.setAwake(true);
+
 		/**
 		 * 根据当前天兵与主角位置关系
 		 * 设置天兵攻击状态

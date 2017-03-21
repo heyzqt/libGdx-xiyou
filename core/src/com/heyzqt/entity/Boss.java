@@ -156,6 +156,9 @@ public class Boss extends BaseSprite implements Runnable {
 	@Override
 	public void update(float delta) {
 
+		//设置Boss一直是苏醒状态
+		mBody.setAwake(true);
+
 		/**
 		 * 根据当前Boss与主角位置关系
 		 * 设置Boss攻击状态

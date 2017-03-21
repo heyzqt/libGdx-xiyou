@@ -24,51 +24,79 @@ attackBallBtnDown
   orig: 128, 128
   offset: 0, 0
   index: -1
-attackBallBtnUp
+attackBallBtnUnclicked
   rotate: false
   xy: 1, 1
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-jumpBtnDown
+attackBallBtnUp
   rotate: false
   xy: 139, 147
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-jumpBtnUp
+attackJumpBtnDown
   rotate: false
   xy: 269, 277
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-leftBtnDown
+attackJumpBtnUnclicked
   rotate: false
   xy: 269, 147
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-leftBtnUp
+attackJumpBtnUp
   rotate: false
   xy: 399, 277
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-rightBtnDown
+jumpBtnDown
   rotate: false
   xy: 399, 147
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-rightBtnUp
+jumpBtnUp
   rotate: false
   xy: 529, 277
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+leftBtnDown
+  rotate: false
+  xy: 529, 147
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+leftBtnUp
+  rotate: false
+  xy: 659, 277
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+rightBtnDown
+  rotate: false
+  xy: 659, 147
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+rightBtnUp
+  rotate: false
+  xy: 789, 277
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

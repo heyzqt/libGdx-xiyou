@@ -211,9 +211,11 @@ public class Box2DContactListener implements ContactListener {
 					sprite.getBody().getPosition().x;
 			if (x > 0) {
 				Monkey.STATE = State.STATE_LEFT_HITED;
+				Play.mMonkey.monkeytime = 0;
 				Play.mMonkey.getBody().setLinearVelocity(1f, 0);
 			} else {
 				Monkey.STATE = State.STATE_RIGHT_HITED;
+				Play.mMonkey.monkeytime = 0;
 				Play.mMonkey.getBody().setLinearVelocity(-1f, 0);
 			}
 		}

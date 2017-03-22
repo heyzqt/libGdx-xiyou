@@ -38,7 +38,6 @@ import com.heyzqt.entity.Monkey;
 import com.heyzqt.entity.Tao;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
-import com.heyzqt.handle.FireBallController;
 import com.heyzqt.handle.State;
 import com.heyzqt.handle.Utils;
 import com.heyzqt.xiyou.MyGdxGame;
@@ -120,26 +119,10 @@ public class Play extends GameState {
 	private Array<Enemy> mEnemyDaos;
 	//Boss
 	private Boss mBoss;
-	//火球Controller
-	private FireBallController mBallController;
 	//蟠桃
 	private Array<Tao> mTaos;
 	//蓝瓶子
 	private Array<Blue> mBlues;
-
-	/**
-	 * 刚体
-	 */
-	//刚体信息
-	private BodyDef mBodyDef;
-	//刚体
-	private Body mBody;
-	//孙悟空攻击夹具
-	private FixtureDef mAttackFixDef;
-	//孙悟空形状夹具
-	private Fixture mStandFix;
-	private FixtureDef mStandFixDef;
-	private Fixture mAttackFixture;
 
 	/**
 	 * 素材
@@ -154,12 +137,6 @@ public class Play extends GameState {
 	 */
 	//游戏渲染时间
 	private float statetime;
-
-	//释放攻击时间
-	private float preAttackTime = 0;
-
-	//攻击是否结束
-	private boolean isFinished = true;
 
 	//是否开启调试模式
 	private boolean Debug = true;
@@ -252,9 +229,6 @@ public class Play extends GameState {
 				new TextureRegionDrawable(mPlayAtlas.findRegion("jumpBtnDown")));
 		mJumpBtn.setPosition(1130, 140);
 
-		//初始化火球
-		mBallController = new FireBallController();
-
 		mStage.addActor(mScore);
 		mStage.addActor(mLeftBtn);
 		mStage.addActor(mRightBtn);
@@ -278,17 +252,17 @@ public class Play extends GameState {
 		mLeftBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				//添加一个水平方向速度
-				mBody.setLinearVelocity(-1f, 0);
 				Monkey.STATE = State.STATE_LEFT;
+				mMonkey.getBody().setLinearVelocity(-1f, 0);
+				mMonkey.monkeytime = 0;
 				return true;
 			}
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				//添加一个水平方向速度
-				mBody.setLinearVelocity(0f, 0);
 				Monkey.STATE = State.STATE_IDEL_LEFT;
+				mMonkey.getBody().setLinearVelocity(0, 0);
+				mMonkey.monkeytime = 0;
 			}
 		});
 
@@ -297,14 +271,16 @@ public class Play extends GameState {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Monkey.STATE = State.STATE_RIGHT;
-				mBody.setLinearVelocity(1f, 0);
+				mMonkey.getBody().setLinearVelocity(1f, 0);
+				mMonkey.monkeytime = 0;
 				return true;
 			}
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				Monkey.STATE = State.STATE_IDEL_RIGHT;
-				mBody.setLinearVelocity(0, 0);
+				mMonkey.getBody().setLinearVelocity(0, 0);
+				mMonkey.monkeytime = 0;
 			}
 		});
 
@@ -312,43 +288,20 @@ public class Play extends GameState {
 		mAttackBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				//设置速度为0
-				mBody.setLinearVelocity(0, 0);
 
-				//创建攻击传感器 stick
-				PolygonShape shape = new PolygonShape();
-				if (Monkey.STATE == State.STATE_RIGHT ||
-						Monkey.STATE == State.STATE_IDEL_RIGHT
-						|| Monkey.STATE == State.STATE_RIGHT_HITED
-						|| Monkey.STATE == State.STATE_RIGHT_ATTACK) {
-					Monkey.STATE = State.STATE_RIGHT_ATTACK;
-					if (mAttackFixture != null) {
-						return true;
-					}
-					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
-							, new Vector2(60 / Constant.RATE, 0), 0);
+				mMonkey.getBody().setLinearVelocity(0, 0);
+				//设置方向
+				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT ||
+						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED
+						|| mMonkey.STATE == State.STATE_RIGHT_FIREBALL) {
+					mMonkey.STATE = State.STATE_RIGHT_ATTACK;
+					mMonkey.monkeytime = 0;
 				} else {
-					Monkey.STATE = State.STATE_LEFT_ATTACK;
-					if (mAttackFixture != null) {
-						return true;
-					}
-					shape.setAsBox(30 / Constant.RATE, 5 / Constant.RATE
-							, new Vector2(-60 / Constant.RATE, 0), 0);
+					mMonkey.STATE = State.STATE_LEFT_ATTACK;
+					mMonkey.monkeytime = 0;
 				}
-
-				mAttackFixDef = new FixtureDef();
-				mAttackFixDef.shape = shape;
-				mAttackFixDef.filter.categoryBits = Constant.PLAYER;
-				mAttackFixDef.filter.maskBits = Constant.ENEMY_DAO;
-				mAttackFixDef.isSensor = true;
-				mAttackFixture = mBody.createFixture(mAttackFixDef);
-				mAttackFixture.setUserData("stick");
+				mMonkey.isAttacked = true;
 				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				preAttackTime = statetime;
 			}
 		});
 
@@ -357,9 +310,7 @@ public class Play extends GameState {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-				mMonkey.STATE = State.STATE_RIGHT_FIREBALL;
-
-				if (mBallController.balls.size >= 3) { // 限制火球的数量为3个
+				if (mMonkey.mBallController.balls.size >= 3) { // 限制火球的数量为3个
 					return false;
 				}
 
@@ -370,60 +321,18 @@ public class Play extends GameState {
 					Monkey.MP--;
 				}
 
-				//初始化刚体属性
-				BodyDef ballDef = new BodyDef();
-				Body ballBody;
-				FixtureDef ballFixDef = new FixtureDef();
-				Fixture ballFix;
-				PolygonShape ballShape = new PolygonShape();
-
-				//设置形状
-				ballDef.type = BodyDef.BodyType.KinematicBody;
-				//position是刚体中心点的位置
+				//设置方向
 				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT ||
 						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED
 						|| mMonkey.STATE == State.STATE_RIGHT_FIREBALL) {
-					ballDef.position.set(mMonkey.getBody().getPosition().x + 0.5f, mMonkey.getBody().getPosition().y);
+					mMonkey.STATE = State.STATE_RIGHT_FIREBALL;
+					mMonkey.monkeytime = 0;
 				} else {
-					ballDef.position.set(mMonkey.getBody().getPosition().x - 0.5f, mMonkey.getBody().getPosition().y);
+					mMonkey.STATE = State.STATE_LEFT_FIREBALL;
+					mMonkey.monkeytime = 0;
 				}
-				ballBody = mWorld.createBody(ballDef);
-				ballShape.setAsBox(50 / Constant.RATE, 20 / Constant.RATE);
-				ballFixDef.shape = ballShape;
-				ballFixDef.filter.categoryBits = Constant.FIREBALL;
-				ballFixDef.filter.maskBits = Constant.ENEMY_DAO | Constant.BOSS;
-				ballFixDef.isSensor = true;
-				ballFix = ballBody.createFixture(ballFixDef);
-				ballFix.setUserData("ball");
-
-				FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
-				ballBody.setUserData(ball);
-				mBallController.addFireBalls(ball);
-
-//				//设置火球出现位置
-//				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT_FIREBALL) {
-//					//孙悟空往右边行动
-//					FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
-//					ballBody.setUserData(ball);
-//					mBallController.addFireBalls(ball);
-//				} else if (mMonkey.STATE == State.STATE_RIGHT || mMonkey.STATE == State.STATE_RIGHT_HITED) {
-//					mMonkey.STATE = State.STATE_IDEL_RIGHT;
-//					FireBall ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
-//					ballBody.setUserData(ball);
-//					mBallController.addFireBalls(ball);
-//				} else if (mMonkey.STATE == State.STATE_IDEL_LEFT) {
-//					//孙悟空往左边行动
-//					FireBall ball = mBallController.createFireBall(ballBody, FireBall.LEFT);
-//					ballBody.setUserData(ball);
-//					mBallController.addFireBalls(ball);
-//				} else if (mMonkey.STATE == State.STATE_LEFT || mMonkey.STATE == State.STATE_LEFT_HITED) {
-//					mMonkey.STATE = State.STATE_IDEL_LEFT;
-//					FireBall ball = mBallController.createFireBall(ballBody, FireBall.LEFT);
-//					ballBody.setUserData(ball);
-//					mBallController.addFireBalls(ball);
-//				}
+				mMonkey.isAttacked = true;
 				mMonkey.getBody().setLinearVelocity(0, 0);
-				MyGdxGame.assetManager.getSound(Constant.FIREBALL_SOUND).play();
 				return true;
 			}
 		});
@@ -444,12 +353,8 @@ public class Play extends GameState {
 		mJumpBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				mBody.applyForceToCenter(0, 250, true);
+				mMonkey.getBody().applyForceToCenter(0, 250, true);
 				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 			}
 		});
 	}
@@ -598,23 +503,23 @@ public class Play extends GameState {
 
 	private void createActor() {
 		//初始化刚体属性
-		mBodyDef = new BodyDef();
+		BodyDef bodyDef = new BodyDef();
 		FixtureDef fixtureDef = new FixtureDef();
 		PolygonShape shape = new PolygonShape();
 
 		//设置孙悟空形状和静态传感器monkey
-		mBodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
 		//position是刚体中心点的位置
-		mBodyDef.position.set(100 / Constant.RATE, 400 / Constant.RATE);
-		mBody = mWorld.createBody(mBodyDef);
+		bodyDef.position.set(100 / Constant.RATE, 400 / Constant.RATE);
+		Body body = mWorld.createBody(bodyDef);
 		PolygonShape standShape = new PolygonShape();
 		standShape.setAsBox(36 / Constant.RATE, 60 / Constant.RATE);
-		mStandFixDef = new FixtureDef();
-		mStandFixDef.shape = standShape;
-		mStandFixDef.filter.categoryBits = Constant.PLAYER;
-		mStandFixDef.filter.maskBits = Constant.ENEMY_DAO;
-		mStandFix = mBody.createFixture(mStandFixDef);
-		mStandFix.setUserData("monkey");
+		FixtureDef standFixDef = new FixtureDef();
+		standFixDef.shape = standShape;
+		standFixDef.filter.categoryBits = Constant.PLAYER;
+		standFixDef.filter.maskBits = Constant.ENEMY_DAO;
+		Fixture standFix = body.createFixture(standFixDef);
+		standFix.setUserData("monkey");
 
 		//创建传感器 foot
 		shape.setAsBox(28 / Constant.RATE, 3 / Constant.RATE, new Vector2(0, -60 / Constant.RATE), 0);
@@ -622,10 +527,10 @@ public class Play extends GameState {
 		fixtureDef.filter.categoryBits = Constant.PLAYER;
 		fixtureDef.filter.maskBits = Constant.BLOCK;
 		fixtureDef.isSensor = false;
-		mBody.createFixture(fixtureDef).setUserData("foot");
+		body.createFixture(fixtureDef).setUserData("foot");
 
-		mMonkey = new Monkey(mBody);
-		mBody.setUserData(mMonkey);
+		mMonkey = new Monkey(body);
+		body.setUserData(mMonkey);
 
 		//开始新关卡时，检查孙悟空血量与MP
 		if (mMonkey.MP <= Monkey.MP_VALUE - 2) {
@@ -767,29 +672,6 @@ public class Play extends GameState {
 	public void update(float delta) {
 
 		mWorld.step(1 / 60f, 1, 1);
-
-		/**
-		 * 检测孙悟空的攻击
-		 */
-		//检测攻击动画的播放
-		float result = delta - preAttackTime;
-		//火球动画最后一帧释放技能
-		if (!mAttackBtn.isPressed() && mMonkey.STATE == State.STATE_RIGHT_ATTACK) {
-			if (result > Monkey.ATTACKTIME) {
-				mMonkey.STATE = State.STATE_IDEL_RIGHT;
-			}
-		}
-		if (!mAttackBtn.isPressed() && mMonkey.STATE == State.STATE_LEFT_ATTACK) {
-			if (result > Monkey.ATTACKTIME) {
-				mMonkey.STATE = State.STATE_IDEL_LEFT;
-			}
-		}
-		//销毁攻击Fixture
-		if (mAttackFixture != null && Monkey.STATE != State.STATE_RIGHT_ATTACK
-				&& Monkey.STATE != State.STATE_LEFT_ATTACK) {
-			mBody.destroyFixture(mAttackFixture);
-			mAttackFixture = null;
-		}
 
 		/**
 		 * 处理主角与天兵战斗逻辑
@@ -946,7 +828,7 @@ public class Play extends GameState {
 		adjustCamera();
 		mCamera.update();
 
-		//设置绘图矩阵
+		//绑定绘图矩阵
 		mBatch.setProjectionMatrix(mUICamera.combined);
 		//画背景
 		if (mBackground != null) {
@@ -974,6 +856,7 @@ public class Play extends GameState {
 		mScoreFont.draw(mBatch, "分数:", 725, mScore.getY() - 20);
 		mBatch.end();
 
+		//绑定绘图矩阵
 		mBatch.setProjectionMatrix(mCamera.combined);
 		//画持刀天兵
 		for (Enemy enemy : mEnemyDaos) {
@@ -985,7 +868,7 @@ public class Play extends GameState {
 		}
 
 		//画孙悟空
-		mMonkey.render(mBatch, statetime);
+		mMonkey.render(mBatch, mMonkey.monkeytime);
 
 		//画蟠桃
 		for (Tao tao : mTaos) {
@@ -998,11 +881,11 @@ public class Play extends GameState {
 		}
 
 		//画火球
-		for (FireBall ball : mBallController.balls) {
+		for (FireBall ball : mMonkey.mBallController.balls) {
 			ball.render(mBatch, statetime);
 		}
 		//更新火球逻辑
-		mBallController.update(mWorld);
+		mMonkey.mBallController.update(mWorld);
 
 		/**
 		 * 画舞台

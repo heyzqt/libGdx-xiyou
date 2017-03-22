@@ -12,8 +12,6 @@ import com.heyzqt.xiyou.MyGdxGame;
  */
 public class FireBall extends BaseSprite {
 
-	private int power;
-
 	//光球当前状态
 	public int STATE;
 	public final static int LEFT = 0;
@@ -30,7 +28,6 @@ public class FireBall extends BaseSprite {
 	public FireBall(Body body, int state) {
 		super(body);
 		this.STATE = state;
-		power = 1; //默认杀伤力为1
 		this.startPosition = body.getPosition().x * Constant.RATE;
 		init();
 	}
@@ -57,13 +54,5 @@ public class FireBall extends BaseSprite {
 				setAnimation(mRightState, 1 / 12f);
 				break;
 		}
-	}
-
-	public int getPower() {
-		return power;
-	}
-
-	public void setPower(int power) {
-		this.power = power;
 	}
 }

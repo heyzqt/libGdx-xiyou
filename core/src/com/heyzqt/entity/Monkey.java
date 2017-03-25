@@ -104,6 +104,9 @@ public class Monkey extends BaseSprite {
 	//攻击夹具
 	private Fixture mAttackFixture;
 
+	//升龙斩光波夹具
+	private Fixture mJumpAtkFix;
+
 	//计算动画时间
 	public float monkeytime = 0;
 
@@ -279,10 +282,12 @@ public class Monkey extends BaseSprite {
 		int frameNumber3 = (int) (monkeytime / mRightJumpHitAni.getFrameDuration());
 		//跳跃
 		if (STATE == State.STATE_RIGHT_JUMP_ATTACK && isJump && frameNumber3 == mRightJumpAtkState.length - 4) {
+			createJumpStick();
 			mBody.applyForceToCenter(0, 200, true);
 			mJumpBall.STATE = State.STATE_RIGHT;
 			isJump = false;
 		} else if (STATE == State.STATE_LEFT_JUMP_ATTACK && isJump && frameNumber3 == mLeftJumpAtkState.length - 4) {
+			createJumpStick();
 			mBody.applyForceToCenter(0, 200, true);
 			mJumpBall.STATE = State.STATE_LEFT;
 			isJump = false;
@@ -292,6 +297,10 @@ public class Monkey extends BaseSprite {
 			isAttacked = false;
 		} else if (STATE == State.STATE_LEFT_JUMP_ATTACK && isAttacked && frameNumber3 == mLeftJumpAtkState.length - 1) {
 			isAttacked = false;
+		}
+		//销毁攻击夹具
+		if (STATE != State.STATE_RIGHT_JUMP_ATTACK && STATE != State.STATE_LEFT_JUMP_ATTACK) {
+			destroyJumpStick();
 		}
 	}
 
@@ -406,6 +415,36 @@ public class Monkey extends BaseSprite {
 	}
 
 	/**
+	 * 创建攻击夹具
+	 */
+	public void createStick() {
+		//创建攻击传感器 stick
+		PolygonShape shape = new PolygonShape();
+		if (STATE == State.STATE_RIGHT_ATTACK) {
+			shape.setAsBox(45 / Constant.RATE, 5 / Constant.RATE
+					, new Vector2(60 / Constant.RATE, 0), 0);
+		} else {
+			shape.setAsBox(45 / Constant.RATE, 5 / Constant.RATE
+					, new Vector2(-60 / Constant.RATE, 0), 0);
+		}
+		FixtureDef attackFixDef = new FixtureDef();
+		attackFixDef.shape = shape;
+		attackFixDef.filter.categoryBits = Constant.PLAYER;
+		attackFixDef.filter.maskBits = Constant.ENEMY_DAO | Constant.BOSS;
+		attackFixDef.isSensor = true;
+		mAttackFixture = mBody.createFixture(attackFixDef);
+		mAttackFixture.setUserData("stick");
+	}
+
+	//销毁攻击夹具
+	public void destroyStick() {
+		if (mAttackFixture != null) {
+			mBody.destroyFixture(mAttackFixture);
+			mAttackFixture = null;
+		}
+	}
+
+	/**
 	 * 创建火球刚体
 	 */
 	private Body createFireBallBody(World world) {
@@ -450,31 +489,45 @@ public class Monkey extends BaseSprite {
 		mBallController.addFireBalls(ball);
 	}
 
-	//创建攻击夹具
-	public void createStick() {
+	/**
+	 * 创建升龙斩攻击夹具
+	 */
+	public void createJumpStick() {
 		//创建攻击传感器 stick
 		PolygonShape shape = new PolygonShape();
-		if (STATE == State.STATE_RIGHT_ATTACK) {
-			shape.setAsBox(45 / Constant.RATE, 5 / Constant.RATE
-					, new Vector2(60 / Constant.RATE, 0), 0);
+		if (STATE == State.STATE_RIGHT_JUMP_ATTACK) {
+			shape.setAsBox(5 / Constant.RATE, 40 / Constant.RATE
+					, new Vector2(100 / Constant.RATE, 20 / Constant.RATE), 0);
 		} else {
-			shape.setAsBox(45 / Constant.RATE, 5 / Constant.RATE
-					, new Vector2(-60 / Constant.RATE, 0), 0);
+			shape.setAsBox(5 / Constant.RATE, 45 / Constant.RATE
+					, new Vector2(-100 / Constant.RATE, 20 / Constant.RATE), 0);
 		}
 		FixtureDef attackFixDef = new FixtureDef();
 		attackFixDef.shape = shape;
 		attackFixDef.filter.categoryBits = Constant.PLAYER;
-		attackFixDef.filter.maskBits = Constant.ENEMY_DAO;
+		attackFixDef.filter.maskBits = Constant.ENEMY_DAO | Constant.BOSS;
 		attackFixDef.isSensor = true;
-		mAttackFixture = mBody.createFixture(attackFixDef);
-		mAttackFixture.setUserData("stick");
+		mJumpAtkFix = mBody.createFixture(attackFixDef);
+		mJumpAtkFix.setUserData("ball");
 	}
 
-	//销毁攻击夹具
-	public void destroyStick() {
-		if (mAttackFixture != null) {
-			mBody.destroyFixture(mAttackFixture);
-			mAttackFixture = null;
+	//销毁升龙斩攻击夹具
+	public void destroyJumpStick() {
+		if (mJumpAtkFix != null) {
+			mBody.destroyFixture(mJumpAtkFix);
+			mJumpAtkFix = null;
 		}
+	}
+
+	/**
+	 * @return true右边 false 左边
+	 */
+	public boolean isRight() {
+		if (STATE == State.STATE_IDEL_RIGHT || STATE == State.STATE_RIGHT ||
+				STATE == State.STATE_RIGHT_ATTACK || STATE == State.STATE_RIGHT_HITED
+				|| STATE == State.STATE_RIGHT_FIREBALL || STATE == State.STATE_RIGHT_JUMP_ATTACK) {
+			return true;
+		}
+		return false;
 	}
 }

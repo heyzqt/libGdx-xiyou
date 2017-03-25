@@ -47,9 +47,6 @@ public class Boss extends BaseSprite implements Runnable {
 	//攻击是否完成
 	public boolean isAttacked = false;
 
-	//记录被攻击的次数
-	public int attacks = 0;
-
 	//Boss左右攻击夹具
 	public Fixture mLeftFixture;
 	public Fixture mRightFixture;
@@ -60,7 +57,10 @@ public class Boss extends BaseSprite implements Runnable {
 	private int preTime;
 
 	//生命值
-	public final static int LIVE = 8;
+	public final static int LIVE = 10;
+
+	//当前生命值
+	public int HP = LIVE;
 
 	public Boss(Body body, TextureAtlas atlas) {
 		super(body);

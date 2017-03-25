@@ -291,9 +291,7 @@ public class Play extends GameState {
 
 				mMonkey.getBody().setLinearVelocity(0, 0);
 				//设置方向
-				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT ||
-						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED
-						|| mMonkey.STATE == State.STATE_RIGHT_FIREBALL) {
+				if (mMonkey.isRight()) {
 					mMonkey.STATE = State.STATE_RIGHT_ATTACK;
 					mMonkey.monkeytime = 0;
 				} else {
@@ -322,9 +320,7 @@ public class Play extends GameState {
 				}
 
 				//设置方向
-				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT ||
-						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED
-						|| mMonkey.STATE == State.STATE_RIGHT_FIREBALL || mMonkey.STATE == State.STATE_RIGHT_JUMP_ATTACK) {
+				if (mMonkey.isRight()) {
 					mMonkey.STATE = State.STATE_RIGHT_FIREBALL;
 					mMonkey.monkeytime = 0;
 				} else {
@@ -350,9 +346,7 @@ public class Play extends GameState {
 				}
 
 				//设置方向
-				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT ||
-						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED
-						|| mMonkey.STATE == State.STATE_RIGHT_FIREBALL || mMonkey.STATE == State.STATE_RIGHT_JUMP_ATTACK) {
+				if (mMonkey.isRight()) {
 					mMonkey.STATE = State.STATE_RIGHT_JUMP_ATTACK;
 					mMonkey.monkeytime = 0;
 				} else {

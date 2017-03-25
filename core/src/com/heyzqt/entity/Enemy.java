@@ -50,9 +50,6 @@ public class Enemy extends BaseSprite implements Runnable {
 	//攻击是否完成
 	public boolean isAttacked = false;
 
-	//记录天兵被攻击的次数
-	public int attacks = 0;
-
 	//天兵左右攻击夹具
 	public Fixture mLeftFixture;
 	public Fixture mRightFixture;
@@ -63,7 +60,10 @@ public class Enemy extends BaseSprite implements Runnable {
 	private int preTime;
 
 	//生命值
-	public final static int LIVE = 4;
+	public final static int LIVE = 6;
+
+	//当前生命值
+	public int HP = LIVE;
 
 	public Enemy(Body body, String type) {
 

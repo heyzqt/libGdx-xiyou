@@ -189,11 +189,13 @@ public class Monkey extends BaseSprite {
 		mRightJumpAtkState[8] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightJumAttack8"));
 		mRightJumpAtkState[9] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightJumAttack8"));
 		//左 升龙斩攻击
-		mLeftJumpAtkState = new TextureAtlas.AtlasRegion[8];
-		for (int i = 0; i < mLeftJumpAtkState.length; i++) {
+		mLeftJumpAtkState = new TextureAtlas.AtlasRegion[10];
+		for (int i = 0; i < 8; i++) {
 			mLeftJumpAtkState[i] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightJumAttack" + (i + 1)));
 			mLeftJumpAtkState[i].flip(true, false);
 		}
+		mLeftJumpAtkState[8] = mLeftJumpAtkState[7];
+		mLeftJumpAtkState[9] = mLeftJumpAtkState[7];
 
 		//初始化所有动画
 		mRightStandAni = new Animation(1 / 12f, mRightStandState);
@@ -276,11 +278,13 @@ public class Monkey extends BaseSprite {
 		}
 		int frameNumber3 = (int) (monkeytime / mRightJumpHitAni.getFrameDuration());
 		//跳跃
-		if (STATE == State.STATE_RIGHT_JUMP_ATTACK && isJump && frameNumber3 == mRightJumpAtkState.length - 3) {
+		if (STATE == State.STATE_RIGHT_JUMP_ATTACK && isJump && frameNumber3 == mRightJumpAtkState.length - 4) {
 			mBody.applyForceToCenter(0, 200, true);
+			mJumpBall.STATE = State.STATE_RIGHT;
 			isJump = false;
-		} else if (STATE == State.STATE_LEFT_JUMP_ATTACK && isJump && frameNumber3 == mLeftJumpAtkState.length - 3) {
+		} else if (STATE == State.STATE_LEFT_JUMP_ATTACK && isJump && frameNumber3 == mLeftJumpAtkState.length - 4) {
 			mBody.applyForceToCenter(0, 200, true);
+			mJumpBall.STATE = State.STATE_LEFT;
 			isJump = false;
 		}
 		//攻击完毕
@@ -329,14 +333,19 @@ public class Monkey extends BaseSprite {
 				break;
 			case State.STATE_RIGHT_JUMP_ATTACK:
 				setFrame(batch, mRightJumpHitAni, mRightJumpAtkState, delta);
-//				//升龙斩攻击
-//				int frame = (int) (monkeytime / mRightJumpHitAni.getFrameDuration());
-//				if (frame == mRightFireballState.length - 3) {
-//					mJumpBall.render(batch, delta);
-//				}
+				//升龙斩攻击光球
+				int frame = (int) (monkeytime / mRightJumpHitAni.getFrameDuration());
+				if (frame == mRightJumpAtkState.length - 3) {
+					mJumpBall.render(batch, delta);
+				}
 				break;
 			case State.STATE_LEFT_JUMP_ATTACK:
 				setFrame(batch, mLeftJumpHitAni, mLeftJumpAtkState, delta);
+				//升龙斩攻击光球
+				int frame1 = (int) (monkeytime / mLeftJumpHitAni.getFrameDuration());
+				if (frame1 == mLeftJumpAtkState.length - 3) {
+					mJumpBall.render(batch, delta);
+				}
 				break;
 		}
 		batch.end();

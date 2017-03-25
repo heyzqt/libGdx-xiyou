@@ -3,6 +3,27 @@ fireball.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+jumpHit1
+  rotate: false
+  xy: 1, 43
+  size: 140, 200
+  orig: 140, 200
+  offset: 0, 0
+  index: -1
+jumpHit2
+  rotate: false
+  xy: 143, 43
+  size: 140, 200
+  orig: 140, 200
+  offset: 0, 0
+  index: -1
+jumpHit3
+  rotate: false
+  xy: 285, 43
+  size: 140, 200
+  orig: 140, 200
+  offset: 0, 0
+  index: -1
 leftfireball
   rotate: false
   xy: 1, 1

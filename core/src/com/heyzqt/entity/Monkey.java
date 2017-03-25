@@ -48,6 +48,10 @@ public class Monkey extends BaseSprite {
 	private TextureAtlas.AtlasRegion[] mLeftFireballState;
 	//右 火球动画
 	private TextureAtlas.AtlasRegion[] mRightFireballState;
+	//右 跳跃动画
+	private TextureAtlas.AtlasRegion[] mRightJumpAtkState;
+	//左 跳跃动画
+	private TextureAtlas.AtlasRegion[] mLeftJumpAtkState;
 
 	//动画
 	private Animation mRightStandAni;
@@ -60,6 +64,8 @@ public class Monkey extends BaseSprite {
 	private Animation mRightHittedAni;
 	private Animation mLeftFireballAni;
 	private Animation mRightFireballAni;
+	private Animation mLeftJumpHitAni;
+	private Animation mRightJumpHitAni;
 
 	//孙悟空状态
 	public static int STATE;
@@ -86,11 +92,14 @@ public class Monkey extends BaseSprite {
 	//火球Controller
 	public FireBallController mBallController;
 
+	//升龙斩
+	public JumpBall mJumpBall;
+
 	//是否攻击
 	public boolean isAttacked = false;
 
-	//攻击动画总时间
-	public final static float ATTACKTIME = 2f;
+	//是否跳跃
+	public boolean isJump = false;
 
 	//攻击夹具
 	private Fixture mAttackFixture;
@@ -172,20 +181,39 @@ public class Monkey extends BaseSprite {
 			mLeftFireballState[i].flip(true, false);
 		}
 
+		//右 升龙斩攻击
+		mRightJumpAtkState = new TextureAtlas.AtlasRegion[10];
+		for (int i = 0; i < 8; i++) {
+			mRightJumpAtkState[i] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightJumAttack" + (i + 1)));
+		}
+		mRightJumpAtkState[8] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightJumAttack8"));
+		mRightJumpAtkState[9] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightJumAttack8"));
+		//左 升龙斩攻击
+		mLeftJumpAtkState = new TextureAtlas.AtlasRegion[8];
+		for (int i = 0; i < mLeftJumpAtkState.length; i++) {
+			mLeftJumpAtkState[i] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightJumAttack" + (i + 1)));
+			mLeftJumpAtkState[i].flip(true, false);
+		}
+
 		//初始化所有动画
 		mRightStandAni = new Animation(1 / 12f, mRightStandState);
 		mLeftStandAni = new Animation(1 / 12f, mLeftStandState);
 		mRightAni = new Animation(1 / 12f, mRightState);
 		mLeftAni = new Animation(1 / 12f, mLeftState);
-		mLeftAttackAni = new Animation(1 / 30f, mLeftAttackState);
-		mRightAttackAni = new Animation(1 / 30f, mRightAttackState);
+		mLeftAttackAni = new Animation(1 / 18f, mLeftAttackState);
+		mRightAttackAni = new Animation(1 / 18f, mRightAttackState);
 		mLeftHittedAni = new Animation(1 / 12f, mLeftHittedState);
 		mRightHittedAni = new Animation(1 / 12f, mRightHittedState);
 		mLeftFireballAni = new Animation(1 / 15f, mLeftFireballState);
 		mRightFireballAni = new Animation(1 / 15f, mRightFireballState);
+		mRightJumpHitAni = new Animation(1 / 12f, mRightJumpAtkState);
+		mLeftJumpHitAni = new Animation(1 / 12f, mLeftJumpAtkState);
 
 		//初始化火球
 		mBallController = new FireBallController();
+
+		//初始化升龙斩
+		mJumpBall = new JumpBall(this);
 	}
 
 	@Override
@@ -204,16 +232,6 @@ public class Monkey extends BaseSprite {
 			STATE = State.STATE_IDEL_LEFT;
 			monkeytime = 0;
 		}
-
-		//一组火球攻击动画完成
-		if (STATE == State.STATE_RIGHT_FIREBALL && mRightFireballAni.isAnimationFinished(delta)) {
-			STATE = State.STATE_IDEL_RIGHT;
-			monkeytime = 0;
-		} else if (STATE == State.STATE_LEFT_FIREBALL && mLeftFireballAni.isAnimationFinished(delta)) {
-			STATE = State.STATE_IDEL_LEFT;
-			monkeytime = 0;
-		}
-
 		//在攻击动画最后一帧创建攻击夹具
 		int frameNumber1 = (int) (monkeytime / mRightAttackAni.getFrameDuration());
 		if (STATE == State.STATE_RIGHT_ATTACK && isAttacked && frameNumber1 == mRightAttackState.length - 1) {
@@ -223,7 +241,19 @@ public class Monkey extends BaseSprite {
 			createStick();
 			isAttacked = false;
 		}
+		//销毁攻击夹具
+		if (STATE != State.STATE_LEFT_ATTACK && STATE != State.STATE_RIGHT_ATTACK) {
+			destroyStick();
+		}
 
+		//一组火球攻击动画完成
+		if (STATE == State.STATE_RIGHT_FIREBALL && mRightFireballAni.isAnimationFinished(delta)) {
+			STATE = State.STATE_IDEL_RIGHT;
+			monkeytime = 0;
+		} else if (STATE == State.STATE_LEFT_FIREBALL && mLeftFireballAni.isAnimationFinished(delta)) {
+			STATE = State.STATE_IDEL_LEFT;
+			monkeytime = 0;
+		}
 		//在火球攻击动画最后一帧创建火球
 		int frameNumber2 = (int) (monkeytime / mRightFireballAni.getFrameDuration());
 		if (STATE == State.STATE_RIGHT_FIREBALL && isAttacked && frameNumber2 == mRightFireballState.length - 1) {
@@ -236,9 +266,28 @@ public class Monkey extends BaseSprite {
 			isAttacked = false;
 		}
 
-		//销毁夹具
-		if (mAttackFixture != null && STATE != State.STATE_LEFT_ATTACK && STATE != State.STATE_RIGHT_ATTACK) {
-			destroyStick();
+		//升龙斩攻击
+		if (STATE == State.STATE_RIGHT_JUMP_ATTACK && mRightJumpHitAni.isAnimationFinished(delta)) {
+			STATE = State.STATE_IDEL_RIGHT;
+			monkeytime = 0;
+		} else if (STATE == State.STATE_LEFT_JUMP_ATTACK && mLeftJumpHitAni.isAnimationFinished(delta)) {
+			STATE = State.STATE_IDEL_LEFT;
+			monkeytime = 0;
+		}
+		int frameNumber3 = (int) (monkeytime / mRightJumpHitAni.getFrameDuration());
+		//跳跃
+		if (STATE == State.STATE_RIGHT_JUMP_ATTACK && isJump && frameNumber3 == mRightJumpAtkState.length - 3) {
+			mBody.applyForceToCenter(0, 200, true);
+			isJump = false;
+		} else if (STATE == State.STATE_LEFT_JUMP_ATTACK && isJump && frameNumber3 == mLeftJumpAtkState.length - 3) {
+			mBody.applyForceToCenter(0, 200, true);
+			isJump = false;
+		}
+		//攻击完毕
+		if (STATE == State.STATE_RIGHT_JUMP_ATTACK && isAttacked && frameNumber3 == mRightJumpAtkState.length - 1) {
+			isAttacked = false;
+		} else if (STATE == State.STATE_LEFT_JUMP_ATTACK && isAttacked && frameNumber3 == mLeftJumpAtkState.length - 1) {
+			isAttacked = false;
 		}
 	}
 
@@ -277,6 +326,17 @@ public class Monkey extends BaseSprite {
 				break;
 			case State.STATE_LEFT_FIREBALL:
 				setFrame(batch, mLeftFireballAni, mLeftFireballState, delta);
+				break;
+			case State.STATE_RIGHT_JUMP_ATTACK:
+				setFrame(batch, mRightJumpHitAni, mRightJumpAtkState, delta);
+//				//升龙斩攻击
+//				int frame = (int) (monkeytime / mRightJumpHitAni.getFrameDuration());
+//				if (frame == mRightFireballState.length - 3) {
+//					mJumpBall.render(batch, delta);
+//				}
+				break;
+			case State.STATE_LEFT_JUMP_ATTACK:
+				setFrame(batch, mLeftJumpHitAni, mLeftJumpAtkState, delta);
 				break;
 		}
 		batch.end();
@@ -373,9 +433,9 @@ public class Monkey extends BaseSprite {
 		//设置火球出现位置
 		FireBall ball;
 		if (STATE == State.STATE_RIGHT_FIREBALL) {
-			ball = mBallController.createFireBall(ballBody, FireBall.RIGHT);
+			ball = mBallController.createFireBall(ballBody, State.STATE_RIGHT);
 		} else {
-			ball = mBallController.createFireBall(ballBody, FireBall.LEFT);
+			ball = mBallController.createFireBall(ballBody, State.STATE_LEFT);
 		}
 		ballBody.setUserData(ball);
 		mBallController.addFireBalls(ball);
@@ -406,7 +466,6 @@ public class Monkey extends BaseSprite {
 		if (mAttackFixture != null) {
 			mBody.destroyFixture(mAttackFixture);
 			mAttackFixture = null;
-			isAttacked = false;
 		}
 	}
 }

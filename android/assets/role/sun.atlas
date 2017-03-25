@@ -3,114 +3,170 @@ sun.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+sunRightJumAttack1
+  rotate: false
+  xy: 1, 781
+  size: 250, 210
+  orig: 250, 210
+  offset: 0, 0
+  index: -1
+sunRightJumAttack2
+  rotate: false
+  xy: 1, 569
+  size: 250, 210
+  orig: 250, 210
+  offset: 0, 0
+  index: -1
+sunRightJumAttack3
+  rotate: false
+  xy: 253, 781
+  size: 250, 210
+  orig: 250, 210
+  offset: 0, 0
+  index: -1
+sunRightJumAttack4
+  rotate: false
+  xy: 1, 357
+  size: 250, 210
+  orig: 250, 210
+  offset: 0, 0
+  index: -1
+sunRightJumAttack5
+  rotate: false
+  xy: 253, 569
+  size: 250, 210
+  orig: 250, 210
+  offset: 0, 0
+  index: -1
+sunRightJumAttack6
+  rotate: false
+  xy: 505, 781
+  size: 250, 210
+  orig: 250, 210
+  offset: 0, 0
+  index: -1
+sunRightJumAttack7
+  rotate: false
+  xy: 1, 145
+  size: 250, 210
+  orig: 250, 210
+  offset: 0, 0
+  index: -1
+sunRightJumAttack8
+  rotate: false
+  xy: 253, 357
+  size: 250, 210
+  orig: 250, 210
+  offset: 0, 0
+  index: -1
 sunRightAttack1
-  rotate: false
-  xy: 1, 651
-  size: 250, 128
-  orig: 250, 128
-  offset: 0, 0
-  index: -1
-sunRightAttack2
-  rotate: false
-  xy: 1, 521
-  size: 250, 128
-  orig: 250, 128
-  offset: 0, 0
-  index: -1
-sunRightAttack3
-  rotate: false
-  xy: 253, 651
-  size: 250, 128
-  orig: 250, 128
-  offset: 0, 0
-  index: -1
-sunRightAttack4
-  rotate: false
-  xy: 1, 391
-  size: 250, 128
-  orig: 250, 128
-  offset: 0, 0
-  index: -1
-sunRightAttack5
-  rotate: false
-  xy: 253, 521
-  size: 250, 128
-  orig: 250, 128
-  offset: 0, 0
-  index: -1
-sunRightAttack6
   rotate: false
   xy: 505, 651
   size: 250, 128
   orig: 250, 128
   offset: 0, 0
   index: -1
-sunRightFireAttack1
+sunRightAttack2
   rotate: false
-  xy: 1, 261
+  xy: 757, 863
   size: 250, 128
   orig: 250, 128
   offset: 0, 0
   index: -1
-sunRightFireAttack2
+sunRightAttack3
   rotate: false
-  xy: 253, 391
+  xy: 1, 15
   size: 250, 128
   orig: 250, 128
   offset: 0, 0
   index: -1
-sunRightFireAttack3
+sunRightAttack4
+  rotate: false
+  xy: 253, 227
+  size: 250, 128
+  orig: 250, 128
+  offset: 0, 0
+  index: -1
+sunRightAttack5
   rotate: false
   xy: 505, 521
   size: 250, 128
   orig: 250, 128
   offset: 0, 0
   index: -1
-sunRightFireAttack4
+sunRightAttack6
   rotate: false
-  xy: 757, 651
+  xy: 757, 733
   size: 250, 128
   orig: 250, 128
   offset: 0, 0
   index: -1
-sunRightFireAttack5
+sunRightFireAttack1
   rotate: false
-  xy: 1, 131
+  xy: 253, 97
   size: 250, 128
   orig: 250, 128
   offset: 0, 0
   index: -1
-sunRightHited
-  rotate: false
-  xy: 253, 261
-  size: 250, 128
-  orig: 250, 128
-  offset: 0, 0
-  index: -1
-sunRightStand
+sunRightFireAttack2
   rotate: false
   xy: 505, 391
   size: 250, 128
   orig: 250, 128
   offset: 0, 0
   index: -1
+sunRightFireAttack3
+  rotate: false
+  xy: 757, 603
+  size: 250, 128
+  orig: 250, 128
+  offset: 0, 0
+  index: -1
+sunRightFireAttack4
+  rotate: false
+  xy: 505, 261
+  size: 250, 128
+  orig: 250, 128
+  offset: 0, 0
+  index: -1
+sunRightFireAttack5
+  rotate: false
+  xy: 757, 473
+  size: 250, 128
+  orig: 250, 128
+  offset: 0, 0
+  index: -1
+sunRightHited
+  rotate: false
+  xy: 505, 131
+  size: 250, 128
+  orig: 250, 128
+  offset: 0, 0
+  index: -1
+sunRightStand
+  rotate: false
+  xy: 757, 343
+  size: 250, 128
+  orig: 250, 128
+  offset: 0, 0
+  index: -1
 sunRightW1
   rotate: false
-  xy: 757, 521
+  xy: 757, 213
   size: 157, 128
   orig: 157, 128
   offset: 0, 0
   index: -1
 sunRightW2
   rotate: false
-  xy: 1, 1
+  xy: 757, 83
   size: 157, 128
   orig: 157, 128
   offset: 0, 0
   index: -1
 sunRightW3
   rotate: false
-  xy: 253, 131
+  xy: 505, 1
   size: 157, 128
   orig: 157, 128
   offset: 0, 0

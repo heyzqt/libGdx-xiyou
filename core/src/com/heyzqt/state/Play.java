@@ -324,7 +324,7 @@ public class Play extends GameState {
 				//设置方向
 				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT ||
 						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED
-						|| mMonkey.STATE == State.STATE_RIGHT_FIREBALL) {
+						|| mMonkey.STATE == State.STATE_RIGHT_FIREBALL || mMonkey.STATE == State.STATE_RIGHT_JUMP_ATTACK) {
 					mMonkey.STATE = State.STATE_RIGHT_FIREBALL;
 					mMonkey.monkeytime = 0;
 				} else {
@@ -342,9 +342,26 @@ public class Play extends GameState {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-				if (Monkey.MP > 0) {
+				//MP为0时无法使用技能
+				if (Monkey.MP == 0) {
+					return true;
+				} else {
 					Monkey.MP--;
 				}
+
+				//设置方向
+				if (mMonkey.STATE == State.STATE_IDEL_RIGHT || mMonkey.STATE == State.STATE_RIGHT ||
+						mMonkey.STATE == State.STATE_RIGHT_ATTACK || mMonkey.STATE == State.STATE_RIGHT_HITED
+						|| mMonkey.STATE == State.STATE_RIGHT_FIREBALL || mMonkey.STATE == State.STATE_RIGHT_JUMP_ATTACK) {
+					mMonkey.STATE = State.STATE_RIGHT_JUMP_ATTACK;
+					mMonkey.monkeytime = 0;
+				} else {
+					mMonkey.STATE = State.STATE_LEFT_JUMP_ATTACK;
+					mMonkey.monkeytime = 0;
+				}
+				mMonkey.isAttacked = true;
+				mMonkey.isJump = true;
+				mMonkey.getBody().setLinearVelocity(0, 0);
 				return true;
 			}
 		});

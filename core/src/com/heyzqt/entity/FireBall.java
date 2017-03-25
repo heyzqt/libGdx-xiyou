@@ -3,6 +3,7 @@ package com.heyzqt.entity;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.State;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**
@@ -14,8 +15,6 @@ public class FireBall extends BaseSprite {
 
 	//光球当前状态
 	public int STATE;
-	public final static int LEFT = 0;
-	public final static int RIGHT = 1;
 
 	//光球动画
 	private TextureAtlas mAtlas;
@@ -47,10 +46,10 @@ public class FireBall extends BaseSprite {
 	@Override
 	public void update(float delta) {
 		switch (STATE) {
-			case LEFT:
+			case State.STATE_LEFT:
 				setAnimation(mLeftState, 1 / 12f);
 				break;
-			case RIGHT:
+			case State.STATE_RIGHT:
 				setAnimation(mRightState, 1 / 12f);
 				break;
 		}

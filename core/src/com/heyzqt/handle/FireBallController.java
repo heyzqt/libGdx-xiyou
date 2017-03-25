@@ -36,7 +36,7 @@ public class FireBallController {
 			return;
 		}
 		// 设置火球移动速度
-		if (ball.STATE == FireBall.RIGHT) {
+		if (ball.STATE == State.STATE_RIGHT) {
 			ball.getBody().setLinearVelocity(1f, 0f);
 		} else {
 			ball.getBody().setLinearVelocity(-1f, 0f);

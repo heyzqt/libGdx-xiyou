@@ -90,6 +90,8 @@ public class Constant {
 	public static final String PLAY_BLOOD = "play_blood";
 	public static final String FIREBALL_WIDGET = "fireball_widget";
 	public static final String FIREBALL_SOUND = "fireball_sound";
+	public static final String ATTACK_SOUND = "attack_sound";
+	public static final String JUMPBALL_SOUND = "jumpball_sound";
 
 	//加载界面
 	public static final String LOADING_BG = "loading_bg";

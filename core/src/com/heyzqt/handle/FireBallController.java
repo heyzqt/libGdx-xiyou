@@ -18,11 +18,25 @@ public class FireBallController {
 
 	//更新火球逻辑
 	public void update(World world) {
+
 		for (int i = 0; i < balls.size; i++) {
 			FireBall ball = balls.get(i);
+
+			//检查火球速度异常情况
+			if (ball.getBody().getLinearVelocity().x == 0.2f && ball.STATE == State.STATE_RIGHT_FIREBALL) {
+				ball.getBody().setLinearVelocity(1.0f, 0);
+			} else if (ball.getBody().getLinearVelocity().x == -0.2f && ball.STATE == State.STATE_RIGHT_FIREBALL) {
+				ball.getBody().setLinearVelocity(1.0f, 0);
+			} else if (ball.getBody().getLinearVelocity().x == 0.2f && ball.STATE == State.STATE_LEFT_FIREBALL) {
+				ball.getBody().setLinearVelocity(-1.0f, 0);
+			} else if (ball.getBody().getLinearVelocity().x == -0.2f && ball.STATE == State.STATE_LEFT_FIREBALL) {
+				ball.getBody().setLinearVelocity(-1.0f, 0);
+			}
+
+			//检查是否Alive
 			if (!checkAlive(ball)) {
-				balls.removeValue(ball, true);
 				world.destroyBody(ball.getBody());
+				balls.removeValue(ball, true);
 			}
 		}
 	}
@@ -36,7 +50,7 @@ public class FireBallController {
 			return;
 		}
 		// 设置火球移动速度
-		if (ball.STATE == State.STATE_RIGHT) {
+		if (ball.STATE == State.STATE_RIGHT_FIREBALL) {
 			ball.getBody().setLinearVelocity(1f, 0f);
 		} else {
 			ball.getBody().setLinearVelocity(-1f, 0f);

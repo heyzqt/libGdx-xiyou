@@ -279,7 +279,7 @@ public class Boss extends BaseSprite implements Runnable {
 				e.printStackTrace();
 			}
 
-			if (!isContacted) {
+			if (!isContacted && isLive) {
 				//给刀兵随机产生一个往左或往右的方向 产生随机数[3,4]
 				STATE = (int) (Math.random() * 2) + 3;
 				setStateAnimation();

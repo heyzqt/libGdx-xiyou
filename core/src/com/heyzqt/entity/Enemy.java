@@ -63,7 +63,7 @@ public class Enemy extends BaseSprite implements Runnable {
 	public final static int LIVE = 6;
 
 	//当前生命值
-	public int HP = LIVE;
+	public int HP = 6;
 
 	public Enemy(Body body, String type) {
 
@@ -275,7 +275,7 @@ public class Enemy extends BaseSprite implements Runnable {
 				e.printStackTrace();
 			}
 
-			if (!isContacted) {
+			if (!isContacted && isLive) {
 				//给刀兵随机产生一个往左或往右的方向 产生随机数[3,4]
 				STATE = (int) (Math.random() * 2) + 3;
 				setStateAnimation();
@@ -303,7 +303,6 @@ public class Enemy extends BaseSprite implements Runnable {
 	 * 设置状态动画
 	 */
 	private void setStateAnimation() {
-
 		if (STATE == State.STATE_RIGHT_ATTACK) {
 			mBody.setLinearVelocity(0, 0);
 			setAnimation(mRightAttackState, 1 / 12f);

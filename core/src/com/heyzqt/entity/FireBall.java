@@ -46,10 +46,10 @@ public class FireBall extends BaseSprite {
 	@Override
 	public void update(float delta) {
 		switch (STATE) {
-			case State.STATE_LEFT:
+			case State.STATE_LEFT_FIREBALL:
 				setAnimation(mLeftState, 1 / 12f);
 				break;
-			case State.STATE_RIGHT:
+			case State.STATE_RIGHT_FIREBALL:
 				setAnimation(mRightState, 1 / 12f);
 				break;
 		}

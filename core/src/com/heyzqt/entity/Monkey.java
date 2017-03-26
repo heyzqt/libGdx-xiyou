@@ -205,8 +205,8 @@ public class Monkey extends BaseSprite {
 		mLeftStandAni = new Animation(1 / 12f, mLeftStandState);
 		mRightAni = new Animation(1 / 12f, mRightState);
 		mLeftAni = new Animation(1 / 12f, mLeftState);
-		mLeftAttackAni = new Animation(1 / 18f, mLeftAttackState);
-		mRightAttackAni = new Animation(1 / 18f, mRightAttackState);
+		mLeftAttackAni = new Animation(1 / 30f, mLeftAttackState);
+		mRightAttackAni = new Animation(1 / 30f, mRightAttackState);
 		mLeftHittedAni = new Animation(1 / 12f, mLeftHittedState);
 		mRightHittedAni = new Animation(1 / 12f, mRightHittedState);
 		mLeftFireballAni = new Animation(1 / 15f, mLeftFireballState);
@@ -241,9 +241,11 @@ public class Monkey extends BaseSprite {
 		int frameNumber1 = (int) (monkeytime / mRightAttackAni.getFrameDuration());
 		if (STATE == State.STATE_RIGHT_ATTACK && isAttacked && frameNumber1 == mRightAttackState.length - 1) {
 			createStick();
+			MyGdxGame.assetManager.getSound(Constant.ATTACK_SOUND).play();
 			isAttacked = false;
 		} else if (STATE == State.STATE_LEFT_ATTACK && isAttacked && frameNumber1 == mLeftAttackState.length - 1) {
 			createStick();
+			MyGdxGame.assetManager.getSound(Constant.ATTACK_SOUND).play();
 			isAttacked = false;
 		}
 		//销毁攻击夹具
@@ -265,10 +267,12 @@ public class Monkey extends BaseSprite {
 			createFireBall();
 			MyGdxGame.assetManager.getSound(Constant.FIREBALL_SOUND).play();
 			isAttacked = false;
+			Monkey.MP--;
 		} else if (STATE == State.STATE_LEFT_FIREBALL && isAttacked && frameNumber2 == mLeftFireballState.length - 1) {
 			createFireBall();
 			MyGdxGame.assetManager.getSound(Constant.FIREBALL_SOUND).play();
 			isAttacked = false;
+			Monkey.MP--;
 		}
 
 		//升龙斩攻击
@@ -280,19 +284,23 @@ public class Monkey extends BaseSprite {
 			monkeytime = 0;
 		}
 		int frameNumber3 = (int) (monkeytime / mRightJumpHitAni.getFrameDuration());
-		//跳跃
+		//跳跃攻击
 		if (STATE == State.STATE_RIGHT_JUMP_ATTACK && isJump && frameNumber3 == mRightJumpAtkState.length - 4) {
 			createJumpStick();
 			mBody.applyForceToCenter(0, 200, true);
+			MyGdxGame.assetManager.getSound(Constant.JUMPBALL_SOUND).play();
 			mJumpBall.STATE = State.STATE_RIGHT;
 			isJump = false;
+			MP--;
 		} else if (STATE == State.STATE_LEFT_JUMP_ATTACK && isJump && frameNumber3 == mLeftJumpAtkState.length - 4) {
 			createJumpStick();
 			mBody.applyForceToCenter(0, 200, true);
+			MyGdxGame.assetManager.getSound(Constant.JUMPBALL_SOUND).play();
 			mJumpBall.STATE = State.STATE_LEFT;
 			isJump = false;
+			MP--;
 		}
-		//攻击完毕
+		//升龙斩攻击完毕
 		if (STATE == State.STATE_RIGHT_JUMP_ATTACK && isAttacked && frameNumber3 == mRightJumpAtkState.length - 1) {
 			isAttacked = false;
 		} else if (STATE == State.STATE_LEFT_JUMP_ATTACK && isAttacked && frameNumber3 == mLeftJumpAtkState.length - 1) {
@@ -418,6 +426,9 @@ public class Monkey extends BaseSprite {
 	 * 创建攻击夹具
 	 */
 	public void createStick() {
+		if (mAttackFixture != null) {
+			return;
+		}
 		//创建攻击传感器 stick
 		PolygonShape shape = new PolygonShape();
 		if (STATE == State.STATE_RIGHT_ATTACK) {
@@ -481,11 +492,13 @@ public class Monkey extends BaseSprite {
 		//设置火球出现位置
 		FireBall ball;
 		if (STATE == State.STATE_RIGHT_FIREBALL) {
-			ball = mBallController.createFireBall(ballBody, State.STATE_RIGHT);
+			ball = mBallController.createFireBall(ballBody, State.STATE_RIGHT_FIREBALL);
 		} else {
-			ball = mBallController.createFireBall(ballBody, State.STATE_LEFT);
+			ball = mBallController.createFireBall(ballBody, State.STATE_LEFT_FIREBALL);
 		}
 		ballBody.setUserData(ball);
+
+		//将火球添加到火球管理类中并给火球速度赋值
 		mBallController.addFireBalls(ball);
 	}
 
@@ -493,6 +506,9 @@ public class Monkey extends BaseSprite {
 	 * 创建升龙斩攻击夹具
 	 */
 	public void createJumpStick() {
+		if (mJumpAtkFix != null) {
+			return;
+		}
 		//创建攻击传感器 stick
 		PolygonShape shape = new PolygonShape();
 		if (STATE == State.STATE_RIGHT_JUMP_ATTACK) {

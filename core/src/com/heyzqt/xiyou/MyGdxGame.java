@@ -105,6 +105,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		//加载火球素材
 		assetManager.loadTextureAtlas("widget/fireball.atlas", Constant.FIREBALL_WIDGET);
 		assetManager.loadSound("sound/fireball.mp3", Constant.FIREBALL_SOUND);
+		//加载攻击音效
+		assetManager.loadSound("sound/attack.mp3", Constant.ATTACK_SOUND);
+		//加载升龙斩音效
+		assetManager.loadSound("sound/jumpball.mp3", Constant.JUMPBALL_SOUND);
 
 		//加载界面背景和游戏素材
 		assetManager.loadTexture("background/loading_bg.png", Constant.LOADING_BG);

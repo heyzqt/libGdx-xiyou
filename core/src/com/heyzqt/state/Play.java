@@ -315,8 +315,6 @@ public class Play extends GameState {
 				//MP为0时无法使用技能
 				if (Monkey.MP == 0) {
 					return true;
-				} else {
-					Monkey.MP--;
 				}
 
 				//设置方向
@@ -337,12 +335,9 @@ public class Play extends GameState {
 		mJumpAttackBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
 				//MP为0时无法使用技能
 				if (Monkey.MP == 0) {
 					return true;
-				} else {
-					Monkey.MP--;
 				}
 
 				//设置方向
@@ -873,6 +868,7 @@ public class Play extends GameState {
 		for (Enemy enemy : mEnemyDaos) {
 			enemy.render(mBatch, statetime);
 		}
+
 		//画Boss
 		if (mBoss != null) {
 			mBoss.render(mBatch, statetime);

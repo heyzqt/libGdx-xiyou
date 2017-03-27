@@ -159,6 +159,11 @@ public class Boss extends BaseSprite implements Runnable {
 		//设置Boss一直是苏醒状态
 		mBody.setAwake(true);
 
+		//掉落屏幕外死亡
+		if (mBody.getPosition().y < 0) {
+			isLive = false;
+		}
+
 		/**
 		 * 根据当前Boss与主角位置关系
 		 * 设置Boss攻击状态

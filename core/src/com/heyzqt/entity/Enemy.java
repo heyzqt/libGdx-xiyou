@@ -154,6 +154,11 @@ public class Enemy extends BaseSprite implements Runnable {
 		//设置天兵一直是苏醒状态
 		mBody.setAwake(true);
 
+		//掉落屏幕外死亡
+		if (mBody.getPosition().y < 0) {
+			isLive = false;
+		}
+
 		/**
 		 * 根据当前天兵与主角位置关系
 		 * 设置天兵攻击状态

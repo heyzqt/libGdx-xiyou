@@ -42,6 +42,8 @@ import com.heyzqt.handle.State;
 import com.heyzqt.handle.Utils;
 import com.heyzqt.xiyou.MyGdxGame;
 
+import java.util.Iterator;
+
 /**
  * Created by heyzqt on 2017/2/7.
  *
@@ -115,7 +117,7 @@ public class Play extends GameState {
 	private Background mBackground;
 	//游戏主角
 	public static Monkey mMonkey;
-	//持刀天兵
+	//天兵
 	private Array<Enemy> mEnemyDaos;
 	//Boss
 	private Boss mBoss;
@@ -964,6 +966,24 @@ public class Play extends GameState {
 			case 4:        //第五关背景音乐
 				MyGdxGame.assetManager.getMusic(Constant.LEVEL_2_BGM).stop();
 				break;
+		}
+
+		//清理未死亡天兵
+		Iterator<Enemy> iterator = mEnemyDaos.iterator();
+		while (iterator.hasNext()) {
+			Enemy enemy = (Enemy) iterator.next();
+
+			enemy.setLive(false);
+			mWorld.destroyBody(enemy.getBody());
+
+			iterator.remove();
+		}
+
+		//清理未死亡Boss
+		if (mBoss != null) {
+			mBoss.setLive(false);
+			mWorld.destroyBody(mBoss.getBody());
+			mBoss = null;
 		}
 
 		//清空演员

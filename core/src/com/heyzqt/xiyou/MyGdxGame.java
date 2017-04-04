@@ -110,6 +110,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		//加载升龙斩音效
 		assetManager.loadSound("sound/jumpball.mp3", Constant.JUMPBALL_SOUND);
 
+		//加载排行榜素材
+		assetManager.loadTextureAtlas("widget/range.atlas", Constant.RANGE_WIDGET);
+		assetManager.loadTexture("background/range_bg.png", Constant.RANGE_BG);
+
+		//加载输入输入姓名对话框背景
+		assetManager.loadTexture("background/inputname_bg.png", Constant.INPUT_NAME_BG);
+
 		//加载界面背景和游戏素材
 		assetManager.loadTexture("background/loading_bg.png", Constant.LOADING_BG);
 		assetManager.loadTextureAtlas("widget/loading.atlas", Constant.LOADING_WIDGET);

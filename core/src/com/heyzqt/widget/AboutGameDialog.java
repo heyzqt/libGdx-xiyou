@@ -29,7 +29,7 @@ public class AboutGameDialog extends BaseDialog {
 
 		//初始化对话框
 		mWindow = new Image(new TextureRegion(mBackground));
-		mWindow.setPosition(MyGdxGame.VIEW_WIDTH / 2 - 25, MyGdxGame.VIEW_HEIGHT / 2 - 130);
+		mWindow.setPosition(x - 25, y - 130);
 
 		//初始化返回按钮
 		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("close")));
@@ -38,7 +38,7 @@ public class AboutGameDialog extends BaseDialog {
 		mBackBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Start.isShowDialog = false;
+				Start.isShowAboutDialog = false;
 				return true;
 			}
 		});

@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
-import com.heyzqt.widget.SettingDialog;
+import com.heyzqt.widget.AboutGameDialog;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**
@@ -37,7 +37,7 @@ public class Start extends GameState {
 	public static boolean isPlay = true;
 	//关于我们
 	private ImageButton mAboutBtn;
-	private SettingDialog mSettingDialog;
+	private AboutGameDialog mAboutGameDialog;
 	//返回主界面按钮
 	private ImageButton mBackButton;
 
@@ -85,7 +85,7 @@ public class Start extends GameState {
 				new TextureRegionDrawable(mAtlas.findRegion("aboutBtnDown")));
 		mAboutBtn.setSize(280, 100);
 		mAboutBtn.setPosition(mGame.VIEW_WIDTH / 2 + 26, mGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 110);
-		mSettingDialog = new SettingDialog(MyGdxGame.VIEW_WIDTH / 2, MyGdxGame.VIEW_HEIGHT / 2);
+		mAboutGameDialog = new AboutGameDialog(MyGdxGame.VIEW_WIDTH / 2, MyGdxGame.VIEW_HEIGHT / 2);
 
 		//设置界面初始化 - 返回按钮
 		mBackButton = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("backStartBtnUp")),
@@ -190,8 +190,8 @@ public class Start extends GameState {
 			mStage.addActor(mAboutBtn);
 			mStage.addActor(mBackButton);
 			if (isShowDialog) {
-				mStage.addActor(mSettingDialog.mWindow);
-				mStage.addActor(mSettingDialog.mBackBtn);
+				mStage.addActor(mAboutGameDialog.mWindow);
+				mStage.addActor(mAboutGameDialog.mBackBtn);
 			}
 		}
 

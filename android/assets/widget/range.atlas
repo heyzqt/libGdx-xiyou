@@ -1,0 +1,54 @@
+
+range.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+rangeBtnDown
+  rotate: false
+  xy: 1, 275
+  size: 560, 200
+  orig: 560, 200
+  offset: 0, 0
+  index: -1
+rangeBtnUp
+  rotate: false
+  xy: 1, 73
+  size: 560, 200
+  orig: 560, 200
+  offset: 0, 0
+  index: -1
+inputname
+  rotate: false
+  xy: 563, 415
+  size: 280, 60
+  orig: 280, 60
+  offset: 0, 0
+  index: -1
+cancelBtnDown
+  rotate: false
+  xy: 1, 1
+  size: 115, 70
+  orig: 115, 70
+  offset: 0, 0
+  index: -1
+cancelBtnUp
+  rotate: false
+  xy: 563, 343
+  size: 115, 70
+  orig: 115, 70
+  offset: 0, 0
+  index: -1
+sureBtnDown
+  rotate: false
+  xy: 118, 1
+  size: 115, 70
+  orig: 115, 70
+  offset: 0, 0
+  index: -1
+sureBtnUp
+  rotate: false
+  xy: 563, 271
+  size: 115, 70
+  orig: 115, 70
+  offset: 0, 0
+  index: -1

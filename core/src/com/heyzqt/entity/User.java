@@ -1,5 +1,8 @@
 package com.heyzqt.entity;
 
+import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.DataSaveSecurity;
+
 /**
  * Created by heyzqt on 2017/4/5.
  *
@@ -13,7 +16,7 @@ public class User {
 	public String name;
 
 	/**
-	 * 血值
+	 * HP
 	 */
 	public int HP;
 
@@ -28,59 +31,52 @@ public class User {
 	public int curLevel;
 
 	/**
-	 * 第一关通关分数和时间
-	 */
-	public int firstSco;
-	public int firstTime;
-
-	/**
-	 * 第二关通关分数和时间
-	 */
-	public int secondSco;
-	public int secondTime;
-
-	/**
-	 * 第三关通关分数和时间
-	 */
-	public int thirdSco;
-	public int thirdTime;
-
-	/**
-	 * 第四关通关分数和时间
-	 */
-	public int forthSco;
-	public int forthTime;
-
-	/**
-	 * 第五关通关分数和时间
-	 */
-	public int fifthSco;
-	public int fifthTime;
-
-	/**
-	 * 通关总分数和总时间
+	 * 当前总分数和总时间
 	 */
 	public int scores;
 	public int times;
 
-	/**
-	 * 通关状态
-	 */
-	public boolean isCompleted;
+	private static User mUser = null;
 
-	public static User user;
-
-	public User() {
+	private User() {
+		mUser = getUser();
 	}
 
 	public static User getInstance() {
-		if (user == null) {
-			user = new User();
+		if (mUser == null) {
+			mUser = new User();
+		}
+		return mUser;
+	}
+
+	public User getUser() {
+		User user = getUserData();
+		if (user.name == null || user.name.equals("")) {
+			return null;
 		}
 		return user;
 	}
 
-	public void saveUserData() {
+	public User getUserData() {
+		User user = new User();
+		user.name = DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_USERNAME, String.class);
+		user.HP = Integer.parseInt(DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_HP, String.class));
+		user.MP = Integer.parseInt(DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_MP, String.class));
+		user.curLevel = Integer.parseInt(DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_CUR_LEVEL, String.class));
+		user.scores = Integer.parseInt(DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_CUR_SCORE, String.class));
+		user.times = Integer.parseInt(DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_CUR_TIME, String.class));
+		return user;
+	}
 
+	public void saveUserData(User user) {
+		if (user == null) {
+			return;
+		}
+		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_USERNAME, user.name);
+		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_HP, user.HP + "");
+		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_MP, user.MP + "");
+		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_CUR_LEVEL, user.curLevel + "");
+		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_CUR_SCORE, user.scores + "");
+		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_CUR_TIME, user.times + "");
 	}
 }

@@ -28,7 +28,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	private GameStateManager mManager;
 
 	public static AssetManager assetManager;
-
 	@Override
 	public void create() {
 

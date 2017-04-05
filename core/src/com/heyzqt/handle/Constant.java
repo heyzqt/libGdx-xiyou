@@ -14,8 +14,10 @@ public class Constant {
 	public final static Color MAIN_COLOR = new Color(1f, 0.8f, 0, 1);
 	//挑战失败 挑战成功界面地名字体颜色
 	public final static Color PLACE_COLOR = new Color(0.2f, 0.1f, 0.02f, 1);
-	//挑战失败 挑战成功界面地名 时间字体颜色
+	//挑战失败 挑战成功界面时间字体颜色
 	public final static Color TIME_COLOR = new Color(1f, 0.26f, 0, 1);
+	//常用字体颜色
+	public final static Color FONT_COLOR = new Color(0.392f, 0.2745f, 0.145f, 1);
 
 
 	/**

@@ -2,12 +2,12 @@ package com.heyzqt.state;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
 import com.heyzqt.widget.AboutGameDialog;
+import com.heyzqt.widget.InputnameDialog;
 import com.heyzqt.widget.RangeDialog;
 import com.heyzqt.xiyou.MyGdxGame;
 
@@ -31,6 +32,12 @@ public class Start extends GameState {
 	//开始界面按钮
 	private ImageButton mStartBtn;
 	private ImageButton mSettingBtn;
+	//输入姓名对话框
+	private InputnameDialog mInputnameDialog;
+	//排行榜
+	private TextureAtlas mRangeAtlas;
+	private ImageButton mRangeBtn;
+	private RangeDialog mRangeDialog;
 
 	//设置界面
 	//是否打开音乐
@@ -39,10 +46,6 @@ public class Start extends GameState {
 	//关于我们
 	private ImageButton mAboutBtn;
 	private AboutGameDialog mAboutGameDialog;
-	//排行榜
-	private TextureAtlas mRangeAtlas;
-	private ImageButton mRangeBtn;
-	private RangeDialog mRangeDialog;
 	//返回主界面按钮
 	private ImageButton mBackButton;
 
@@ -51,11 +54,17 @@ public class Start extends GameState {
 	 */
 	public static boolean isStart = true;
 
+	//是否跳转到选关界面
+	public static boolean isChangeToSelect = false;
+
 	//是否显示关于我们对话框
 	public static boolean isShowAboutDialog = false;
 
 	//是否显示排行榜对话框
 	public static boolean isShowRangeDialog = false;
+
+	//是否显示输入名字对话框
+	public static boolean isShowInputNameDialog = false;
 
 	public Start(GameStateManager gsm) {
 		super(gsm);
@@ -66,15 +75,18 @@ public class Start extends GameState {
 
 		//开始界面控件初始化
 		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.START_SETTING);
+		mRangeAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.RANGE_WIDGET);
 		mStartBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("startBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("startBtnDown")));
+
 		mSettingBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("settingBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("settingBtnDown")));
 		mStartBtn.setSize(280, 100);
 		mSettingBtn.setSize(280, 100);
+		//输入姓名对话框
+		mInputnameDialog = new InputnameDialog(MyGdxGame.VIEW_WIDTH / 2, MyGdxGame.VIEW_HEIGHT / 2);
 
-		//开始界面 排行榜
-		mRangeAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.RANGE_WIDGET);
+		//开始界面 - 排行榜
 		mRangeBtn = new ImageButton(new TextureRegionDrawable(mRangeAtlas.findRegion("rangeBtnUp")),
 				new TextureRegionDrawable(mRangeAtlas.findRegion("rangeBtnDown")));
 		mRangeBtn.setSize(280, 100);
@@ -131,9 +143,9 @@ public class Start extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND);
-				sound.play();
-				mGameStateManager.setState(GameStateManager.SELECT);
+				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
+				isShowInputNameDialog = true;
+				setBtnDisabled(true);
 			}
 		});
 
@@ -146,8 +158,9 @@ public class Start extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				isShowRangeDialog = true;
 				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
+				isShowRangeDialog = true;
+				setBtnDisabled(true);
 			}
 		});
 
@@ -169,8 +182,9 @@ public class Start extends GameState {
 		mAboutBtn.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				isShowAboutDialog = true;
 				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
+				isShowAboutDialog = true;
+				setBtnDisabled(true);
 			}
 
 			@Override
@@ -201,11 +215,39 @@ public class Start extends GameState {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
 				isStart = true;
-				Sound sound = MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND);
-				sound.play();
 			}
 		});
+	}
+
+	/**
+	 * 设置当前按钮的点击状态
+	 *
+	 * @param disabled true 不能点击 false 可以点击
+	 */
+	private void setBtnDisabled(boolean disabled) {
+		if (isStart) {
+			if (disabled) {
+				mStartBtn.setTouchable(Touchable.disabled);
+				mRangeBtn.setTouchable(Touchable.disabled);
+				mSettingBtn.setTouchable(Touchable.disabled);
+			} else {
+				mStartBtn.setTouchable(Touchable.enabled);
+				mRangeBtn.setTouchable(Touchable.enabled);
+				mSettingBtn.setTouchable(Touchable.enabled);
+			}
+		} else {
+			if (disabled) {
+				mCheckBox.setTouchable(Touchable.disabled);
+				mAboutBtn.setTouchable(Touchable.disabled);
+				mBackButton.setTouchable(Touchable.disabled);
+			} else {
+				mCheckBox.setTouchable(Touchable.enabled);
+				mAboutBtn.setTouchable(Touchable.enabled);
+				mBackButton.setTouchable(Touchable.enabled);
+			}
+		}
 	}
 
 	@Override
@@ -221,8 +263,12 @@ public class Start extends GameState {
 			mStage.addActor(mSettingBtn);
 			//是否显示排行榜对话框
 			if (isShowRangeDialog) {
-				mStage.addActor(mRangeDialog.mWindow);
-				mStage.addActor(mRangeDialog.mBackBtn);
+				mRangeDialog.addDialog(mStage);
+			} else if (isShowInputNameDialog) {        //是否显示输入名字对话框
+				mInputnameDialog.addDialog(mStage);
+				mStage.addActor(mInputnameDialog.mNameField);
+			} else {
+				setBtnDisabled(false);
 			}
 		} else {    //设置界面
 			mStage.addActor(mCheckBox);
@@ -230,8 +276,9 @@ public class Start extends GameState {
 			mStage.addActor(mBackButton);
 			//是否显示关于游戏对话框
 			if (isShowAboutDialog) {
-				mStage.addActor(mAboutGameDialog.mWindow);
-				mStage.addActor(mAboutGameDialog.mBackBtn);
+				mAboutGameDialog.addDialog(mStage);
+			} else {
+				setBtnDisabled(false);
 			}
 		}
 
@@ -240,6 +287,12 @@ public class Start extends GameState {
 			MyGdxGame.assetManager.getMusic(Constant.START_BGM).pause();
 		} else {
 			MyGdxGame.assetManager.getMusic(Constant.START_BGM).play();
+		}
+
+		//是否跳转到选关界面
+		if (isChangeToSelect) {
+			mGameStateManager.setState(GameStateManager.SELECT);
+			isChangeToSelect = false;
 		}
 	}
 

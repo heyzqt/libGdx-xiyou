@@ -21,6 +21,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	public final static int VIEW_WIDTH = 960;
 	public final static int VIEW_HEIGHT = 640;
 
+	//屏幕大小
+	public final static int SCREEN_WIDTH = 1280;
+	public final static int SCREEN_HEIGHT = 720;
+
 	private GameStateManager mManager;
 
 	public static AssetManager assetManager;

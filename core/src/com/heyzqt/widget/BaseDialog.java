@@ -2,6 +2,7 @@ package com.heyzqt.widget;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 
@@ -32,5 +33,13 @@ public class BaseDialog {
 	public BaseDialog(float x, float y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public void addDialog(Stage stage) {
+		stage.addActor(mWindow);
+		stage.addActor(mBackBtn);
+		if (mConfirmBtn != null) {
+			stage.addActor(mConfirmBtn);
+		}
 	}
 }

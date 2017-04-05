@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.Utils;
 import com.heyzqt.state.Start;
 import com.heyzqt.xiyou.MyGdxGame;
 
@@ -65,10 +66,18 @@ public class InputnameDialog extends BaseDialog {
 		mConfirmBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				//确认姓名是否符合规范
-				//跳转到选关界面
 				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
-				Start.isChangeToSelect = true;
+				//确认姓名是否符合规范
+				String name = mNameField.getText().toString();
+				int result = Utils.isNameFormatted(name);
+				//用户名合法
+				if (result == 0) {
+					//跳转到选关界面
+					Start.isChangeToSelect = true;
+				} else {
+					//用户名非法
+					mNameField.setText("");
+				}
 				return true;
 			}
 		});

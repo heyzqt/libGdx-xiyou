@@ -59,4 +59,32 @@ public class Utils {
 		}
 		return false;
 	}
+
+	/**
+	 * 判断用户名是否合乎规范
+	 *
+	 * @return 0 符合要求
+	 * 1 字符串为null
+	 * 2 字符串超过10个字符或小于等于0个字符
+	 * 3 字符串仅能由英文字母和数字组成
+	 */
+	public static int isNameFormatted(String name) {
+		if (name == null) {
+			return 1;
+		}
+
+		if (name.length() > 10 || name.length() <= 0) {
+			return 2;
+		}
+
+		char[] cha = name.toCharArray();
+		for (int i = 0; i < cha.length; i++) {
+			if ((cha[i] <= 'z' && cha[i] >= 'a') || (cha[i] <= 'Z' && cha[i] >= 'A')
+					|| (cha[i] <= '9' && cha[i] >= '0')) {
+				continue;
+			}
+			return 3;
+		}
+		return 0;
+	}
 }

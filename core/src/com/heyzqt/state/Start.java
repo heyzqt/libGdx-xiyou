@@ -232,7 +232,9 @@ public class Start extends GameState {
 	}
 
 	private void loadUserData() {
-		mUser = User.getInstance();
+		mUser = new User();
+		mUser = User.getUserData();
+		System.out.println(mUser.toString());
 	}
 
 	/**

@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.heyzqt.entity.User;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.DataSaveSecurity;
 import com.heyzqt.handle.Utils;
 import com.heyzqt.state.Start;
 import com.heyzqt.xiyou.MyGdxGame;
@@ -73,7 +73,9 @@ public class InputnameDialog extends BaseDialog {
 				int result = Utils.isNameFormatted(name);
 				//用户名合法
 				if (result == 0) {
-					User.getInstance().name = name;
+					Start.isShowInputNameDialog = false;
+					//保存用户数据
+					DataSaveSecurity.getInstance().saveData(Constant.PREFERENCES_USERNAME, name);
 					//跳转到选关界面
 					Start.isChangeToSelect = true;
 				} else {

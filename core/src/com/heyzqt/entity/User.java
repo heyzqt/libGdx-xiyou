@@ -36,19 +36,13 @@ public class User {
 	public int scores;
 	public int times;
 
-	private static User mUser = null;
-
-	private User() {
+	public User() {
 	}
 
-	public static User getInstance() {
-		if (mUser == null) {
-			mUser = getUserData();
-		}
-		return mUser;
-	}
-
-	private static User getUserData() {
+	/**
+	 * 获取用户数据
+	 */
+	public static User getUserData() {
 		User user = new User();
 		user.name = DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_USERNAME, String.class);
 		user.HP = Integer.parseInt(DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_HP, String.class));
@@ -59,16 +53,17 @@ public class User {
 		return user;
 	}
 
-	public void saveUserData(User user) {
-		if (user == null) {
-			return;
-		}
-		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_USERNAME, user.name);
-		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_HP, user.HP + "");
-		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_MP, user.MP + "");
-		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_CUR_LEVEL, user.curLevel + "");
-		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_CUR_SCORE, user.scores + "");
-		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_CUR_TIME, user.times + "");
+
+	/**
+	 * 保存用户所有数据
+	 */
+	public void saveAllUserData(User user) {
+		DataSaveSecurity.getInstance().saveData(Constant.PREFERENCES_USERNAME, user.name);
+		DataSaveSecurity.getInstance().saveData(Constant.PREFERENCES_HP, user.HP + "");
+		DataSaveSecurity.getInstance().saveData(Constant.PREFERENCES_MP, user.MP + "");
+		DataSaveSecurity.getInstance().saveData(Constant.PREFERENCES_CUR_LEVEL, user.curLevel + "");
+		DataSaveSecurity.getInstance().saveData(Constant.PREFERENCES_CUR_SCORE, user.scores + "");
+		DataSaveSecurity.getInstance().saveData(Constant.PREFERENCES_CUR_TIME, user.times + "");
 	}
 
 	@Override

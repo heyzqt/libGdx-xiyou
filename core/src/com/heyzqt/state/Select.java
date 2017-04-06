@@ -25,6 +25,7 @@ public class Select extends GameState {
 	private ImageButton mSouthPlaBtn;
 	private ImageButton mNorthPlaBtn;
 	private ImageButton mWestPlaBtn;
+	private ImageButton mPalaceBtn;
 
 	public Select(GameStateManager manager) {
 		super(manager);
@@ -39,15 +40,18 @@ public class Select extends GameState {
 		mSouthPlaBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectThird")));
 		mWestPlaBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectSecond")));
 		mNorthPlaBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectImgFirst")));
+		mPalaceBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("selectFifth")));
 		mSouthDoorBtn.setPosition(mGame.VIEW_WIDTH / 2 - 200, mGame.VIEW_HEIGHT / 2 + 100);
 		mSouthPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 + 300, mGame.VIEW_HEIGHT / 2 + 70);
 		mWestPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 - 200, mGame.VIEW_HEIGHT / 2 - 300);
 		mNorthPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 + 250, mGame.VIEW_HEIGHT / 2 - 290);
+		mPalaceBtn.setPosition(0, 200);
 
 		mStage.addActor(mSouthDoorBtn);
 		mStage.addActor(mSouthPlaBtn);
 		mStage.addActor(mWestPlaBtn);
 		mStage.addActor(mNorthPlaBtn);
+		mStage.addActor(mPalaceBtn);
 
 		initListener();
 	}
@@ -109,6 +113,20 @@ public class Select extends GameState {
 				Monkey.MP = Monkey.MP_VALUE;
 				//进入第四关
 				Play.level = 3;
+				mGameStateManager.setState(GameStateManager.LOADING);
+				return true;
+			}
+		});
+
+		//凌霄宝殿按钮
+		mPalaceBtn.addListener(new ClickListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				MyGdxGame.assetManager.getSound(Constant.BTN_SELECT_SOUND).play();
+				Monkey.HP = Monkey.BLOOD;
+				Monkey.MP = Monkey.MP_VALUE;
+				//进入第四关
+				Play.level = 4;
 				mGameStateManager.setState(GameStateManager.LOADING);
 				return true;
 			}

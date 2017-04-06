@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.heyzqt.entity.User;
 import com.heyzqt.handle.Constant;
 import com.heyzqt.widget.AboutGameDialog;
 import com.heyzqt.widget.InputnameDialog;
@@ -66,12 +67,16 @@ public class Start extends GameState {
 	//是否显示输入名字对话框
 	public static boolean isShowInputNameDialog = false;
 
+	private User mUser;
+
 	public Start(GameStateManager gsm) {
 		super(gsm);
 		init();
 	}
 
 	private void init() {
+
+		loadUserData();
 
 		//开始界面控件初始化
 		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.START_SETTING);
@@ -144,8 +149,13 @@ public class Start extends GameState {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
-				isShowInputNameDialog = true;
-				setBtnDisabled(true);
+				if (mUser.name == null || mUser.name.equals("")) {
+					isShowInputNameDialog = true;
+					setBtnDisabled(true);
+				} else {
+					//在用户已登录情况下，直接跳转到选关界面
+					mGameStateManager.setState(GameStateManager.SELECT);
+				}
 			}
 		});
 
@@ -219,6 +229,10 @@ public class Start extends GameState {
 				isStart = true;
 			}
 		});
+	}
+
+	private void loadUserData() {
+		mUser = User.getInstance();
 	}
 
 	/**

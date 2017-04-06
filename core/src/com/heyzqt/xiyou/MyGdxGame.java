@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.heyzqt.handle.AssetManager;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.DataSaveSecurity;
 import com.heyzqt.state.GameStateManager;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -28,6 +29,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	private GameStateManager mManager;
 
 	public static AssetManager assetManager;
+
+	public static DataSaveSecurity dataSaveSecurity;
+
 	@Override
 	public void create() {
 
@@ -42,7 +46,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		mUICamera = new OrthographicCamera();
 		mUICamera.setToOrtho(false, VIEW_WIDTH, VIEW_HEIGHT);
 
+		//初始化数据
+		dataSaveSecurity = DataSaveSecurity.getInstance();
+
 		mManager = new GameStateManager(this);
+
 	}
 
 	private void loadAssets() {

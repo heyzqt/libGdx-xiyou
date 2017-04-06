@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.heyzqt.entity.User;
 
 /**
  * Created by heyzqt on 2017/4/5.
@@ -16,8 +15,6 @@ public class DataSaveSecurity {
 	private Save mSave;
 
 	private Preferences mPreferences;
-
-	public static User mUser;
 
 	private static DataSaveSecurity dataSavaSecurity = null;
 
@@ -36,24 +33,63 @@ public class DataSaveSecurity {
 	public Save getSave() {
 		Save save = new Save();
 
+		String name = mPreferences.getString(Constant.PREFERENCES_USERNAME);
+		//游戏初始化
+		if (name == null || name.equals("")) {
+			//个人数据
+			mPreferences.putString(Constant.PREFERENCES_USERNAME, Base64Coder.encodeString(""));
+			mPreferences.putString(Constant.PREFERENCES_HP, Base64Coder.encodeString("8"));
+			mPreferences.putString(Constant.PREFERENCES_MP, Base64Coder.encodeString("8"));
+			mPreferences.putString(Constant.PREFERENCES_CUR_LEVEL, Base64Coder.encodeString("1"));
+			mPreferences.putString(Constant.PREFERENCES_CUR_TIME, Base64Coder.encodeString("0"));
+			mPreferences.putString(Constant.PREFERENCES_CUR_SCORE, Base64Coder.encodeString("0"));
+
+			String rangeNameFirst = Base64Coder.decodeString(mPreferences.getString(Constant.PREFERENCES_RANGE_FIRST_NAME));
+			//排行榜数据
+			if (rangeNameFirst == null || rangeNameFirst.equals("")) {
+				mPreferences.putString(Constant.PREFERENCES_RANGE_FIRST_NAME, Base64Coder.encodeString(""));
+				mPreferences.putString(Constant.PREFERENCES_RANGE_FIRST_SCORE, Base64Coder.encodeString("-1"));
+				mPreferences.putString(Constant.PREFERENCES_RANGE_FIRST_TIME, Base64Coder.encodeString("-1"));
+
+				mPreferences.putString(Constant.PREFERENCES_RANGE_SECOND_NAME, Base64Coder.encodeString(""));
+				mPreferences.putString(Constant.PREFERENCES_RANGE_SECOND_SCORE, Base64Coder.encodeString("-1"));
+				mPreferences.putString(Constant.PREFERENCES_RANGE_SECOND_TIME, Base64Coder.encodeString("-1"));
+
+				mPreferences.putString(Constant.PREFERENCES_RANGE_THIRD_NAME, Base64Coder.encodeString(""));
+				mPreferences.putString(Constant.PREFERENCES_RANGE_THIRD_TIME, Base64Coder.encodeString("-1"));
+				mPreferences.putString(Constant.PREFERENCES_RANGE_THIRD_SCORE, Base64Coder.encodeString("-1"));
+			}
+			mPreferences.flush();
+		}
+
+		//初始化
 		//个人数据
-		save.datas.get(Constant.PREFERENCES_USERNAME, "");
-		save.datas.get(Constant.PREFERENCES_HP, "");
-		save.datas.get(Constant.PREFERENCES_MP, "");
-		save.datas.get(Constant.PREFERENCES_CUR_SCORE, "");
-		save.datas.get(Constant.PREFERENCES_CUR_TIME, "");
-		save.datas.get(Constant.PREFERENCES_CUR_LEVEL, "");
+		save.datas.put(Constant.PREFERENCES_USERNAME, Base64Coder.decodeString(mPreferences.getString(Constant.PREFERENCES_USERNAME, "")));
+		save.datas.put(Constant.PREFERENCES_HP, Base64Coder.decodeString(mPreferences.getString(Constant.PREFERENCES_HP, "-1")));
+		save.datas.put(Constant.PREFERENCES_MP, Base64Coder.decodeString(mPreferences.getString(Constant.PREFERENCES_MP, "-1")));
+		save.datas.put(Constant.PREFERENCES_CUR_LEVEL, Base64Coder.decodeString(mPreferences.getString(Constant.PREFERENCES_CUR_LEVEL, "-1")));
+		save.datas.put(Constant.PREFERENCES_CUR_TIME, Base64Coder.decodeString(mPreferences.getString(Constant.PREFERENCES_CUR_TIME, "-1")));
+		save.datas.put(Constant.PREFERENCES_CUR_SCORE, Base64Coder.decodeString(mPreferences.getString(Constant.PREFERENCES_CUR_SCORE, "-1")));
 
 		//排行榜数据
-		save.datas.get(Constant.PREFERENCES_RANGE_FIRST_NAME, "");
-		save.datas.get(Constant.PREFERENCES_RANGE_FIRST_SCORE, "");
-		save.datas.get(Constant.PREFERENCES_RANGE_FIRST_TIME, "");
-		save.datas.get(Constant.PREFERENCES_RANGE_SECOND_NAME, "");
-		save.datas.get(Constant.PREFERENCES_RANGE_SECOND_SCORE, "");
-		save.datas.get(Constant.PREFERENCES_RANGE_SECOND_TIME, "");
-		save.datas.get(Constant.PREFERENCES_RANGE_THIRD_NAME, "");
-		save.datas.get(Constant.PREFERENCES_RANGE_THIRD_SCORE, "");
-		save.datas.get(Constant.PREFERENCES_RANGE_THIRD_TIME, "");
+		save.datas.put(Constant.PREFERENCES_RANGE_FIRST_NAME, Base64Coder.decodeString(
+				mPreferences.getString(Constant.PREFERENCES_RANGE_FIRST_NAME, "")));
+		save.datas.put(Constant.PREFERENCES_RANGE_FIRST_SCORE, Base64Coder.decodeString(
+				mPreferences.getString(Constant.PREFERENCES_RANGE_FIRST_SCORE, "-1")));
+		save.datas.put(Constant.PREFERENCES_RANGE_FIRST_TIME, Base64Coder.decodeString(
+				mPreferences.getString(Constant.PREFERENCES_RANGE_FIRST_TIME, "-1")));
+		save.datas.put(Constant.PREFERENCES_RANGE_SECOND_NAME, Base64Coder.decodeString(
+				mPreferences.getString(Constant.PREFERENCES_RANGE_SECOND_NAME, "-1")));
+		save.datas.put(Constant.PREFERENCES_RANGE_SECOND_SCORE, Base64Coder.decodeString(
+				mPreferences.getString(Constant.PREFERENCES_RANGE_SECOND_SCORE, "-1")));
+		save.datas.put(Constant.PREFERENCES_RANGE_SECOND_TIME, Base64Coder.decodeString(
+				mPreferences.getString(Constant.PREFERENCES_RANGE_SECOND_TIME, "-1")));
+		save.datas.put(Constant.PREFERENCES_RANGE_THIRD_NAME, Base64Coder.decodeString(
+				mPreferences.getString(Constant.PREFERENCES_RANGE_THIRD_NAME, "-1")));
+		save.datas.put(Constant.PREFERENCES_RANGE_THIRD_TIME, Base64Coder.decodeString(
+				mPreferences.getString(Constant.PREFERENCES_RANGE_THIRD_TIME, "-1")));
+		save.datas.put(Constant.PREFERENCES_RANGE_THIRD_SCORE, Base64Coder.decodeString(
+				mPreferences.getString(Constant.PREFERENCES_RANGE_THIRD_SCORE, "-1")));
 
 		return save;
 	}
@@ -62,8 +98,10 @@ public class DataSaveSecurity {
 	 * Base64Coder加密保存数据
 	 */
 	public void saveDataToEncode(String key, String content) {
+		mSave.datas.put(key, content);
 		String result = Base64Coder.encodeString(content);
-		mSave.datas.put(key, result);
+		mPreferences.putString(key, result);
+		mPreferences.flush();
 	}
 
 	/**
@@ -71,9 +109,9 @@ public class DataSaveSecurity {
 	 */
 	public String loadDataValue(String key, Class<String> type) {
 		if (mSave.datas.containsKey(key)) {
-			return Base64Coder.decodeString((String) mSave.datas.get(key));
+			return (String) mSave.datas.get(key);
 		}
-		return null;
+		return "-1";
 	}
 
 	private static class Save {

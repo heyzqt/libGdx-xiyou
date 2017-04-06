@@ -39,25 +39,16 @@ public class User {
 	private static User mUser = null;
 
 	private User() {
-		mUser = getUser();
 	}
 
 	public static User getInstance() {
 		if (mUser == null) {
-			mUser = new User();
+			mUser = getUserData();
 		}
 		return mUser;
 	}
 
-	public User getUser() {
-		User user = getUserData();
-		if (user.name == null || user.name.equals("")) {
-			return null;
-		}
-		return user;
-	}
-
-	public User getUserData() {
+	private static User getUserData() {
 		User user = new User();
 		user.name = DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_USERNAME, String.class);
 		user.HP = Integer.parseInt(DataSaveSecurity.getInstance().loadDataValue(Constant.PREFERENCES_HP, String.class));
@@ -78,5 +69,17 @@ public class User {
 		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_CUR_LEVEL, user.curLevel + "");
 		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_CUR_SCORE, user.scores + "");
 		DataSaveSecurity.getInstance().saveDataToEncode(Constant.PREFERENCES_CUR_TIME, user.times + "");
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"name='" + name + '\'' +
+				", HP=" + HP +
+				", MP=" + MP +
+				", curLevel=" + curLevel +
+				", scores=" + scores +
+				", times=" + times +
+				'}';
 	}
 }

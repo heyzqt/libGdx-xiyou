@@ -68,6 +68,7 @@ public class RankingUtils {
 				break;
 			case 1:
 			case 2:
+			case 3:
 				MyGdxGame.rankings.add(ranking);
 				sortRankingList(MyGdxGame.rankings);
 				DataUtils.getInstance().saveRankingDataToEncode(MyGdxGame.rankings);

@@ -45,7 +45,7 @@ public class Select extends GameState {
 		mSouthPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 + 300, mGame.VIEW_HEIGHT / 2 + 70);
 		mWestPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 - 200, mGame.VIEW_HEIGHT / 2 - 300);
 		mNorthPlaBtn.setPosition(mGame.VIEW_WIDTH / 2 + 250, mGame.VIEW_HEIGHT / 2 - 290);
-		mPalaceBtn.setPosition(0, 200);
+		mPalaceBtn.setPosition(-100, 200);
 
 		mStage.addActor(mSouthDoorBtn);
 		mStage.addActor(mSouthPlaBtn);

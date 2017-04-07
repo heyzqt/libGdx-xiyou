@@ -6,10 +6,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.heyzqt.entity.Ranking;
+import com.heyzqt.entity.User;
 import com.heyzqt.handle.AssetManager;
 import com.heyzqt.handle.Constant;
-import com.heyzqt.handle.DataSaveSecurity;
+import com.heyzqt.handle.DataUtils;
 import com.heyzqt.state.GameStateManager;
+
+import java.util.ArrayList;
 
 public class MyGdxGame extends ApplicationAdapter {
 
@@ -30,7 +34,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	public static AssetManager assetManager;
 
-	public static DataSaveSecurity dataSaveSecurity;
+	public static User user;
+
+	public static ArrayList<Ranking> rankings;
 
 	@Override
 	public void create() {
@@ -46,8 +52,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		mUICamera = new OrthographicCamera();
 		mUICamera.setToOrtho(false, VIEW_WIDTH, VIEW_HEIGHT);
 
+		//第一次启动游戏
+		String isFirstPlayingGame = DataUtils.getInstance().getDataFromDecode(Constant.PREFERENCES_FIRST_PLAYING_GAME);
+		if (isFirstPlayingGame.equals("")) {
+			DataUtils.getInstance().initPreferences();
+			isFirstPlayingGame = "false";
+			DataUtils.getInstance().saveDataToEncode(Constant.PREFERENCES_FIRST_PLAYING_GAME, isFirstPlayingGame);
+		}
+
 		//初始化数据
-		dataSaveSecurity = DataSaveSecurity.getInstance();
+		user = DataUtils.getInstance().getUserData();
+		rankings = (ArrayList<Ranking>) DataUtils.getInstance().getRankings();
 
 		mManager = new GameStateManager(this);
 

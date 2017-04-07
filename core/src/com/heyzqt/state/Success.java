@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
-import com.heyzqt.handle.Utils;
+import com.heyzqt.util.Utils;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**

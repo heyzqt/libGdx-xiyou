@@ -39,7 +39,7 @@ import com.heyzqt.entity.Tao;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
 import com.heyzqt.handle.State;
-import com.heyzqt.handle.Utils;
+import com.heyzqt.util.Utils;
 import com.heyzqt.xiyou.MyGdxGame;
 
 import java.util.Iterator;
@@ -799,10 +799,11 @@ public class Play extends GameState {
 			} else {
 				Success.winGrades += 1;
 			}
+
 		}
 
 		//检测技能按钮状态
-		if (mMonkey.MP > 0) {
+		if (Monkey.MP > 0) {
 			mBallBtn.setVisible(true);
 			mUnclickedBallBtn.setVisible(false);
 

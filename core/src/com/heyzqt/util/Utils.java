@@ -1,6 +1,8 @@
-package com.heyzqt.handle;
+package com.heyzqt.util;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.heyzqt.entity.Ranking;
+import com.heyzqt.entity.User;
 
 import java.util.Random;
 
@@ -86,5 +88,14 @@ public class Utils {
 			return 3;
 		}
 		return 0;
+	}
+
+	public static Ranking changeUserToRanking(User user) {
+		Ranking result = new Ranking();
+		result.name = user.name;
+		result.score = user.score;
+		result.time = user.time;
+		result.weight = RankingUtils.getWeight(user.score, user.time);
+		return result;
 	}
 }

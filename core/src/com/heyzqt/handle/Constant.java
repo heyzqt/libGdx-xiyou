@@ -20,15 +20,13 @@ public class Constant {
 	public final static String PREFERENCES_CUR_LEVEL = "cur_level";
 	public final static String PREFERENCES_CUR_SCORE = "cur_scorce";
 	public final static String PREFERENCES_CUR_TIME = "cur_time";
-	public final static String PREFERENCES_RANGE_FIRST_NAME = "range_first_name";
-	public final static String PREFERENCES_RANGE_FIRST_SCORE = "range_first_score";
-	public final static String PREFERENCES_RANGE_FIRST_TIME = "range_first_time";
-	public final static String PREFERENCES_RANGE_SECOND_NAME = "range_second_name";
-	public final static String PREFERENCES_RANGE_SECOND_SCORE = "range_second_score";
-	public final static String PREFERENCES_RANGE_SECOND_TIME = "range_second_time";
-	public final static String PREFERENCES_RANGE_THIRD_NAME = "range_third_name";
-	public final static String PREFERENCES_RANGE_THIRD_SCORE = "range_third_score";
-	public final static String PREFERENCES_RANGE_THIRD_TIME = "range_third_time";
+
+	public final static String PREFERENCES_RANGE_NAME = "range_name_";
+	public final static String PREFERENCES_RANGE_SCORE = "range_score_";
+	public final static String PREFERENCES_RANGE_TIME = "range_time_";
+	public final static String PREFERENCES_RANGE_WEIGHT = "range_weight_";
+
+	public final static String PREFERENCES_FIRST_PLAYING_GAME = "first_playing_game";
 
 	//开始 设置界面字体颜色
 	public final static Color MAIN_COLOR = new Color(1f, 0.8f, 0, 1);

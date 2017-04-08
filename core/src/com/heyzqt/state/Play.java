@@ -36,9 +36,12 @@ import com.heyzqt.entity.Enemy;
 import com.heyzqt.entity.FireBall;
 import com.heyzqt.entity.Monkey;
 import com.heyzqt.entity.Tao;
+import com.heyzqt.entity.User;
 import com.heyzqt.handle.Box2DContactListener;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.DataUtils;
 import com.heyzqt.handle.State;
+import com.heyzqt.util.RankingUtils;
 import com.heyzqt.util.Utils;
 import com.heyzqt.xiyou.MyGdxGame;
 
@@ -800,6 +803,23 @@ public class Play extends GameState {
 				Success.winGrades += 1;
 			}
 
+			//主角通关，保存数据
+			if (level == 4) {
+				MyGdxGame.user.score = mMonkey.getEnemyCount() + MyGdxGame.user.score;
+				MyGdxGame.user.time = (int) statetime + MyGdxGame.user.time;
+				//完成所有关卡，更新排行榜
+				RankingUtils.saveUserToRanking(MyGdxGame.user);
+				//清理主角数据
+				MyGdxGame.user = new User();
+				DataUtils.getInstance().saveUserDataToEncode(MyGdxGame.user);
+			} else {
+				MyGdxGame.user.HP = Monkey.HP;
+				MyGdxGame.user.MP = Monkey.MP;
+				MyGdxGame.user.curLevel = level + 1;
+				MyGdxGame.user.score = mMonkey.getEnemyCount() + MyGdxGame.user.score;
+				MyGdxGame.user.time = (int) statetime + MyGdxGame.user.time;
+				DataUtils.getInstance().saveUserDataToEncode(MyGdxGame.user);
+			}
 		}
 
 		//检测技能按钮状态

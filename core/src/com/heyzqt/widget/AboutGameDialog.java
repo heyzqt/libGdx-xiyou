@@ -24,16 +24,16 @@ public class AboutGameDialog extends BaseDialog {
 
 	private void init() {
 		//获取资源
-		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.START_SETTING);
+		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.OTHER_WIDGET);
 		mBackground = MyGdxGame.assetManager.getTexture(Constant.SETTING_DIALOG);
 
 		//初始化对话框
 		mWindow = new Image(new TextureRegion(mBackground));
-		mWindow.setPosition(x - 25, y - 130);
+		mWindow.setPosition(x - mBackground.getWidth() / 2, y - mBackground.getHeight() / 2);
 
 		//初始化返回按钮
-		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("close")));
-		mBackBtn.setPosition(785, 480);
+		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("close48")));
+		mBackBtn.setPosition(x + mBackground.getWidth() / 2 - 70, y + mBackground.getHeight() / 2 - 53);
 
 		mBackBtn.addListener(new ClickListener() {
 			@Override

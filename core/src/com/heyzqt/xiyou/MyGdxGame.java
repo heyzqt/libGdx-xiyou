@@ -30,6 +30,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	public final static int SCREEN_WIDTH = 1280;
 	public final static int SCREEN_HEIGHT = 720;
 
+	public final static float WEIGHT_RATE = 0.75f;
+	public final static float HEIGHT_RATE = 8f / 9f;
+
 	private GameStateManager mManager;
 
 	public static AssetManager assetManager;
@@ -54,7 +57,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//第一次启动游戏
 		String isFirstPlayingGame = DataUtils.getInstance().getDataFromDecode(Constant.PREFERENCES_FIRST_PLAYING_GAME);
-		if (isFirstPlayingGame.equals("")) {
+		if (isFirstPlayingGame == null || isFirstPlayingGame.equals("")) {
 			DataUtils.getInstance().initPreferences();
 			isFirstPlayingGame = "false";
 			DataUtils.getInstance().saveDataToEncode(Constant.PREFERENCES_FIRST_PLAYING_GAME, isFirstPlayingGame);
@@ -73,6 +76,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//加载字体
 		assetManager.loadFont();
+		assetManager.loadFont32();
 
 		//加载按钮音效
 		assetManager.loadSound("sound/btn_common.wav", Constant.BTN_COMMON_SOUND);
@@ -146,6 +150,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		//加载界面背景和游戏素材
 		assetManager.loadTexture("background/loading_bg.png", Constant.LOADING_BG);
 		assetManager.loadTextureAtlas("widget/loading.atlas", Constant.LOADING_WIDGET);
+
+		//加载其他素材
+		assetManager.loadTextureAtlas("widget/other.atlas", Constant.OTHER_WIDGET);
 	}
 
 	@Override

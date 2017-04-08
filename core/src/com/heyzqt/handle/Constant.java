@@ -120,6 +120,9 @@ public class Constant {
 	//输入姓名对话框
 	public static final String INPUT_NAME_BG = "input_name_bg";
 
+	//其他素材
+	public static final String OTHER_WIDGET = "other_widget";
+
 	//加载界面
 	public static final String LOADING_BG = "loading_bg";
 	public static final String LOADING_WIDGET = "loading_widget";

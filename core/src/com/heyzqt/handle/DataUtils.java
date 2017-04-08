@@ -33,13 +33,7 @@ public class DataUtils {
 
 	public void initPreferences() {
 		User user = new User();
-		List<Ranking> rankings = new ArrayList<Ranking>();
-		Ranking ranking = new Ranking();
-		rankings.add(ranking);
-		rankings.add(ranking);
-		rankings.add(ranking);
 		saveUserDataToEncode(user);
-		saveRankingDataToEncode(rankings);
 	}
 
 	/**
@@ -69,10 +63,12 @@ public class DataUtils {
 	 */
 	public List<Ranking> getRankings() {
 		List<Ranking> lists = new ArrayList<Ranking>();
-		Ranking ranking = new Ranking();
-
 		for (int i = 0; i < 3; i++) {
+			Ranking ranking = new Ranking();
 			ranking.name = getDataFromDecode(Constant.PREFERENCES_RANGE_NAME + i);
+			if (ranking.name.equals("")) {
+				return lists;
+			}
 			ranking.score = Integer.parseInt(getDataFromDecode(Constant.PREFERENCES_RANGE_SCORE + i));
 			ranking.time = Integer.parseInt(getDataFromDecode(Constant.PREFERENCES_RANGE_TIME + i));
 			ranking.weight = Double.parseDouble(getDataFromDecode(Constant.PREFERENCES_RANGE_WEIGHT + i));

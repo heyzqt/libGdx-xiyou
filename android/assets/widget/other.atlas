@@ -1,0 +1,19 @@
+
+other.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+close64
+  rotate: false
+  xy: 1, 51
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+close48
+  rotate: false
+  xy: 1, 1
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1

@@ -24,6 +24,7 @@ public class AssetManager {
 	private HashMap<String, Music> musics;
 	private HashMap<String, Sound> sounds;
 	private BitmapFont mNumFont;
+	private BitmapFont mFont32;
 
 	private AssetManager() {
 		textures = new HashMap<String, Texture>();
@@ -44,10 +45,22 @@ public class AssetManager {
 		mFont = new BitmapFont(Gdx.files.internal("font/text48.fnt"));
 	}
 
+	//加载32号字体
+	public void loadFont32() {
+		mFont32 = new BitmapFont(Gdx.files.internal("font/text32.fnt"));
+	}
+
 	//释放字体
 	public void removeFont() {
 		if (mFont != null) {
 			mFont.dispose();
+		}
+	}
+
+	//释放32号字体
+	public void removeFont32() {
+		if (mFont32 != null) {
+			mFont32.dispose();
 		}
 	}
 
@@ -71,6 +84,11 @@ public class AssetManager {
 	//获取字体资源
 	public BitmapFont getFont() {
 		return mFont;
+	}
+
+	//获取32号字体资源
+	public BitmapFont getFont32() {
+		return mFont32;
 	}
 
 	//加载图片
@@ -156,6 +174,7 @@ public class AssetManager {
 	public void removeAll() {
 		//清理字体
 		removeFont();
+		removeFont32();
 
 		//清理数字字体
 		removeNumFont();

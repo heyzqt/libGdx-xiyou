@@ -30,30 +30,14 @@ public class RankingUtils {
 	 * 返回当前排行榜上榜人数
 	 */
 	public static int getRankingSize() {
-		int count = 1;
-		if (isRankingEmpty()) {
-			return 0;
-		}
-
-		String name2 = MyGdxGame.rankings.get(1).name;
-		String name3 = MyGdxGame.rankings.get(2).name;
-
-		if (!name2.equals("")) {
-			count++;
-		}
-
-		if (!name3.equals("")) {
-			count++;
-		}
-
-		return count;
+		return MyGdxGame.rankings.size();
 	}
 
 	/**
-	 * weight计算 = 分数*60%+时间*40%
+	 * weight计算 = 分数*60%+100/时间
 	 */
 	public static double getWeight(int score, int time) {
-		return score * 0.6 + time * 0.4;
+		return score * 0.6 + 100 / time;
 	}
 
 	/**

@@ -3,6 +3,7 @@ package com.heyzqt.util;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.heyzqt.entity.Ranking;
 import com.heyzqt.entity.User;
+import com.heyzqt.xiyou.MyGdxGame;
 
 import java.util.Random;
 
@@ -67,7 +68,7 @@ public class Utils {
 	 *
 	 * @return 0 符合要求
 	 * 1 字符串为null
-	 * 2 字符串超过10个字符或小于等于0个字符
+	 * 2 字符串超过6个字符或小于等于0个字符
 	 * 3 字符串仅能由英文字母和数字组成
 	 */
 	public static int isNameFormatted(String name) {
@@ -75,7 +76,7 @@ public class Utils {
 			return 1;
 		}
 
-		if (name.length() > 10 || name.length() <= 0) {
+		if (name.length() > 6 || name.length() <= 0) {
 			return 2;
 		}
 
@@ -97,5 +98,12 @@ public class Utils {
 		result.time = user.time;
 		result.weight = RankingUtils.getWeight(user.score, user.time);
 		return result;
+	}
+
+	public static void printInfo() {
+		System.out.println("hello " + MyGdxGame.user.toString());
+		for (int i = 0; i < MyGdxGame.rankings.size(); i++) {
+			System.out.println("hello " + MyGdxGame.rankings.get(i).toString());
+		}
 	}
 }

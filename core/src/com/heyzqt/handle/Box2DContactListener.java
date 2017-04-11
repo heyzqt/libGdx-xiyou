@@ -63,6 +63,20 @@ public class Box2DContactListener implements ContactListener {
 			}
 		}
 
+		//孙悟空攻击天兵
+		if (Utils.isContacted(fixtureA, fixtureB, "stick", "enemy")) {
+			Enemy enemy = (Enemy) fixtureB.getBody().getUserData();
+			//血量-1
+			enemy.HP--;
+			MyGdxGame.assetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			//天兵被击飞
+			checkHitted(enemy, "enemy");
+			//血量为0死亡
+			if (enemy.HP <= 0) {
+				removeEnemies.add(fixtureB.getBody());
+			}
+		}
+
 		//孙悟空攻击Boss
 		if (Utils.isContacted(fixtureA, fixtureB, "boss", "stick")) {
 			Boss boss = (Boss) fixtureA.getBody().getUserData();
@@ -74,6 +88,20 @@ public class Box2DContactListener implements ContactListener {
 			//血量为0死亡
 			if (boss.HP <= 0) {
 				removeBoss = fixtureA.getBody();
+			}
+		}
+
+		//孙悟空攻击Boss
+		if (Utils.isContacted(fixtureA, fixtureB, "stick", "boss")) {
+			Boss boss = (Boss) fixtureB.getBody().getUserData();
+			//Boss血量-1
+			boss.HP--;
+			MyGdxGame.assetManager.getSound(Constant.SOUND_ENEMY_GET_HURT).play();
+			//Boss被击飞
+			checkHitted(boss, "boss");
+			//血量为0死亡
+			if (boss.HP <= 0) {
+				removeBoss = fixtureB.getBody();
 			}
 		}
 

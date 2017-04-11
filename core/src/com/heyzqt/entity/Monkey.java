@@ -515,10 +515,10 @@ public class Monkey extends BaseSprite {
 		//创建攻击传感器 stick
 		PolygonShape shape = new PolygonShape();
 		if (STATE == State.STATE_RIGHT_JUMP_ATTACK) {
-			shape.setAsBox(5 / Constant.RATE, 40 / Constant.RATE
+			shape.setAsBox(10 / Constant.RATE, 40 / Constant.RATE
 					, new Vector2(100 / Constant.RATE, 20 / Constant.RATE), 0);
 		} else {
-			shape.setAsBox(5 / Constant.RATE, 45 / Constant.RATE
+			shape.setAsBox(10 / Constant.RATE, 45 / Constant.RATE
 					, new Vector2(-100 / Constant.RATE, 20 / Constant.RATE), 0);
 		}
 		FixtureDef attackFixDef = new FixtureDef();

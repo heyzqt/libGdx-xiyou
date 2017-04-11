@@ -130,14 +130,6 @@ public class Play extends GameState {
 	private Array<Blue> mBlues;
 
 	/**
-	 * 素材
-	 */
-	//游戏操作杆素材
-	private TextureAtlas mPlayAtlas;
-	//音乐
-	private Music mMusic;
-
-	/**
 	 * 其他
 	 */
 	//游戏渲染时间
@@ -211,42 +203,42 @@ public class Play extends GameState {
 		mScore = new Label("0", style);
 		mScore.setPosition(1100, 590);
 		//初始化操作杆素材
-		mPlayAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.PLAY_WIDGET);
+		TextureAtlas playAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.PLAY_WIDGET);
 		//左行动按钮
-		mLeftBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("leftBtnUp")),
-				new TextureRegionDrawable(mPlayAtlas.findRegion("leftBtnDown")));
+		mLeftBtn = new ImageButton(new TextureRegionDrawable(playAtlas.findRegion("leftBtnUp")),
+				new TextureRegionDrawable(playAtlas.findRegion("leftBtnDown")));
 		mLeftBtn.setPosition(100, 20);
 		//右行动按钮
-		mRightBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("rightBtnUp")),
-				new TextureRegionDrawable(mPlayAtlas.findRegion("rightBtnDown")));
+		mRightBtn = new ImageButton(new TextureRegionDrawable(playAtlas.findRegion("rightBtnUp")),
+				new TextureRegionDrawable(playAtlas.findRegion("rightBtnDown")));
 		mRightBtn.setPosition(260, 20);
 		//攻击按钮
-		mAttackBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackBtnUp")),
-				new TextureRegionDrawable(mPlayAtlas.findRegion("attackBtnDown")));
+		mAttackBtn = new ImageButton(new TextureRegionDrawable(playAtlas.findRegion("attackBtnUp")),
+				new TextureRegionDrawable(playAtlas.findRegion("attackBtnDown")));
 		mAttackBtn.setPosition(1000, 35);
 		//火球攻击按钮
-		mBallBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackBallBtnUp")),
-				new TextureRegionDrawable(mPlayAtlas.findRegion("attackBallBtnDown")));
+		mBallBtn = new ImageButton(new TextureRegionDrawable(playAtlas.findRegion("attackBallBtnUp")),
+				new TextureRegionDrawable(playAtlas.findRegion("attackBallBtnDown")));
 		mBallBtn.getImage().setSize(138, 138);
 		mBallBtn.setPosition(850, 35);
 		//Unclicked火球
-		mUnclickedBallBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackBallBtnUnclicked")));
+		mUnclickedBallBtn = new ImageButton(new TextureRegionDrawable(playAtlas.findRegion("attackBallBtnUnclicked")));
 		mUnclickedBallBtn.getImage().setSize(138, 138);
 		mUnclickedBallBtn.setPosition(850, 35);
 		mUnclickedBallBtn.setVisible(false);
 		//升龙斩攻击按钮
-		mJumpAttackBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackJumpBtnUp")),
-				new TextureRegionDrawable(mPlayAtlas.findRegion("attackJumpBtnDown")));
+		mJumpAttackBtn = new ImageButton(new TextureRegionDrawable(playAtlas.findRegion("attackJumpBtnUp")),
+				new TextureRegionDrawable(playAtlas.findRegion("attackJumpBtnDown")));
 		mJumpAttackBtn.getImage().setSize(138, 138);
 		mJumpAttackBtn.setPosition(700, 35);
 		//Unclicked升龙斩
-		mUnclickedJumpBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("attackJumpBtnUnclicked")));
+		mUnclickedJumpBtn = new ImageButton(new TextureRegionDrawable(playAtlas.findRegion("attackJumpBtnUnclicked")));
 		mUnclickedJumpBtn.getImage().setSize(138, 138);
 		mUnclickedJumpBtn.setPosition(700, 35);
 		mUnclickedJumpBtn.setVisible(false);
 		//跳跃按钮
-		mJumpBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("jumpBtnUp")),
-				new TextureRegionDrawable(mPlayAtlas.findRegion("jumpBtnDown")));
+		mJumpBtn = new ImageButton(new TextureRegionDrawable(playAtlas.findRegion("jumpBtnUp")),
+				new TextureRegionDrawable(playAtlas.findRegion("jumpBtnDown")));
 		mJumpBtn.setPosition(1130, 140);
 
 		mStage.addActor(mScore);
@@ -305,10 +297,10 @@ public class Play extends GameState {
 				mMonkey.getBody().setLinearVelocity(0, 0);
 				//设置方向
 				if (mMonkey.isRight()) {
-					mMonkey.STATE = State.STATE_RIGHT_ATTACK;
+					Monkey.STATE = State.STATE_RIGHT_ATTACK;
 					mMonkey.monkeytime = 0;
 				} else {
-					mMonkey.STATE = State.STATE_LEFT_ATTACK;
+					Monkey.STATE = State.STATE_LEFT_ATTACK;
 					mMonkey.monkeytime = 0;
 				}
 				mMonkey.isAttacked = true;
@@ -332,10 +324,10 @@ public class Play extends GameState {
 
 				//设置方向
 				if (mMonkey.isRight()) {
-					mMonkey.STATE = State.STATE_RIGHT_FIREBALL;
+					Monkey.STATE = State.STATE_RIGHT_FIREBALL;
 					mMonkey.monkeytime = 0;
 				} else {
-					mMonkey.STATE = State.STATE_LEFT_FIREBALL;
+					Monkey.STATE = State.STATE_LEFT_FIREBALL;
 					mMonkey.monkeytime = 0;
 				}
 				mMonkey.isAttacked = true;
@@ -355,10 +347,10 @@ public class Play extends GameState {
 
 				//设置方向
 				if (mMonkey.isRight()) {
-					mMonkey.STATE = State.STATE_RIGHT_JUMP_ATTACK;
+					Monkey.STATE = State.STATE_RIGHT_JUMP_ATTACK;
 					mMonkey.monkeytime = 0;
 				} else {
-					mMonkey.STATE = State.STATE_LEFT_JUMP_ATTACK;
+					Monkey.STATE = State.STATE_LEFT_JUMP_ATTACK;
 					mMonkey.monkeytime = 0;
 				}
 				mMonkey.isAttacked = true;
@@ -690,24 +682,25 @@ public class Play extends GameState {
 	}
 
 	public void initMusic() {
+		Music music;
 		switch (level) {
 			case 0:        //第一关
 				//初始化音乐
-				mMusic = MyGdxGame.assetManager.getMusic(Constant.LEVEL_0_BGM);
-				mMusic.setLooping(true);
-				mMusic.play();
+				music = MyGdxGame.assetManager.getMusic(Constant.LEVEL_0_BGM);
+				music.setLooping(true);
+				music.play();
 				break;
 			case 1:        //第二关
 			case 2:        //第三关
 			case 3:        //第四关
-				mMusic = MyGdxGame.assetManager.getMusic(Constant.LEVEL_1_BGM);
-				mMusic.setLooping(true);
-				mMusic.play();
+				music = MyGdxGame.assetManager.getMusic(Constant.LEVEL_1_BGM);
+				music.setLooping(true);
+				music.play();
 				break;
 			case 4:        //第五关背景音乐
-				mMusic = MyGdxGame.assetManager.getMusic(Constant.LEVEL_2_BGM);
-				mMusic.setLooping(true);
-				mMusic.play();
+				music = MyGdxGame.assetManager.getMusic(Constant.LEVEL_2_BGM);
+				music.setLooping(true);
+				music.play();
 				break;
 		}
 	}
@@ -820,7 +813,7 @@ public class Play extends GameState {
 		if (mMonkey.getBody().getPosition().y < 0) {
 			Failure.isFailed = true;
 			mGameStateManager.setState(GameStateManager.FAILURE);
-		} else if (mMonkey.HP <= 0) {
+		} else if (Monkey.HP <= 0) {
 			Failure.isFailed = true;
 			mGameStateManager.setState(GameStateManager.FAILURE);
 		}
@@ -833,7 +826,7 @@ public class Play extends GameState {
 			mGameStateManager.setState(GameStateManager.SUCCESS);
 			Failure.isFailed = false;
 			//血量判断
-			if (mMonkey.HP >= Monkey.BLOOD / 2) {
+			if (Monkey.HP >= Monkey.BLOOD / 2) {
 				Success.winGrades = 1;
 			} else {
 				Success.winGrades = 0;
@@ -1044,7 +1037,7 @@ public class Play extends GameState {
 		//清理未死亡天兵
 		Iterator<Enemy> iterator = mEnemyDaos.iterator();
 		while (iterator.hasNext()) {
-			Enemy enemy = (Enemy) iterator.next();
+			Enemy enemy = iterator.next();
 
 			enemy.setLive(false);
 			mWorld.destroyBody(enemy.getBody());

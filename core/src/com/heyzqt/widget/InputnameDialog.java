@@ -23,6 +23,7 @@ import com.heyzqt.xiyou.MyGdxGame;
 public class InputnameDialog extends BaseDialog {
 
 	public TextField mNameField;
+	public Image mInputBg;
 
 	private int TEXT_FIELD_WEIGHT;
 	private int TEXT_FIELD_HEIGHT;
@@ -39,35 +40,50 @@ public class InputnameDialog extends BaseDialog {
 		TEXT_FIELD_WEIGHT = mBackground.getWidth();
 		TEXT_FIELD_HEIGHT = mBackground.getHeight();
 
+		//初始化背景
+		mWindow = new Image(mBackground);
+		mWindow.setPosition(MyGdxGame.SCREEN_WIDTH / 2 - mBackground.getWidth() / 2
+				, MyGdxGame.VIEW_HEIGHT / 5 * 4 - mBackground.getHeight() / 2);
+
+		float windowX = MyGdxGame.SCREEN_WIDTH / 2 - mBackground.getWidth() / 2;
+		float windowY = MyGdxGame.VIEW_HEIGHT / 5 * 4 - mBackground.getHeight() / 2;
+
 		//初始化输入框
+		mInputBg = new Image(new TextureRegion(mAtlas.findRegion("inputname")));
 		TextField.TextFieldStyle style = new TextField.TextFieldStyle();
-		style.font = MyGdxGame.assetManager.getFont();
+		style.font = MyGdxGame.assetManager.getFont32();
 		style.fontColor = Constant.FONT_COLOR;
-		style.background = new TextureRegionDrawable(new TextureRegion(mAtlas.findRegion("inputname")));
 		Texture cursor = createCursorTexture();
 		style.cursor = new TextureRegionDrawable(new TextureRegion(cursor));
 
 		mNameField = new TextField("", style);
-		mNameField.setPosition(x + 60, y - 20);
+		mNameField.setSize(260, 60);
+		mNameField.setMaxLength(6);
+		mNameField.setPosition(windowX + mWindow.getWidth() / 5 + 35, windowY + mWindow.getHeight() / 2 - 20);
 
-		//初始化背景
-		mWindow = new Image(mBackground);
-		mWindow.setPosition(x - 30, y - mWindow.getHeight() / 2);
+		mInputBg.setSize(270, 60);
+		mInputBg.setPosition(windowX + mWindow.getWidth() / 5 + 15, windowY + mWindow.getHeight() / 2 - 20);
 
 		//初始化确认按钮
 		mConfirmBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("sureBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("sureBtnDown")));
-		mConfirmBtn.setPosition(x + 40, y - 120);
+		mConfirmBtn.setPosition(windowX + mWindow.getWidth() / 5 + 15, windowY + mWindow.getHeight() / 8);
 
 		//初始化取消按钮
 		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("cancelBtnUp")),
 				new TextureRegionDrawable(mAtlas.findRegion("cancelBtnDown")));
-		mBackBtn.setPosition(x + 200, y - 120);
+		mBackBtn.setPosition(windowX + mWindow.getWidth() / 5 * 3 - 25, windowY + mWindow.getHeight() / 8);
 
 		mConfirmBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
 				//确认姓名是否符合规范
 				String name = mNameField.getText();
 				int result = Utils.isNameFormatted(name);
@@ -83,7 +99,6 @@ public class InputnameDialog extends BaseDialog {
 					//用户名非法
 					mNameField.setText("");
 				}
-				return true;
 			}
 		});
 
@@ -91,8 +106,13 @@ public class InputnameDialog extends BaseDialog {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				MyGdxGame.assetManager.getSound(Constant.BTN_COMMON_SOUND).play();
-				Start.isShowInputNameDialog = false;
 				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				Start.isShowInputNameDialog = false;
 			}
 		});
 
@@ -102,7 +122,7 @@ public class InputnameDialog extends BaseDialog {
 	 * 创建文本框中的光标纹理
 	 */
 	private Texture createCursorTexture() {
-		Pixmap pixmap = new Pixmap(2, TEXT_FIELD_HEIGHT - 8, Pixmap.Format.RGBA8888);
+		Pixmap pixmap = new Pixmap(3, 10, Pixmap.Format.RGBA8888);
 		pixmap.setColor(0.047f, 0.047f, 0.047f, 1);
 		pixmap.fill();
 		Texture texture = new Texture(pixmap);

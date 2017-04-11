@@ -270,6 +270,7 @@ public class Start extends GameState {
 				mRangeDialog.addDialog(mStage);
 			} else if (isShowInputNameDialog) {        //是否显示输入名字对话框
 				mInputnameDialog.addDialog(mStage);
+				mStage.addActor(mInputnameDialog.mInputBg);
 				mStage.addActor(mInputnameDialog.mNameField);
 			} else {
 				setBtnDisabled(false);

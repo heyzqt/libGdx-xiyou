@@ -119,6 +119,9 @@ public class Monkey extends BaseSprite {
 
 		mMonkeyAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.SUN);
 
+		HP = MyGdxGame.user.HP;
+		MP = MyGdxGame.user.MP;
+
 		//初始化静止图片
 		mRightStandState = new TextureAtlas.AtlasRegion[2];
 		mRightStandState[0] = new TextureAtlas.AtlasRegion(mMonkeyAtlas.findRegion("sunRightStand"));

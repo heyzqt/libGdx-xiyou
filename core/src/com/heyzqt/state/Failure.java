@@ -38,6 +38,8 @@ public class Failure extends GameState {
 	//画星级起始x坐标
 	public int distance = 225;
 
+	public static boolean isFailed = false;
+
 	public Failure(GameStateManager manager) {
 		super(manager);
 		init();

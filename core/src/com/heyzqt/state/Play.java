@@ -143,6 +143,9 @@ public class Play extends GameState {
 	//游戏渲染时间
 	private float statetime;
 
+	//桃子初始Y轴位置
+	private float taoY;
+
 	//是否开启调试模式
 	private boolean Debug = true;
 
@@ -163,6 +166,10 @@ public class Play extends GameState {
 		//初始化Box2D渲染器
 		mBox2DRender = new Box2DDebugRenderer();
 
+		//初始化蟠桃与蓝瓶
+		mTaos = new Array<Tao>();
+		mBlues = new Array<Blue>();
+
 		//创建地图
 		createMap();
 
@@ -175,10 +182,18 @@ public class Play extends GameState {
 		//创建主角
 		createActor();
 
-		//初始化蟠桃与蓝瓶
-		mTaos = new Array<Tao>();
-		mBlues = new Array<Blue>();
+		//初始化所有控件
+		initWidget();
 
+		//初始化孙悟空所有按钮的监听事件
+		initListener();
+
+		//注册碰撞监听事件
+		mContactListener = new Box2DContactListener();
+		mWorld.setContactListener(mContactListener);
+	}
+
+	private void initWidget() {
 		//初始化界面控件
 		TextureAtlas mBloodAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.PLAY_BLOOD);
 		//初始化头像
@@ -195,7 +210,7 @@ public class Play extends GameState {
 		Label.LabelStyle style = new Label.LabelStyle(MyGdxGame.assetManager.getNumFont(), null);
 		mScore = new Label("0", style);
 		mScore.setPosition(1100, 590);
-		//初始化操作杆
+		//初始化操作杆素材
 		mPlayAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.PLAY_WIDGET);
 		//左行动按钮
 		mLeftBtn = new ImageButton(new TextureRegionDrawable(mPlayAtlas.findRegion("leftBtnUp")),
@@ -243,13 +258,6 @@ public class Play extends GameState {
 		mStage.addActor(mUnclickedBallBtn);
 		mStage.addActor(mJumpAttackBtn);
 		mStage.addActor(mUnclickedJumpBtn);
-
-		//初始化孙悟空所有按钮的监听事件
-		initListener();
-
-		//注册碰撞监听事件
-		mContactListener = new Box2DContactListener();
-		mWorld.setContactListener(mContactListener);
 	}
 
 	private void initListener() {
@@ -543,18 +551,6 @@ public class Play extends GameState {
 		mMonkey = new Monkey(body);
 		body.setUserData(mMonkey);
 
-		//开始新关卡时，检查孙悟空血量与MP
-		if (mMonkey.MP <= Monkey.MP_VALUE - 2) {
-			mMonkey.MP += 2;
-		} else {
-			mMonkey.MP = Monkey.MP_VALUE;
-		}
-		if (mMonkey.HP <= Monkey.BLOOD - 2) {
-			mMonkey.HP += 2;
-		} else {
-			mMonkey.HP = Monkey.BLOOD;
-		}
-
 		//设置敌人总数
 		switch (level) {
 			case 0:        //第一关
@@ -572,6 +568,40 @@ public class Play extends GameState {
 			case 4:        //第五关
 				mMonkey.setAllEnemiesCount(mMonkey.level_5_enemies);
 				break;
+		}
+
+		//如果是失败重新开始则不奖励桃子蓝瓶
+		if (Failure.isFailed) {
+			return;
+		}
+		//通关进入下一关时，奖励桃子与蓝瓶
+		if (Monkey.HP <= Monkey.BLOOD - 2) {
+			//生成2个蟠桃
+			for (int i = 0; i < 2; i++) {
+				Tao tao = new Tao(mWorld, (200 + i * 10) / Constant.RATE, taoY);
+				tao.getBody().setUserData(tao);
+				mTaos.add(tao);
+			}
+		} else if (Monkey.HP == Monkey.BLOOD - 1) {
+			Tao tao = new Tao(mWorld, 200 / Constant.RATE, taoY);
+			tao.getBody().setUserData(tao);
+			mTaos.add(tao);
+		} else {
+			Monkey.HP = Monkey.BLOOD;
+		}
+		if (Monkey.MP <= Monkey.MP_VALUE - 2) {
+			//生成2个蓝瓶
+			for (int i = 0; i < 2; i++) {
+				Blue blue = new Blue(mWorld, (220 + i * 10) / Constant.RATE, taoY);
+				blue.getBody().setUserData(blue);
+				mBlues.add(blue);
+			}
+		} else if (Monkey.MP == Monkey.MP_VALUE - 1) {
+			Blue blue = new Blue(mWorld, 220 / Constant.RATE, taoY);
+			blue.getBody().setUserData(blue);
+			mBlues.add(blue);
+		} else {
+			Monkey.MP = Monkey.MP_VALUE;
 		}
 	}
 
@@ -607,6 +637,7 @@ public class Play extends GameState {
 		//遍历所有单元格
 		BodyDef bodyDef = new BodyDef();
 		FixtureDef chainFixtureDef = new FixtureDef();
+		int i = 0;
 		for (int row = 0; row < layer.getHeight(); row++) {
 			for (int col = 0; col < layer.getWidth(); col++) {
 				TiledMapTileLayer.Cell cell = layer.getCell(col, row);
@@ -618,6 +649,24 @@ public class Play extends GameState {
 				bodyDef.position.set(
 						(col + 0.5f) * tileSize / Constant.RATE,
 						(row + 0.5f) * tileSize / Constant.RATE);
+
+
+				//获取地面坐标设置桃子坐标
+				if (i < 1) {
+					i++;
+					taoY = bodyDef.position.y;
+
+					switch (level) {
+						case 1:
+							taoY += 1.1f;
+							break;
+						case 2:
+						case 3:
+						case 4:
+							taoY += 0.8f;
+							break;
+					}
+				}
 
 				//设置地面是链式形状
 				ChainShape chainShape = new ChainShape();
@@ -769,8 +818,10 @@ public class Play extends GameState {
 		 * 主角死亡 方式一：掉落到屏幕之外 方式二：敌人攻击主角致死
 		 */
 		if (mMonkey.getBody().getPosition().y < 0) {
+			Failure.isFailed = true;
 			mGameStateManager.setState(GameStateManager.FAILURE);
 		} else if (mMonkey.HP <= 0) {
+			Failure.isFailed = true;
 			mGameStateManager.setState(GameStateManager.FAILURE);
 		}
 
@@ -780,6 +831,7 @@ public class Play extends GameState {
 		 */
 		if (mMonkey.getBody().getPosition().x * Constant.RATE > tileWidth * tileSize) {
 			mGameStateManager.setState(GameStateManager.SUCCESS);
+			Failure.isFailed = false;
 			//血量判断
 			if (mMonkey.HP >= Monkey.BLOOD / 2) {
 				Success.winGrades = 1;

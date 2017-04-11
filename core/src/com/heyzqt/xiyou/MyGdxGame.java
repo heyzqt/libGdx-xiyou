@@ -100,7 +100,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		assetManager.loadTexture("background/aboutDialog.png", Constant.SETTING_DIALOG);
 
 		//加载选关界面Select.java资源
-		assetManager.loadTexture("background/world_map_bg.jpg", Constant.SELECT_BG);
+		assetManager.loadTexture("background/world_map_bg.png", Constant.SELECT_BG);
 		assetManager.loadTextureAtlas("widget/select.atlas", Constant.SELECT_WIDGET);
 
 		//加载失败界面Failure.java资源

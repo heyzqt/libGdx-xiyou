@@ -51,6 +51,10 @@ public class Loading extends GameState {
 	}
 
 	public void init() {
+		//取消选关界面设置锚点，重新恢复相机锚点
+		mCamera.setToOrtho(false, MyGdxGame.VIEW_WIDTH, MyGdxGame.VIEW_HEIGHT);
+		mCamera.update();
+		mStage.getCamera().position.set(MyGdxGame.SCREEN_WIDTH / 2, MyGdxGame.SCREEN_HEIGHT / 2, 0);
 		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.LOADING_WIDGET);
 
 		//背景

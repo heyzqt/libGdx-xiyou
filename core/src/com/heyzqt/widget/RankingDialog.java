@@ -55,9 +55,10 @@ public class RankingDialog extends BaseDialog {
 		}
 		batch.begin();
 		for (int i = 0; i < MyGdxGame.rankings.size(); i++) {
+			mFont.draw(batch, (i + 1) + ".", x * MyGdxGame.WEIGHT_RATE - 175, y * MyGdxGame.HEIGHT_RATE + 50 - i * 80);
 			mFont.draw(batch, MyGdxGame.rankings.get(i).name, x * MyGdxGame.WEIGHT_RATE - 95, y * MyGdxGame.HEIGHT_RATE + 50 - i * 80);
 			mFont.draw(batch, MyGdxGame.rankings.get(i).score + "", x * MyGdxGame.WEIGHT_RATE - 95 + 140, y * MyGdxGame.HEIGHT_RATE + 50 - i * 80);
-			mFont.draw(batch, MyGdxGame.rankings.get(i).time + "秒", x * MyGdxGame.WEIGHT_RATE - 95 + 240, y * MyGdxGame.HEIGHT_RATE + 50 - i * 80);
+			mFont.draw(batch, MyGdxGame.rankings.get(i).time + "秒", x * MyGdxGame.WEIGHT_RATE - 95 + 235, y * MyGdxGame.HEIGHT_RATE + 50 - i * 80);
 		}
 		batch.end();
 	}

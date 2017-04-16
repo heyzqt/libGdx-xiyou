@@ -37,7 +37,9 @@ public class BaseDialog {
 
 	public void addDialog(Stage stage) {
 		stage.addActor(mWindow);
-		stage.addActor(mBackBtn);
+		if (mBackBtn != null) {
+			stage.addActor(mBackBtn);
+		}
 		if (mConfirmBtn != null) {
 			stage.addActor(mConfirmBtn);
 		}

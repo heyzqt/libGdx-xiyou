@@ -97,7 +97,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		assetManager.loadMusic("sound/bgm_main.mp3", Constant.START_BGM);
 
 		//加载设置界面对话框
-		assetManager.loadTexture("background/aboutDialog.png", Constant.SETTING_DIALOG);
+		assetManager.loadTexture("background/about_dialog.png", Constant.ABOUT_DIALOG);
 
 		//加载选关界面Select.java资源
 		assetManager.loadTexture("background/world_map_bg.png", Constant.SELECT_BG);
@@ -146,13 +146,15 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//加载输入输入姓名对话框背景
 		assetManager.loadTexture("background/inputname_bg.png", Constant.INPUT_NAME_BG);
+		//加载姓名限制对话框背景
+		assetManager.loadTexture("background/namewarning_bg.png",Constant.NAMEWARNING_BG);
 
 		//加载界面背景和游戏素材
 		assetManager.loadTexture("background/loading_bg.png", Constant.LOADING_BG);
 		assetManager.loadTextureAtlas("widget/loading.atlas", Constant.LOADING_WIDGET);
 
-		//加载其他素材
-		assetManager.loadTextureAtlas("widget/other.atlas", Constant.OTHER_WIDGET);
+		//加载其他常用素材
+		assetManager.loadTextureAtlas("widget/components.atlas", Constant.COMMON_COMPONENTS);
 	}
 
 	@Override

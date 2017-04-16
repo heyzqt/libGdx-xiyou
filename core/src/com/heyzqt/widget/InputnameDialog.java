@@ -95,9 +95,11 @@ public class InputnameDialog extends BaseDialog {
 					DataUtils.getInstance().saveDataToEncode(Constant.PREFERENCES_USERNAME, name);
 					//跳转到选关界面
 					Start.isChangeToSelect = true;
+					Start.isShowNameWarningDialog = false;
 				} else {
 					//用户名非法
 					mNameField.setText("");
+					Start.isShowNameWarningDialog = true;
 				}
 			}
 		});

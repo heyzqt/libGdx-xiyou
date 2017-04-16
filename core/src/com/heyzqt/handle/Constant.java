@@ -83,7 +83,7 @@ public class Constant {
 	public static final String START_BG = "start_bg";
 	public static final String START_SETTING = "start_setting";
 	public static final String START_BGM = "start_bgm";
-	public static final String SETTING_DIALOG = "setting_dialog";
+	public static final String ABOUT_DIALOG = "about_dialog";
 
 	//选关界面
 	public static final String SELECT_WIDGET = "select_widget";
@@ -119,9 +119,10 @@ public class Constant {
 
 	//输入姓名对话框
 	public static final String INPUT_NAME_BG = "input_name_bg";
+	public static final String NAMEWARNING_BG = "namewarning_bg";
 
 	//其他素材
-	public static final String OTHER_WIDGET = "other_widget";
+	public static final String COMMON_COMPONENTS = "common_components";
 
 	//加载界面
 	public static final String LOADING_BG = "loading_bg";

@@ -1,6 +1,5 @@
 package com.heyzqt.widget;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -11,34 +10,31 @@ import com.heyzqt.state.Start;
 import com.heyzqt.xiyou.MyGdxGame;
 
 /**
- * Created by heyzqt on 2017/3/2.
+ * Created by heyzqt on 2017/4/11.
  *
- * 设置界面关于游戏对话框
+ * 用户名警告框
  */
-public class AboutGameDialog extends BaseDialog {
+public class NameWarningDialog extends BaseDialog {
 
-	public AboutGameDialog(float x, float y) {
+	public NameWarningDialog(float x, float y) {
 		super(x, y);
 		init();
 	}
 
 	private void init() {
-		//获取资源
+		mBackground = MyGdxGame.assetManager.getTexture(Constant.NAMEWARNING_BG);
 		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.COMMON_COMPONENTS);
-		mBackground = MyGdxGame.assetManager.getTexture(Constant.ABOUT_DIALOG);
 
-		//初始化对话框
-		mWindow = new Image(new TextureRegion(mBackground));
-		mWindow.setPosition(x - mBackground.getWidth() / 2, y - mBackground.getHeight() / 2);
+		mWindow = new Image(mBackground);
+		mWindow.setPosition(x - mWindow.getWidth() / 2, y - mWindow.getHeight() / 2 + 240);
 
-		//初始化返回按钮
-		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("close48")));
-		mBackBtn.setPosition(x + mBackground.getWidth() / 2 - 55, y + mBackground.getHeight() / 2 - 53);
+		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("ok")));
+		mBackBtn.setPosition(x + mWindow.getWidth() / 3, y - mBackBtn.getHeight() / 2 + 225);
 
 		mBackBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Start.isShowAboutDialog = false;
+				Start.isShowNameWarningDialog = false;
 				return true;
 			}
 		});

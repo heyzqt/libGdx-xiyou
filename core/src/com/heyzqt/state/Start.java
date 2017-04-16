@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
 import com.heyzqt.widget.AboutGameDialog;
 import com.heyzqt.widget.InputnameDialog;
+import com.heyzqt.widget.NameWarningDialog;
 import com.heyzqt.widget.RankingDialog;
 import com.heyzqt.xiyou.MyGdxGame;
 
@@ -38,6 +39,8 @@ public class Start extends GameState {
 	private TextureAtlas mRangeAtlas;
 	private ImageButton mRangeBtn;
 	private RankingDialog mRangeDialog;
+	//警告对话框
+	private NameWarningDialog mWarningDialog;
 
 	//设置界面
 	//是否打开音乐
@@ -66,6 +69,9 @@ public class Start extends GameState {
 	//是否显示输入名字对话框
 	public static boolean isShowInputNameDialog = false;
 
+	//是否显示名字警告对话框
+	public static boolean isShowNameWarningDialog = false;
+
 	public Start(GameStateManager gsm) {
 		super(gsm);
 		init();
@@ -84,6 +90,8 @@ public class Start extends GameState {
 		mSettingBtn.setSize(280, 100);
 		//输入姓名对话框
 		mInputnameDialog = new InputnameDialog(MyGdxGame.VIEW_WIDTH / 2, MyGdxGame.VIEW_HEIGHT / 2);
+		//警告对话框
+		mWarningDialog = new NameWarningDialog(MyGdxGame.SCREEN_WIDTH / 2, MyGdxGame.SCREEN_HEIGHT / 2);
 
 		//开始界面 - 排行榜
 		mRangeBtn = new ImageButton(new TextureRegionDrawable(mRangeAtlas.findRegion("rangeBtnUp")),
@@ -272,6 +280,10 @@ public class Start extends GameState {
 				mInputnameDialog.addDialog(mStage);
 				mStage.addActor(mInputnameDialog.mInputBg);
 				mStage.addActor(mInputnameDialog.mNameField);
+				if (isShowNameWarningDialog) {
+					mWarningDialog.addDialog(mStage);
+					mStage.addActor(mWarningDialog.mBackBtn);
+				}
 			} else {
 				setBtnDisabled(false);
 			}

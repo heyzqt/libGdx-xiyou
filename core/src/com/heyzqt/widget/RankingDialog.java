@@ -28,7 +28,7 @@ public class RankingDialog extends BaseDialog {
 	}
 
 	private void init() {
-		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.OTHER_WIDGET);
+		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.COMMON_COMPONENTS);
 		mBackground = MyGdxGame.assetManager.getTexture(Constant.RANGE_BG);
 
 		//初始化对话框
@@ -37,7 +37,7 @@ public class RankingDialog extends BaseDialog {
 
 		//初始化返回按钮
 		mBackBtn = new ImageButton(new TextureRegionDrawable(mAtlas.findRegion("close64")));
-		mBackBtn.setPosition(x + mBackground.getWidth() / 2 - 90, y + mBackground.getHeight() / 2 - 77);
+		mBackBtn.setPosition(x + mBackground.getWidth() / 2 - 75, y + mBackground.getHeight() / 2 - 70);
 
 		mBackBtn.addListener(new ClickListener() {
 			@Override

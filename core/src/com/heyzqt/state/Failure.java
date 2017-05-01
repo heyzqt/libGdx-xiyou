@@ -36,7 +36,7 @@ public class Failure extends GameState {
 	private String timeStr;
 
 	//画星级起始x坐标
-	public int distance = 225;
+	public int distance = 180;
 
 	public static boolean isFailed = false;
 
@@ -78,7 +78,7 @@ public class Failure extends GameState {
 		//时间样式
 		Label.LabelStyle timeStyle = new Label.LabelStyle(MyGdxGame.assetManager.getFont(), Constant.TIME_COLOR);
 		mTimeLab = new Label(timeStr, timeStyle);
-		mTimeLab.setPosition(480, 360);
+		mTimeLab.setPosition(480, 365);
 
 		//五角星与按钮
 		mAtlas = MyGdxGame.assetManager.getTextureAtlas(Constant.FAILURE_WIDGET);

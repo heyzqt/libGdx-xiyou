@@ -139,7 +139,7 @@ public class Play extends GameState {
 	private float taoY;
 
 	//是否开启调试模式
-	private boolean Debug = true;
+	private boolean Debug = false;
 
 	public Play(GameStateManager manager) {
 		super(manager);
@@ -364,7 +364,10 @@ public class Play extends GameState {
 		mJumpBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				mMonkey.getBody().applyForceToCenter(0, 250, true);
+				//限制孙悟空跳跃高度
+				if (mMonkey.getPosition().y < MyGdxGame.VIEW_HEIGHT / Constant.RATE / 3 * 2) {
+					mMonkey.getBody().applyForceToCenter(0, 250, true);
+				}
 				return true;
 			}
 		});

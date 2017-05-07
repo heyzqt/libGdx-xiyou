@@ -12,6 +12,7 @@ import com.heyzqt.handle.AssetManager;
 import com.heyzqt.handle.Constant;
 import com.heyzqt.handle.DataUtils;
 import com.heyzqt.state.GameStateManager;
+import com.heyzqt.state.Start;
 
 import java.util.ArrayList;
 
@@ -61,6 +62,14 @@ public class MyGdxGame extends ApplicationAdapter {
 			DataUtils.getInstance().initPreferences();
 			isFirstPlayingGame = "false";
 			DataUtils.getInstance().saveDataToEncode(Constant.PREFERENCES_FIRST_PLAYING_GAME, isFirstPlayingGame);
+
+			//初始化并保存音乐播放状态
+			DataUtils.getInstance().saveDataToEncode(Constant.PREFERENCES_MUSIC, "true");
+			Start.isPlay = true;
+		} else {
+			//获取音乐状态
+			Start.isPlay = Boolean.parseBoolean(DataUtils.getInstance()
+					.getDataFromDecode(Constant.PREFERENCES_MUSIC));
 		}
 
 		//初始化数据
@@ -147,7 +156,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		//加载输入输入姓名对话框背景
 		assetManager.loadTexture("background/inputname_bg.png", Constant.INPUT_NAME_BG);
 		//加载姓名限制对话框背景
-		assetManager.loadTexture("background/namewarning_bg.png",Constant.NAMEWARNING_BG);
+		assetManager.loadTexture("background/namewarning_bg.png", Constant.NAMEWARNING_BG);
 
 		//加载界面背景和游戏素材
 		assetManager.loadTexture("background/loading_bg.png", Constant.LOADING_BG);

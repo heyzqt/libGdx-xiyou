@@ -27,6 +27,7 @@ public class Constant {
 	public final static String PREFERENCES_RANGE_WEIGHT = "range_weight_";
 
 	public final static String PREFERENCES_FIRST_PLAYING_GAME = "first_playing_game";
+	public final static String PREFERENCES_MUSIC = "playmusic";
 
 	//开始 设置界面字体颜色
 	public final static Color MAIN_COLOR = new Color(1f, 0.8f, 0, 1);

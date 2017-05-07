@@ -1,7 +1,6 @@
 package com.heyzqt.state;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.heyzqt.handle.Constant;
+import com.heyzqt.handle.DataUtils;
 import com.heyzqt.widget.AboutGameDialog;
 import com.heyzqt.widget.InputnameDialog;
 import com.heyzqt.widget.NameWarningDialog;
@@ -45,7 +45,7 @@ public class Start extends GameState {
 	//设置界面
 	//是否打开音乐
 	private CheckBox mCheckBox;
-	public static boolean isPlay = true;
+	public static boolean isPlay;
 	//关于我们
 	private ImageButton mAboutBtn;
 	private AboutGameDialog mAboutGameDialog;
@@ -132,9 +132,11 @@ public class Start extends GameState {
 		mBackButton.setPosition(MyGdxGame.VIEW_WIDTH / 2 + 26, MyGdxGame.VIEW_HEIGHT / 2 - mStartBtn.getHeight() / 2 - 180);
 
 		//背景音乐
-		Music music = MyGdxGame.assetManager.getMusic(Constant.START_BGM);
-		music.setLooping(true);
-		music.play();
+		if (isPlay) {
+			MyGdxGame.assetManager.getMusic(Constant.START_BGM).play();
+		} else {
+			MyGdxGame.assetManager.getMusic(Constant.START_BGM).pause();
+		}
 
 		//初始化监听
 		initListener();
@@ -212,8 +214,10 @@ public class Start extends GameState {
 			public void changed(ChangeEvent event, Actor actor) {
 				if (isPlay) {
 					isPlay = false;
+					DataUtils.getInstance().saveDataToEncode(Constant.PREFERENCES_MUSIC, "false");
 				} else {
 					isPlay = true;
+					DataUtils.getInstance().saveDataToEncode(Constant.PREFERENCES_MUSIC, "true");
 				}
 			}
 		});

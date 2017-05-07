@@ -364,9 +364,9 @@ public class Play extends GameState {
 		mJumpBtn.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				//限制孙悟空跳跃高度
-				if (mMonkey.getPosition().y < MyGdxGame.VIEW_HEIGHT / Constant.RATE / 3 * 2) {
-					mMonkey.getBody().applyForceToCenter(0, 250, true);
+				//限制孙悟空跳跃
+				if (mContactListener.isOnGround()) {
+					mMonkey.getBody().applyForceToCenter(0, 400, true);
 				}
 				return true;
 			}

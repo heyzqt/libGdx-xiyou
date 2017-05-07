@@ -34,6 +34,9 @@ public class Box2DContactListener implements ContactListener {
 	//记录要移除的Blue
 	private Array<Body> removeBlues;
 
+	// 声明跳跃计数器
+	private int platformNum;
+
 	public Box2DContactListener() {
 		removeEnemies = new Array<Body>();
 		removeBoss = null;
@@ -48,6 +51,16 @@ public class Box2DContactListener implements ContactListener {
 		Fixture fixtureA = contact.getFixtureA();
 		//获取刚体碰撞夹具B
 		Fixture fixtureB = contact.getFixtureB();
+
+		//孙悟空跳跃开始
+		if (fixtureA.getUserData() != null && fixtureA.getUserData().equals("foot")) {
+			// 计数器加1
+			platformNum++;
+		}
+		if (fixtureB.getUserData() != null && fixtureB.getUserData().equals("foot")) {
+			// 计数器加1
+			platformNum++;
+		}
 
 		//孙悟空攻击天兵
 		if (Utils.isContacted(fixtureA, fixtureB, "enemy", "stick")) {
@@ -281,6 +294,27 @@ public class Box2DContactListener implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
+		// 夹具为空时，碰撞直接返回不执行。
+		if (fixtureA == null || fixtureB == null) {
+			return;
+		}
+
+		//孙悟空跳跃结束
+		if (fixtureA.getUserData() != null && fixtureA.getUserData().equals("foot")) {
+			// 计数器减1
+			platformNum--;
+		}
+		if (fixtureB.getUserData() != null && fixtureB.getUserData().equals("foot")) {
+			// 计数器减1
+			platformNum--;
+		}
+	}
+
+	//判断刚体是否在地面上
+	public boolean isOnGround() {
+		return platformNum > 0;
 	}
 
 	@Override

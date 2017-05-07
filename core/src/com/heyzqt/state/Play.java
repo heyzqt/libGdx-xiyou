@@ -565,10 +565,6 @@ public class Play extends GameState {
 				break;
 		}
 
-		//如果是失败重新开始则不奖励桃子蓝瓶
-		if (Failure.isFailed) {
-			return;
-		}
 		//通关进入下一关时，奖励桃子与蓝瓶
 		if (Monkey.HP <= Monkey.BLOOD - 2) {
 			//生成2个蟠桃
@@ -814,10 +810,8 @@ public class Play extends GameState {
 		 * 主角死亡 方式一：掉落到屏幕之外 方式二：敌人攻击主角致死
 		 */
 		if (mMonkey.getBody().getPosition().y < 0) {
-			Failure.isFailed = true;
 			mGameStateManager.setState(GameStateManager.FAILURE);
 		} else if (Monkey.HP <= 0) {
-			Failure.isFailed = true;
 			mGameStateManager.setState(GameStateManager.FAILURE);
 		}
 
@@ -827,7 +821,6 @@ public class Play extends GameState {
 		 */
 		if (mMonkey.getBody().getPosition().x * Constant.RATE > tileWidth * tileSize) {
 			mGameStateManager.setState(GameStateManager.SUCCESS);
-			Failure.isFailed = false;
 			//血量判断
 			if (Monkey.HP >= Monkey.BLOOD / 2) {
 				Success.winGrades = 1;

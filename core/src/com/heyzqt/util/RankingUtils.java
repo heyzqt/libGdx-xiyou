@@ -5,6 +5,7 @@ import com.heyzqt.entity.User;
 import com.heyzqt.handle.DataUtils;
 import com.heyzqt.xiyou.MyGdxGame;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -34,10 +35,12 @@ public class RankingUtils {
 	}
 
 	/**
-	 * weight计算 = 分数*60%+100/时间
+	 * weight计算 = 分数*60%+200/时间
 	 */
 	public static double getWeight(int score, int time) {
-		return score * 0.6 + 100 / time;
+		DecimalFormat df = new DecimalFormat("#.00");
+		String result = df.format(score * 0.6 + 200 / time);
+		return Double.parseDouble(result);
 	}
 
 	/**

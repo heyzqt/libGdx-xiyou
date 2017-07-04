@@ -1,14 +1,14 @@
 # libGdx-xiyou 大话西游之大闹天空
 
-基于libGdx1.6.1开发的横版闯关游戏，高仿造梦西游OL，不做任何商业用途。
+基于libGdx1.6.1开发的单机横版闯关游戏，高仿造梦西游OL，不做任何商业用途。
 
-### Development Environment
+## Development Environment
 
 + Android Studio 2.0
 + libgdx 1.6.1
 + Adobe Photoshop CC 2015
 
-### Running
+## Running
 
 + Min SDK verison 4.4+ (4.7 inch mobile phone screen)
 
@@ -16,21 +16,24 @@ P.S.：使用红米2开发，4.7英寸屏幕，没有对其他屏幕做适配，
 
 ## Preview
 
-开始界面
+**开始界面**<br/>
+
 ![image1](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img1.jpg)
 
-排行榜界面
+**排行榜界面**<br/>
 ![image1](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img1.jpg)
 
-战斗界面
+**战斗界面**<br/>
 ![image1](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img1.jpg)
 
-成功界面
+**成功界面**<br/>
 ![image1](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img1.jpg)
 
-### Download xiyou.apk
+## Download xiyou.apk
 
-### License
+[download xiyou.apk](https://github.com/heyzqt/libGdx-xiyou/blob/master/xiyou.apk)
+
+## License
 
 Copyright 2017 heyzqt
 

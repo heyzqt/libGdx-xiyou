@@ -318,7 +318,7 @@ public class Boss extends BaseSprite implements Runnable {
 			mBody.setLinearVelocity(0f, 0);
 		} else if (STATE == State.STATE_LEFT_HITED) {
 			setAnimation(mLeftHittedState, 1 / 12f);
-		} else if (STATE == State.STATE_LEFT_HITED) {
+		} else if (STATE == State.STATE_RIGHT_HITED) {
 			setAnimation(mRightHittedState, 1 / 12f);
 		}
 	}

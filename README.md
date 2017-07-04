@@ -21,17 +21,17 @@ P.S.：使用红米2开发，4.7英寸屏幕，没有对其他屏幕做适配，
 ![image1](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img1.jpg)
 
 **排行榜界面**<br/>
-![image1](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img1.jpg)
+![image2](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img2.jpg)
 
 **战斗界面**<br/>
-![image1](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img1.jpg)
+![image3](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img3.jpg)
 
 **成功界面**<br/>
-![image1](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img1.jpg)
+![image4](https://github.com/heyzqt/libGdx-xiyou/blob/master/images/img4.jpg)
 
 ## Download xiyou.apk
 
-[download xiyou.apk](https://github.com/heyzqt/libGdx-xiyou/blob/master/xiyou.apk)
+[download xiyou.apk](https://github.com/heyzqt/libGdx-xiyou/raw/master/xiyou.apk)
 
 ## License
 
